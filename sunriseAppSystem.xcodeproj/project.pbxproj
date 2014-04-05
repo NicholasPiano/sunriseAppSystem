@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		89AA602218EF78D0002195FD /* ARKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AA602118EF78D0002195FD /* ARKView.m */; };
 		89B2229118E702B80042FF24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B2229018E702B80042FF24 /* Foundation.framework */; };
 		89B2229318E702B80042FF24 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B2229218E702B80042FF24 /* CoreGraphics.framework */; };
 		89B2229518E702B80042FF24 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B2229418E702B80042FF24 /* UIKit.framework */; };
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		89AA602018EF78D0002195FD /* ARKView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKView.h; sourceTree = "<group>"; };
+		89AA602118EF78D0002195FD /* ARKView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKView.m; sourceTree = "<group>"; };
 		89B2228D18E702B80042FF24 /* sunriseAppSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sunriseAppSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89B2229018E702B80042FF24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		89B2229218E702B80042FF24 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -81,6 +84,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		89AA602318EF90BC002195FD /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				89AA602018EF78D0002195FD /* ARKView.h */,
+				89AA602118EF78D0002195FD /* ARKView.m */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
 		89B2228418E702B80042FF24 = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +131,7 @@
 				89B222A218E702B90042FF24 /* ARKAppDelegate.m */,
 				89B222A718E702B90042FF24 /* Images.xcassets */,
 				89B222A418E702B90042FF24 /* sunriseAppSystem.xcdatamodeld */,
+				89AA602318EF90BC002195FD /* Base */,
 				89B2229918E702B90042FF24 /* Supporting Files */,
 			);
 			path = sunriseAppSystem;
@@ -250,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89B2229F18E702B90042FF24 /* main.m in Sources */,
+				89AA602218EF78D0002195FD /* ARKView.m in Sources */,
 				89B222A318E702B90042FF24 /* ARKAppDelegate.m in Sources */,
 				89B222A618E702B90042FF24 /* sunriseAppSystem.xcdatamodeld in Sources */,
 			);
@@ -450,6 +464,7 @@
 				89B222C118E702B90042FF24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		89B222C218E702B90042FF24 /* Build configuration list for PBXNativeTarget "sunriseAppSystemTests" */ = {
 			isa = XCConfigurationList;
@@ -458,6 +473,7 @@
 				89B222C418E702B90042FF24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
