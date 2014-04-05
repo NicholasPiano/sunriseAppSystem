@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		89AA602218EF78D0002195FD /* ARKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AA602118EF78D0002195FD /* ARKView.m */; };
+		89AA602618EF9589002195FD /* ARKState.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AA602518EF9589002195FD /* ARKState.m */; };
 		89B2229118E702B80042FF24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B2229018E702B80042FF24 /* Foundation.framework */; };
 		89B2229318E702B80042FF24 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B2229218E702B80042FF24 /* CoreGraphics.framework */; };
 		89B2229518E702B80042FF24 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B2229418E702B80042FF24 /* UIKit.framework */; };
@@ -38,6 +39,8 @@
 /* Begin PBXFileReference section */
 		89AA602018EF78D0002195FD /* ARKView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKView.h; sourceTree = "<group>"; };
 		89AA602118EF78D0002195FD /* ARKView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKView.m; sourceTree = "<group>"; };
+		89AA602418EF9589002195FD /* ARKState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKState.h; sourceTree = "<group>"; };
+		89AA602518EF9589002195FD /* ARKState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKState.m; sourceTree = "<group>"; };
 		89B2228D18E702B80042FF24 /* sunriseAppSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sunriseAppSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89B2229018E702B80042FF24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		89B2229218E702B80042FF24 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -89,6 +92,8 @@
 			children = (
 				89AA602018EF78D0002195FD /* ARKView.h */,
 				89AA602118EF78D0002195FD /* ARKView.m */,
+				89AA602418EF9589002195FD /* ARKState.h */,
+				89AA602518EF9589002195FD /* ARKState.m */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89AA602618EF9589002195FD /* ARKState.m in Sources */,
 				89B2229F18E702B90042FF24 /* main.m in Sources */,
 				89AA602218EF78D0002195FD /* ARKView.m in Sources */,
 				89B222A318E702B90042FF24 /* ARKAppDelegate.m in Sources */,
