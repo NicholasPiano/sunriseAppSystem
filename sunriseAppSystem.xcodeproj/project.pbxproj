@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8906B4BE18FB5B6500D4EF77 /* ARKDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906B4BD18FB5B6500D4EF77 /* ARKDefault.m */; };
 		89AA602218EF78D0002195FD /* ARKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AA602118EF78D0002195FD /* ARKView.m */; };
 		89AA602618EF9589002195FD /* ARKState.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AA602518EF9589002195FD /* ARKState.m */; };
 		89B2229118E702B80042FF24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B2229018E702B80042FF24 /* Foundation.framework */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8906B4BC18FB5B6500D4EF77 /* ARKDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKDefault.h; sourceTree = "<group>"; };
+		8906B4BD18FB5B6500D4EF77 /* ARKDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKDefault.m; sourceTree = "<group>"; };
 		89AA602018EF78D0002195FD /* ARKView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKView.h; sourceTree = "<group>"; };
 		89AA602118EF78D0002195FD /* ARKView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKView.m; sourceTree = "<group>"; };
 		89AA602418EF9589002195FD /* ARKState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKState.h; sourceTree = "<group>"; };
@@ -94,6 +97,8 @@
 				89AA602118EF78D0002195FD /* ARKView.m */,
 				89AA602418EF9589002195FD /* ARKState.h */,
 				89AA602518EF9589002195FD /* ARKState.m */,
+				8906B4BC18FB5B6500D4EF77 /* ARKDefault.h */,
+				8906B4BD18FB5B6500D4EF77 /* ARKDefault.m */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -267,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8906B4BE18FB5B6500D4EF77 /* ARKDefault.m in Sources */,
 				89AA602618EF9589002195FD /* ARKState.m in Sources */,
 				89B2229F18E702B90042FF24 /* main.m in Sources */,
 				89AA602218EF78D0002195FD /* ARKView.m in Sources */,
