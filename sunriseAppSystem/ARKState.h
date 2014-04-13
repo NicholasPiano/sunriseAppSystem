@@ -10,4 +10,25 @@
 
 @interface ARKState : NSObject
 
+#pragma mark - properties
+//identification
+@property (nonatomic) NSString *globalId;
+@property (nonatomic) NSString *localId;
+
+//state variables
+@property (nonatomic) CGAffineTransform transform;
+@property (nonatomic) CALayer *layer; //for colors and shapes
+@property (nonatomic) CGColorRef color;
+@property (nonatomic) CGFloat alpha;
+
+//animation
+@property (nonatomic) CGFloat duration;
+@property (nonatomic) CGFloat delay;
+
+#pragma mark - initialiser
+- (id)initWithGlobalId:(NSString *)argGlobalId andLocalId:(NSString *)argLocalId;
+
+#pragma mark - factory
++ (ARKState *)standardDurationAndDelayWithGlobalId:(NSString *)argGlobalId andLocalId:(NSString *)argLocalId;
+
 @end

@@ -15,3 +15,8 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
 #endif
+
+//++++++++++++ DEFAULTS +++++++++++++
+
+#define HomeState @"home"
+#define LocalOne @"1"
