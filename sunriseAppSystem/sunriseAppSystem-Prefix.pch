@@ -18,5 +18,7 @@
 
 //++++++++++++ DEFAULTS +++++++++++++
 
+#import "ARKDefault.h"
+
 #define HomeState @"home"
 #define LocalOne @"1"
