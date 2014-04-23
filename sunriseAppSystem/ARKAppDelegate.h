@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+//view controllers
+#import "ARKMainViewController.h"
+
 @interface ARKAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
