@@ -36,8 +36,6 @@
 + (ARKState *)standardDurationAndDelayWithGlobalId:(NSString *)argGlobalId andLocalId:(NSString *)argLocalId
 {
     ARKState *state = [[self alloc] initWithGlobalId:argGlobalId andLocalId:argLocalId];
-    state.globalId = HomeState;
-    state.localId = LocalOne;
     return state;
 }
 
