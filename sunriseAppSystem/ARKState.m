@@ -15,7 +15,7 @@
 @synthesize globalId, localId;
 
 //state variables
-@synthesize transform, layer, color, alpha;
+@synthesize transform, color, alpha;
 
 //animation
 @synthesize duration, delay;

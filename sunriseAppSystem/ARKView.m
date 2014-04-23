@@ -12,7 +12,7 @@
 
 #pragma mark - properties
 //metrics
-@synthesize radius, size, animationCenter;
+@synthesize radius, size;
 
 #pragma mark - initialisers
 - (id)initWithFrame:(CGRect)frame

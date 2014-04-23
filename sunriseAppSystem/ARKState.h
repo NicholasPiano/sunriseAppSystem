@@ -17,7 +17,6 @@
 
 //state variables
 @property (nonatomic) CGAffineTransform transform;
-@property (nonatomic) CALayer *layer; //for colors and shapes
 @property (nonatomic) CGColorRef color;
 @property (nonatomic) CGFloat alpha;
 

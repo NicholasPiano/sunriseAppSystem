@@ -14,10 +14,8 @@
 //metrics
 @property CGFloat radius;
 @property CGSize size;
-@property CGPoint animationCenter; //point, if different from true center, about which any animation or focus is done
 
 //other
-//-color, etc.
 
 //state
 
