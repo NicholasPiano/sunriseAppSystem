@@ -66,8 +66,6 @@
 + (NSCalendar *)calendar;
 + (BOOL)isInTheFutureTodayWithHour:(int)hour andMinute:(int)minute;
 
-//user defaults
-
 //local notifications
 + (BOOL)localNotificationExistsWithIdent:(NSString *)localNotificationIdent;
 + (void)postLocalNotificationWithDate:(NSDate *)date andIdent:(NSString *)ident andValue:(CGFloat)value isRecurring:(BOOL)isRecurring;
