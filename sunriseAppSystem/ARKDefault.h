@@ -21,12 +21,15 @@
 #define Local2 @"2"
 #define Local3 @"3"
 
+//standard metrics
+#define buttonRadius 24.0
+
 //CLASS FOR MORE COMPLEX DEFAULT OBJECTS
 
 @interface ARKDefault : NSObject
 
 #pragma mark initialize
-+ (void)initialize; //setup all static vars
++ (void)initialize; //setup all static vars - might not be necessary
 
 #pragma mark fetch methods
 //system metrics
@@ -44,7 +47,7 @@
 //+ (CGSize)buttonSize;
 //+ (CGSize)clockButtonInteriorSize; //if the alarm label components were to fit inside a button comfortably, what size would they be?
 //+ (CGFloat)sliderSpacing;
-+ (CGFloat)sliderSpacingWithIndex:(int)index;
+//+ (CGFloat)sliderSpacingWithIndex:(int)index;
 
 //animation properties
 //+ (CGFloat)animationDuration;
