@@ -7,7 +7,29 @@
 //
 
 #import "ARKControl.h"
+#import "ARKButton.h"
 
 @interface ARKSlider : ARKControl
+
+#pragma mark - properties
+//intrinsic
+@property BOOL isVertical;
+
+//elements
+@property (strong, nonatomic) ARKRect *upperTrack;
+@property (strong, nonatomic) ARKRect *lowerTrack;
+@property (strong, nonatomic) ARKButton *thumb;
+
+#pragma mark - initialisers
+
+
+#pragma mark - instance methods
+//commands and reactions
+- (IBAction)tapThumb:(UITapGestureRecognizer *)argTapGestureRecognizer;
+- (IBAction)panThumb:(UIPanGestureRecognizer *)argPanGestureRecognizer;
+
+#pragma mark - factory
++ (ARKSlider *)horizontalSlider;
++ (ARKSlider *)verticalSlider;
 
 @end

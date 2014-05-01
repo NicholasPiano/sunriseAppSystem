@@ -7,6 +7,9 @@
 //
 
 #import "ARKView.h"
+#import "ARKArc.h"
+#import "ARKRect.h"
+#import "ARKGlyph.h"
 
 @interface ARKControl : ARKView
 
