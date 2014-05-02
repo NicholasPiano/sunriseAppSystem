@@ -24,12 +24,19 @@
 //standard metrics
 #define buttonRadius 24.0
 
+//animation
+#define animationDuration 1.0
+#define animationDelay 0.0
+
+//slider
+#define sliderTimeInterval 15.0 //minutes
+
 //CLASS FOR MORE COMPLEX DEFAULT OBJECTS
 
 @interface ARKDefault : NSObject
 
 #pragma mark initialize
-+ (void)initialize; //setup all static vars - might not be necessary
++ (void)initialize; //setup all static vars
 
 #pragma mark fetch methods
 //system metrics
@@ -48,10 +55,6 @@
 //+ (CGSize)clockButtonInteriorSize; //if the alarm label components were to fit inside a button comfortably, what size would they be?
 //+ (CGFloat)sliderSpacing;
 //+ (CGFloat)sliderSpacingWithIndex:(int)index;
-
-//animation properties
-//+ (CGFloat)animationDuration;
-//+ (CGFloat)animationDelay;
 
 //colors
 + (UIColor *)backgroundColor;
@@ -76,10 +79,7 @@
 + (void)removeLocalNotificationWithIdent:(NSString *)localNotificationIdent;
 
 //convenience
-+ (NSNumber *)i:(int)i;
 + (NSNumber *)f:(CGFloat)f;
-+ (BOOL)dictionariesAreEqualWithFirstDictionary:(NSDictionary *)firstDictionary andSecondDictionary:(NSDictionary *)secondDictionary; //test keys and values
-//+ (UIImage *)imageFromView:(UIView *)view;
 + (UIApplication *)app;
 
 //vector methods
