@@ -15,7 +15,6 @@
 
 //identification
 @property (strong, nonatomic) NSString *globalId;
-@property (strong, nonatomic) NSString *localId;
 @property (strong, nonatomic) NSString *sender;
 
 //state variables
@@ -28,10 +27,10 @@
 @property (nonatomic) CGFloat delay;
 
 #pragma mark - initialiser
-- (id)initWithGlobalId:(NSString *)argGlobalId andLocalId:(NSString *)argLocalId andSender:(NSString *)argSender;
+- (id)initWithGlobalId:(NSString *)argGlobalId andSender:(NSString *)argSender;
 
 #pragma mark - factory
 + (ARKState *)standardDurationAndDelayWithGlobalId:(NSString *)globalId; //global state
-+ (ARKState *)standardDurationAndDelayWithGlobalId:(NSString *)globalId andLocalId:(NSString *)localId andSender:(NSString *)sender; //local state
++ (ARKState *)standardDurationAndDelayWithGlobalId:(NSString *)globalId andSender:(NSString *)sender; //local state
 
 @end

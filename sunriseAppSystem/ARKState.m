@@ -12,7 +12,7 @@
 
 #pragma mark - properties
 //identification
-@synthesize globalId, localId, sender;
+@synthesize globalId, sender;
 
 //state variables
 @synthesize transform, color, alpha;
@@ -21,12 +21,11 @@
 @synthesize duration, delay;
 
 #pragma mark - initialiser
-- (id)initWithGlobalId:(NSString *)argGlobalId andLocalId:(NSString *)argLocalId andSender:(NSString *)argSender
+- (id)initWithGlobalId:(NSString *)argGlobalId andSender:(NSString *)argSender
 {
     self = [super init];
     if (self) {
         self.globalId = argGlobalId;
-        self.localId = argLocalId;
         self.sender = argSender;
         self.transform = CGAffineTransformIdentity;
     }
@@ -36,12 +35,12 @@
 #pragma mark - factory
 + (ARKState *)standardDurationAndDelayWithGlobalId:(NSString *)globalId
 {
-    return [[self alloc] initWithGlobalId:globalId andLocalId:Global0 andSender:Self];
+    return [[self alloc] initWithGlobalId:globalId andSender:Self];
 }
 
-+ (ARKState *)standardDurationAndDelayWithGlobalId:(NSString *)globalId andLocalId:(NSString *)localId andSender:(NSString *)sender
++ (ARKState *)standardDurationAndDelayWithGlobalId:(NSString *)globalId andSender:(NSString *)sender
 {
-    return [[self alloc] initWithGlobalId:globalId andLocalId:localId andSender:sender];
+    return [[self alloc] initWithGlobalId:globalId andSender:sender];
 }
 
 @end

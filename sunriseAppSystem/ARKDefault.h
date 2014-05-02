@@ -15,12 +15,8 @@
 #define AddState @"add"
 #define SettingsState @"settings"
 
-//local states
+//default sender
 #define Self @"self"
-#define Global0 @"0"
-#define Local1 @"1"
-#define Local2 @"2"
-#define Local3 @"3"
 
 //standard metrics
 #define buttonRadius 24.0
