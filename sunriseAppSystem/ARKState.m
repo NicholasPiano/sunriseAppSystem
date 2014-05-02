@@ -41,4 +41,13 @@
     return [self.globalId isEqualToString:state.globalId]; //may compare based on other things to account for replacement while in a certain state.
 }
 
+#pragma mark - factory
++ (ARKState *)homeState
+{
+    ARKState *state = [[self alloc] initWithGlobalId:HomeState andNextGlobalId:HomeState andSender:Self];
+    state.duration = 0.0;
+    state.delay = 0.0;
+    return state;
+}
+
 @end

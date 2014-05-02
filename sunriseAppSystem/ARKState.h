@@ -33,4 +33,7 @@
 //compare
 - (BOOL)isEqualToState:(ARKState *)state;
 
+#pragma mark - factory
++ (ARKState *)homeState;
+
 @end
