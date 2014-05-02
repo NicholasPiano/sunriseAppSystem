@@ -35,5 +35,6 @@
 
 #pragma mark - factory
 + (ARKState *)homeState;
++ (ARKState *)stateWithGlobalId:globalId andNextGlobalId:nextGlobalId andSender:sender;
 
 @end

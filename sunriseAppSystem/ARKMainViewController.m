@@ -21,8 +21,14 @@
     [self.view setBackgroundColor:[ARKDefault backgroundColor]];
     
     //objects
-    ARKView *test = [ARKMainViewController testView];
-    [self.view addSubview:test];
+    
+    //-button
+    ARKButton *testButton = [ARKMainViewController testButton];
+    [self.view addSubview:testButton];
+    
+    //-view
+    ARKView *testView = [ARKMainViewController testView];
+    [self.view addSubview:testView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,14 +44,21 @@
 #pragma mark - factory
 //test views
 //-button
++ (ARKButton *)testButton
+{
+    ARKButton *testButton = [[ARKButton alloc] initWithCenter:[ARKDefault centerScreenHorizontalWithVertical:4*buttonRadius] andRadius:buttonRadius];
+    
+    return testButton;
+}
+
 //-static view
 + (ARKView *)testView
 {
-    ARKView *test = [[ARKView alloc] initWithCenter:[ARKDefault centerScreen] andRadius:buttonRadius];
+    ARKView *testView = [[ARKView alloc] initWithCenter:[ARKDefault centerScreen] andRadius:buttonRadius];
     
     //setup
     
-    return test;
+    return testView;
 }
 
 @end

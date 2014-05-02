@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ARKView.h"
+#import "ARKButton.h"
 
 @interface ARKMainViewController : UIViewController
 
@@ -16,6 +17,8 @@
 #pragma mark - factory
 //test views
 //-button
++ (ARKButton *)testButton;
+
 //-static view
 + (ARKView *)testView;
 

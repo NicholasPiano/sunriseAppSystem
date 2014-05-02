@@ -50,4 +50,9 @@
     return state;
 }
 
++ (ARKState *)stateWithGlobalId:globalId andNextGlobalId:nextGlobalId andSender:sender
+{
+    return [[ARKState alloc] initWithGlobalId:globalId andNextGlobalId:nextGlobalId andSender:sender];
+}
+
 @end

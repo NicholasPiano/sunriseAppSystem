@@ -79,11 +79,13 @@
 
 - (void)syncState:(ARKState *)state
 {
-    //reset active state
-    self.activeState = state;
-    
-    //set up animation
-    [self animateTransform:state.transform andAlpha:state.alpha andColor:state.color withDuration:state.duration andDelay:state.delay];
+    if (state != nil) {
+        //reset active state
+        self.activeState = state;
+        
+        //set up animation
+        [self animateTransform:state.transform andAlpha:state.alpha andColor:state.color withDuration:state.duration andDelay:state.delay];
+    }
 }
 
 - (void)syncCurrentState
@@ -101,9 +103,20 @@
     [self syncStateWithGlobalId:HomeState andSender:Self];
 }
 
-- (void)addStateWithGlobalId:(NSString *)globalId andSender:(NSString *)sender withState:(ARKState *)newState
+- (void)addState:(ARKState *)state
 {
     //this method searches the current stateDictionary for a state with the matching global id and sender in a manner similar to -syncStateWithGlobalId. If the state exists, it will replace it; if not, it will add it to the dictionary.
+    //1. if state dictionary is nil, make it.
+    if (self.stateDictionary == nil) {
+        self.stateDictionary = [NSMutableDictionary dictionary];
+    }
+    
+    //2. if state has a sender, add by sender, else by global id
+    if (state.sender != nil) {
+        [self.stateDictionary setObject:state forKey:state.sender]; //local states
+    } else {
+        [self.stateDictionary setObject:state forKey:state.globalId]; //global states
+    }
 }
 
 //more general animate methods for state change to use
