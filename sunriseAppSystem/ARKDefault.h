@@ -32,6 +32,7 @@
 #define State @"state"
 #define Sender @"sender"
 #define Global @"global"
+#define Category @"category"
 
 //CLASS FOR MORE COMPLEX DEFAULT OBJECTS
 

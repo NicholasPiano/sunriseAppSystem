@@ -25,6 +25,9 @@
 @property (strong, nonatomic) ARKState *defaultState;
 @property (strong, nonatomic) NSMutableDictionary *stateDictionary;
 
+//user defaults
+@property (strong, nonatomic) NSMutableDictionary *currentUserDefaultDictionary;
+
 #pragma mark - initialisers
 - initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius;
 - initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;

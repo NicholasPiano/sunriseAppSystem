@@ -14,6 +14,9 @@
 //metrics
 @synthesize radius, size;
 
+//id
+@synthesize ident, category;
+
 //state
 @synthesize activeState, defaultState, stateDictionary;
 
@@ -157,38 +160,81 @@
 
 - (void)pullDictionaryFromUserDefaults
 {
-    
+    [self pullDictionaryFromUserDefaultsWithKey:self.category];
 }
 
 - (void)pullDictionaryFromUserDefaultsWithKey:(NSString *)dictionaryKey
 {
-    
+    //get defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    //get dictionary
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    if ([defaults valueForKey:dictionaryKey] != nil) { //if dictionary already exists in defaults
+        dictionary = [[defaults valueForKey:dictionaryKey] mutableCopy];
+    }
+    self.currentUserDefaultDictionary = dictionary;
 }
 
 - (BOOL)keyExistsInCurrentDefaultDictionary:(NSString *)key
 {
-    return YES;
+    if ([self currentUserDefaultDictionary] != nil) {
+        return [[self currentUserDefaultDictionary] objectForKey:key] != nil;
+    } else {
+        return NO;
+    }
 }
 
 - (void)pushUserDefaultDictionary
 {
-    
+    //get defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:self.currentUserDefaultDictionary forKey:self.category];
+    [defaults synchronize];
+    self.currentUserDefaultDictionary = nil;
 }
 
 //local notifications
 - (BOOL)localNotificationExists
 {
-    return YES;
+    BOOL test = NO; //false by default
+    
+    UIApplication *app = [ARKDefault app];
+    NSArray *eventArray = [app scheduledLocalNotifications];
+    for (UILocalNotification *event in eventArray) {
+        NSString *testCategory = [NSString stringWithFormat:@"%@",[event.userInfo valueForKey:Category]];
+        if ([testCategory isEqualToString:self.category]) {
+            test = YES;
+            break;
+        }
+    }
+    return test;
 }
 
 - (void)postLocalNotificationWithDate:(NSDate *)date
 {
-    
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = date;
+    localNotification.repeatInterval = NSWeekCalendarUnit; //repeat weekly
+    localNotification.alertAction = @"wake up..."; //slide to wake up...
+    localNotification.alertBody = @"Wake up!";
+    localNotification.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:self.category, Category, nil]; //ident
+    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    [[ARKDefault app] scheduleLocalNotification: localNotification];
 }
 
 - (void)removeLocalNotification
 {
-    
+    UIApplication *app = [ARKDefault app];
+    NSArray *eventArray = [app scheduledLocalNotifications];
+    for (UILocalNotification *event in eventArray)
+    {
+        NSString *testCategory = [NSString stringWithFormat:@"%@",[event.userInfo valueForKey:Category]];
+        if ([testCategory isEqualToString:self.category])
+        {
+            [app cancelLocalNotification:event];
+            break;
+        }
+    }
 }
 
 @end
