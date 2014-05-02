@@ -30,4 +30,7 @@
 #pragma mark - initialiser
 - (id)initWithGlobalId:(NSString *)argGlobalId andNextGlobalId:(NSString *)argNextGlobalId andSender:(NSString *)argSender;
 
+//compare
+- (BOOL)isEqualToState:(ARKState *)state;
+
 @end

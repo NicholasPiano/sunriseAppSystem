@@ -67,7 +67,7 @@
     if (state == nil || state.globalId != globalId) {
         //2. look for global id in dictionary
         state = [self.stateDictionary objectForKey:globalId];
-        if (state == nil || state == self.activeState) {
+        if (state == nil || [state isEqualToState:self.activeState]) {
             state = self.defaultState;
         }
     }

@@ -35,4 +35,10 @@
     return self;
 }
 
+//compare
+- (BOOL)isEqualToState:(ARKState *)state
+{
+    return [self.globalId isEqualToString:state.globalId]; //may compare based on other things to account for replacement while in a certain state.
+}
+
 @end
