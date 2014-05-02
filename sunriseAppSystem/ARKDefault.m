@@ -25,15 +25,10 @@ static UIColor *backgroundColor = nil, *interfaceColor = nil, *yesColor = nil, *
         weekLabelArray = [NSArray arrayWithObjects:@"M", @"T", @"W", @"T", @"F", @"S", @"S", nil];
         
         //colors
-        backgroundColor = [UIColor whiteColor];
-        interfaceColor = [UIColor grayColor];
-        yesColor = [UIColor greenColor];
-        noColor = [UIColor redColor];
-        
-//        backgroundColor = [[UIColor alloc] initWithRed:0.1725 green:0.5412 blue:0.9804 alpha:1];
-//        interfaceColor = [[UIColor alloc] initWithRed:0.8314 green:0.8314 blue:0.8314 alpha:1];
-//        yesColor = [[UIColor alloc] initWithRed:(40.0f/255.0f) green:(180.0f/255.0f) blue:(30.0/255.0) alpha:1];
-//        noColor = [[UIColor alloc] initWithRed:(200.0f/255.0f) green:(35.0f/255.0f) blue:(35.0/255.0) alpha:1];
+        backgroundColor = [[UIColor alloc] initWithRed:0.1725 green:0.5412 blue:0.9804 alpha:1];
+        interfaceColor = [[UIColor alloc] initWithRed:0.8314 green:0.8314 blue:0.8314 alpha:1];
+        yesColor = [[UIColor alloc] initWithRed:(40.0f/255.0f) green:(180.0f/255.0f) blue:(30.0/255.0) alpha:1];
+        noColor = [[UIColor alloc] initWithRed:(200.0f/255.0f) green:(35.0f/255.0f) blue:(35.0/255.0) alpha:1];
     }
 }
 
@@ -135,6 +130,11 @@ static UIColor *backgroundColor = nil, *interfaceColor = nil, *yesColor = nil, *
 }
 
 //local notifications
++ (NSString *)uniqueString
+{
+    return [[NSProcessInfo processInfo] globallyUniqueString];
+}
+
 + (BOOL)localNotificationExistsWithIdent:(NSString *)localNotificationIdent
 {
     BOOL test = NO; //false by default

@@ -75,6 +75,7 @@
 + (BOOL)isInTheFutureTodayWithHour:(int)hour andMinute:(int)minute;
 
 //local notifications
++ (NSString *)uniqueString;
 + (BOOL)localNotificationExistsWithIdent:(NSString *)localNotificationIdent;
 + (void)postLocalNotificationWithDate:(NSDate *)date andIdent:(NSString *)ident andValue:(CGFloat)value isRecurring:(BOOL)isRecurring;
 + (CGFloat)getValueFromLocalNotificationWithIdent:(NSString *)ident;
