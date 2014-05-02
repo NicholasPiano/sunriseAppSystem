@@ -10,4 +10,6 @@
 
 @interface ARKMainViewController : UIViewController
 
+//all objects used in the view controller should be produced by factory methods in the view controller.
+
 @end

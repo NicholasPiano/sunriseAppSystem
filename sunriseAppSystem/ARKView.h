@@ -16,9 +16,13 @@
 @property CGFloat radius;
 @property CGSize size;
 
-//other
+//id
+@property (strong, nonatomic) NSString *ident;
+@property (strong, nonatomic) NSString *category; //for grouping objects
 
 //state
+@property (strong, nonatomic) ARKState *activeState;
+@property (strong, nonatomic) ARKState *defaultState;
 @property (strong, nonatomic) NSMutableDictionary *stateDictionary;
 
 #pragma mark - initialisers
@@ -29,11 +33,12 @@
 - (void)dealloc; //for removing observer
 
 //state methods
-- (void)syncStateWithGlobalId:(NSString *)globalId andIdent:(NSString *)sender; //receiver
+- (void)syncStateWithGlobalId:(NSString *)globalId andSender:(NSString *)sender; //receiver
 - (void)syncState:(ARKState *)state;
 - (void)syncCurrentState;
-- (void)syncCurrentStateWithIdent:(NSString *)argIdent;
+- (void)syncCurrentStateWithSender:(NSString *)sender;
 - (void)syncInitialState;
+- (void)addStateWithGlobalId:(NSString *)globalId andSender:(NSString *)sender withState:(ARKState *)newState;
 
 //more general animate methods for state change to use
 - (void)animateTransform:(CGAffineTransform)argTransform andAlpha:(CGFloat)argAlpha andColor:(UIColor *)argColor withDuration:(CGFloat)duration andDelay:(CGFloat)delay;
@@ -44,13 +49,10 @@
 - (void)postNotification:(NSNotification *)notification;
 - (void)postStateWithGlobalId:(NSString *)globalId;
 - (void)postNextId;
-//- (void)postCommand; //does not trigger syncing current state, but elements listening for a certain ident will respond and change local state.
 
 //user defaults
-- (NSString *)controlCategory;
-- (void)setControlCategory; //self.category
-- (void)pullDictionaryFromUserDefaultsWithIdent:(NSString *)dictionaryIdent;
-- (void)pullDictionaryFromUserDefaults;
+- (void)pullDictionaryFromUserDefaults; //pulls on category not ident
+- (void)pullDictionaryFromUserDefaultsWithKey:(NSString *)dictionaryKey; //specific part of object defaults
 - (BOOL)keyExistsInCurrentDefaultDictionary:(NSString *)key;
 - (void)pushUserDefaultDictionary;
 

@@ -120,6 +120,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8912A1F719133DD700BEB211 /* Slider */ = {
+			isa = PBXGroup;
+			children = (
+				89AB47B1190805D500A0D5B7 /* ARKSlider.h */,
+				89AB47B2190805D500A0D5B7 /* ARKSlider.m */,
+			);
+			name = Slider;
+			sourceTree = "<group>";
+		};
 		89AA602318EF90BC002195FD /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,10 +175,9 @@
 		89AB47AD190805A000A0D5B7 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				8912A1F719133DD700BEB211 /* Slider */,
 				89AB47AE190805BB00A0D5B7 /* ARKControl.h */,
 				89AB47AF190805BB00A0D5B7 /* ARKControl.m */,
-				89AB47B1190805D500A0D5B7 /* ARKSlider.h */,
-				89AB47B2190805D500A0D5B7 /* ARKSlider.m */,
 				89AB47B4190805DF00A0D5B7 /* ARKButton.h */,
 				89AB47B5190805DF00A0D5B7 /* ARKButton.m */,
 			);

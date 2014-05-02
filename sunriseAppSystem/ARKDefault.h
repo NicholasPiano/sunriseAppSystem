@@ -28,6 +28,11 @@
 //slider
 #define sliderTimeInterval 15.0 //minutes
 
+//local notifications
+#define State @"state"
+#define Sender @"sender"
+#define Global @"global"
+
 //CLASS FOR MORE COMPLEX DEFAULT OBJECTS
 
 @interface ARKDefault : NSObject
