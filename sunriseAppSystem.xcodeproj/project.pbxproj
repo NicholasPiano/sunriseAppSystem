@@ -11,7 +11,6 @@
 		89AA602218EF78D0002195FD /* ARKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AA602118EF78D0002195FD /* ARKView.m */; };
 		89AA602618EF9589002195FD /* ARKState.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AA602518EF9589002195FD /* ARKState.m */; };
 		89AB47A61907FBBF00A0D5B7 /* ARKMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AB47A51907FBBF00A0D5B7 /* ARKMainViewController.m */; };
-		89AB47B0190805BB00A0D5B7 /* ARKControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AB47AF190805BB00A0D5B7 /* ARKControl.m */; };
 		89AB47B3190805D500A0D5B7 /* ARKSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AB47B2190805D500A0D5B7 /* ARKSlider.m */; };
 		89AB47B6190805DF00A0D5B7 /* ARKButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AB47B5190805DF00A0D5B7 /* ARKButton.m */; };
 		89AB47BF1908074800A0D5B7 /* ARKAlarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AB47BE1908074800A0D5B7 /* ARKAlarm.m */; };
@@ -56,8 +55,6 @@
 		89AA602518EF9589002195FD /* ARKState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKState.m; sourceTree = "<group>"; };
 		89AB47A41907FBBF00A0D5B7 /* ARKMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKMainViewController.h; sourceTree = "<group>"; };
 		89AB47A51907FBBF00A0D5B7 /* ARKMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKMainViewController.m; sourceTree = "<group>"; };
-		89AB47AE190805BB00A0D5B7 /* ARKControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKControl.h; sourceTree = "<group>"; };
-		89AB47AF190805BB00A0D5B7 /* ARKControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKControl.m; sourceTree = "<group>"; };
 		89AB47B1190805D500A0D5B7 /* ARKSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKSlider.h; sourceTree = "<group>"; };
 		89AB47B2190805D500A0D5B7 /* ARKSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKSlider.m; sourceTree = "<group>"; };
 		89AB47B4190805DF00A0D5B7 /* ARKButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKButton.h; sourceTree = "<group>"; };
@@ -176,8 +173,6 @@
 			isa = PBXGroup;
 			children = (
 				8912A1F719133DD700BEB211 /* Slider */,
-				89AB47AE190805BB00A0D5B7 /* ARKControl.h */,
-				89AB47AF190805BB00A0D5B7 /* ARKControl.m */,
 				89AB47B4190805DF00A0D5B7 /* ARKButton.h */,
 				89AB47B5190805DF00A0D5B7 /* ARKButton.m */,
 			);
@@ -373,7 +368,6 @@
 				89AB47D2190824E700A0D5B7 /* ARKRect.m in Sources */,
 				8906B4BE18FB5B6500D4EF77 /* ARKDefault.m in Sources */,
 				89AB47B3190805D500A0D5B7 /* ARKSlider.m in Sources */,
-				89AB47B0190805BB00A0D5B7 /* ARKControl.m in Sources */,
 				89AB47B6190805DF00A0D5B7 /* ARKButton.m in Sources */,
 				89AB47C81908200500A0D5B7 /* ARKAlarmInterface.m in Sources */,
 				89AB47CF190824DC00A0D5B7 /* ARKGlyph.m in Sources */,

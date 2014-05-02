@@ -6,10 +6,13 @@
 //  Copyright (c) 2014 Nicholas Piano. All rights reserved.
 //
 
-#import "ARKControl.h"
+#import "ARKView.h"
+#import "ARKArc.h"
+#import "ARKRect.h"
+#import "ARKGlyph.h"
 #import "ARKButton.h"
 
-@interface ARKSlider : ARKControl
+@interface ARKSlider : ARKView
 
 #pragma mark - properties
 //intrinsic

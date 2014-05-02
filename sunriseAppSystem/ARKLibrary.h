@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Nicholas Piano. All rights reserved.
 //
 
-#import "ARKControl.h"
+#import "ARKView.h"
 
-@interface ARKLibrary : ARKControl
+@interface ARKLibrary : ARKView
 
 @end

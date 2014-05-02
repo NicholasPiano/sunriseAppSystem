@@ -6,8 +6,10 @@
 //  Copyright (c) 2014 Nicholas Piano. All rights reserved.
 //
 
-#import "ARKControl.h"
+#import "ARKView.h"
 
-@interface ARKButton : ARKControl
+@interface ARKButton : ARKView
+
+//really all I can think of is using the button class to store the custom methods that various buttons will execute when pressed.
 
 @end
