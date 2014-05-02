@@ -29,19 +29,10 @@
         self.nextGlobalId = argNextGlobalId;
         self.sender = argSender;
         self.transform = CGAffineTransformIdentity;
+        self.duration = animationDuration;
+        self.delay = animationDelay;
     }
     return self;
-}
-
-#pragma mark - factory
-+ (ARKState *)standardDurationAndDelayWithGlobalId:(NSString *)globalId andNextGlobalId:(NSString *)nextGlobalId
-{
-    return [[self alloc] initWithGlobalId:globalId andNextGlobalId:nextGlobalId andSender:Self];
-}
-
-+ (ARKState *)standardDurationAndDelayWithGlobalId:(NSString *)globalId andNextGlobalId:(NSString *)nextGlobalId andSender:(NSString *)sender
-{
-    return [[self alloc] initWithGlobalId:globalId andNextGlobalId:nextGlobalId andSender:sender];
 }
 
 @end
