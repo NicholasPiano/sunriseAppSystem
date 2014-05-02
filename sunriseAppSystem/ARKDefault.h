@@ -66,7 +66,6 @@
 + (UIColor *)transparent;
 
 //time
-+ (int)sliderTimeInterval;
 + (int)currentDayNumber;
 + (int)dayNumberFromIdent:(NSString *)ident;
 + (NSDateComponents *)currentDateComponents;
