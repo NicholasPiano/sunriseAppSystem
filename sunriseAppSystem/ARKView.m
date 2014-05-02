@@ -51,7 +51,7 @@
 
 - (void)dealloc
 {
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 //state methods

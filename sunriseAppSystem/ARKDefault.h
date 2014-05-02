@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 //DEFINITIONS
-
 //global states
 #define HomeState @"home"
 #define SummaryState @"summary"
@@ -17,6 +16,8 @@
 #define SettingsState @"settings"
 
 //local states
+#define Self @"self"
+#define Global0 @"0"
 #define Local1 @"1"
 #define Local2 @"2"
 #define Local3 @"3"

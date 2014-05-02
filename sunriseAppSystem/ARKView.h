@@ -19,6 +19,7 @@
 //other
 
 //state
+@property (strong, nonatomic) NSMutableDictionary *stateDictionary;
 
 #pragma mark - initialisers
 - initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius;
