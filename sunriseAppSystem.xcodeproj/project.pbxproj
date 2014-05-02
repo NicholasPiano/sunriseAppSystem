@@ -156,6 +156,7 @@
 		89AB47A91908053F00A0D5B7 /* Backend */ = {
 			isa = PBXGroup;
 			children = (
+				89B222A418E702B90042FF24 /* sunriseAppSystem.xcdatamodeld */,
 				89AB47BD1908074800A0D5B7 /* ARKAlarm.h */,
 				89AB47BE1908074800A0D5B7 /* ARKAlarm.m */,
 			);
@@ -225,7 +226,6 @@
 				89B222A118E702B90042FF24 /* ARKAppDelegate.h */,
 				89B222A218E702B90042FF24 /* ARKAppDelegate.m */,
 				89B222A718E702B90042FF24 /* Images.xcassets */,
-				89B222A418E702B90042FF24 /* sunriseAppSystem.xcdatamodeld */,
 				89AB47A71907FBC900A0D5B7 /* ViewControllers */,
 				89AA602318EF90BC002195FD /* Base */,
 				89AB47CC190824AA00A0D5B7 /* Graphics */,
