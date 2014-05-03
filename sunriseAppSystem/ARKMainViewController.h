@@ -13,6 +13,7 @@
 @interface ARKMainViewController : UIViewController
 
 //all objects used in the view controller should be produced by factory methods in the view controller.
+@property (strong, nonatomic) NSMutableArray *stateList;
 
 #pragma mark - factory
 //test views

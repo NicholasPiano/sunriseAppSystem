@@ -8,15 +8,28 @@
 
 #import "ARKMainViewController.h"
 
-@interface ARKMainViewController ()
-
-@end
+static NSMutableArray *stateList;
 
 @implementation ARKMainViewController
+
++ (void)initialize
+{
+    if (self == [ARKMainViewController class]) {
+        stateList = [NSMutableArray arrayWithObjects:HomeState, SummaryState, AddState, SettingsState, nil];
+    }
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //set up state dictionary
+    self.stateList = [NSMutableArray array];
+    [self.stateList addObject:HomeState];
+    [self.stateList addObject:SummaryState];
+    [self.stateList addObject:AddState];
+    [self.stateList addObject:SettingsState];
+    
     //background
     [self.view setBackgroundColor:[ARKDefault backgroundColor]];
     
