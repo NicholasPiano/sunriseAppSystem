@@ -48,6 +48,16 @@
 {
     ARKButton *testButton = [[ARKButton alloc] initWithCenter:[ARKDefault centerScreenHorizontalWithVertical:4*buttonRadius] andRadius:buttonRadius];
     
+    //states
+    ARKState *homeState = [ARKState stateWithGlobalId:HomeState andNextGlobalId:SummaryState andSender:nil];
+    ARKState *moved = [ARKState stateWithGlobalId:SummaryState andNextGlobalId:HomeState andSender:nil];
+    
+    [testButton addState:homeState];
+    [testButton addState:moved];
+    
+    UITapGestureRecognizer *testButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:testButton action:@selector(testButtonTap:)];
+    [testButton addGestureRecognizer:testButtonTap];
+    
     return testButton;
 }
 
@@ -57,6 +67,13 @@
     ARKView *testView = [[ARKView alloc] initWithCenter:[ARKDefault centerScreen] andRadius:buttonRadius];
     
     //setup
+    ARKState *homeState = [ARKState stateWithGlobalId:HomeState andNextGlobalId:nil andSender:nil];
+    ARKState *moved = [ARKState stateWithGlobalId:SummaryState andNextGlobalId:nil andSender:nil];
+    
+    [moved moveDown:10.0 andRight:10.0];
+    
+    [testView addState:homeState];
+    [testView addState:moved];
     
     return testView;
 }

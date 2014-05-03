@@ -29,6 +29,8 @@
         self.nextGlobalId = argNextGlobalId;
         self.sender = argSender;
         self.transform = CGAffineTransformIdentity;
+        self.color = nil;
+        self.alpha = 1.0;
         self.duration = animationDuration;
         self.delay = animationDelay;
     }
@@ -39,6 +41,23 @@
 - (BOOL)isEqualToState:(ARKState *)state
 {
     return [self.globalId isEqualToString:state.globalId]; //may compare based on other things to account for replacement while in a certain state.
+}
+
+//modifiers
+- (void)moveDown:(CGFloat)down andRight:(CGFloat)right
+{
+    self.transform = CGAffineTransformMakeTranslation(right, down);
+}
+
+- (void)invisible
+{
+    self.alpha = 0.0;
+}
+
+- (void)duration:(CGFloat)argDuration andDelay:(CGFloat)argDelay
+{
+    self.duration = argDuration;
+    self.delay = argDelay;
 }
 
 #pragma mark - factory

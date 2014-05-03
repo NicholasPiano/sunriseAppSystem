@@ -33,6 +33,11 @@
 //compare
 - (BOOL)isEqualToState:(ARKState *)state;
 
+//modifiers
+- (void)moveDown:(CGFloat)down andRight:(CGFloat)right;
+- (void)invisible;
+- (void)duration:(CGFloat)argDuration andDelay:(CGFloat)argDelay;
+
 #pragma mark - factory
 + (ARKState *)homeState;
 + (ARKState *)stateWithGlobalId:globalId andNextGlobalId:nextGlobalId andSender:sender;

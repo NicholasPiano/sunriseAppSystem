@@ -12,4 +12,6 @@
 
 //really all I can think of is using the button class to store the custom methods that various buttons will execute when pressed.
 
+- (IBAction)testButtonTap:(UITapGestureRecognizer *)gestureRecognizer;
+
 @end

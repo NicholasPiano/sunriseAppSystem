@@ -10,6 +10,9 @@
 
 @implementation ARKButton
 
-
+- (void)testButtonTap:(UITapGestureRecognizer *)gestureRecognizer
+{
+    [self postNextId];
+}
 
 @end
