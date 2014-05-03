@@ -22,7 +22,7 @@
 #define buttonRadius 24.0
 
 //animation
-#define animationDuration 1.0
+#define animationDuration 0.2
 #define animationDelay 0.0
 
 //slider

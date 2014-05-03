@@ -27,6 +27,7 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [ARKDefault interfaceColor];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:State object:nil];
     }
     return self;
 }
@@ -65,16 +66,23 @@
 {
     //view object has a number of states. Some have global ids and the sender "self". Others have a specific sender. When receiving a state message with a global id and a sender. This method checks in the stateDictionary for a state with the same sender. The global id is checked. If it finds no sender or the global id is wrong, it will look for the global id in the dictionary. If it finds neither, it will go to the default state.
     
+//    ARKLog(@"dictionary %@: %@", self.ident, self.stateDictionary);
+    
     //1. first check sender
     ARKState *state = [self.stateDictionary objectForKey:sender];
     if (state == nil || state.globalId != globalId) {
         //2. look for global id in dictionary
+//        ARKLog(@"gi: %@", globalId);
         state = [self.stateDictionary objectForKey:globalId];
-        if (state == nil || [state isEqualToState:self.activeState]) {
+//        ARKLog(@"%@", state.globalId);
+        if (state == nil) {
             state = self.defaultState;
         }
-    }
+    }// else {
+//    ARKLog(@"%f", state.alpha);
     [self syncState:state];
+    //}
+    
 }
 
 - (void)syncState:(ARKState *)state
@@ -84,7 +92,9 @@
         self.activeState = state;
         
         //set up animation
+//        ARKLog(@"%@ %@", self.ident, state.color);
         [self animateTransform:state.transform andAlpha:state.alpha andColor:state.color withDuration:state.duration andDelay:state.delay];
+//        ARKLog(@"%@ %f", self.ident, self.alpha);
     }
 }
 
@@ -106,6 +116,7 @@
 - (void)addState:(ARKState *)state
 {
     //this method searches the current stateDictionary for a state with the matching global id and sender in a manner similar to -syncStateWithGlobalId. If the state exists, it will replace it; if not, it will add it to the dictionary.
+    
     //1. if state dictionary is nil, make it.
     if (self.stateDictionary == nil) {
         self.stateDictionary = [NSMutableDictionary dictionary];
@@ -130,7 +141,9 @@
     
     self.transform = argTransform;
     self.alpha = argAlpha;
-    self.backgroundColor = argColor;
+    if (argColor != nil) {
+        self.backgroundColor = argColor;
+    }
     
     [UIView commitAnimations];
 }
@@ -166,6 +179,7 @@
 
 - (void)postNextId
 {
+//    ARKLog(@"next: %@", self.activeState.nextGlobalId);
     [self postStateWithGlobalId:self.activeState.nextGlobalId];
 }
 

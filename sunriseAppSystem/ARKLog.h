@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #ifdef DEBUG
-#define NSLog(args...) ExtendNSLog(__FILE__,__LINE__,__PRETTY_FUNCTION__,args);
+#define ARKLog(args...) ExtendNSLog(__FILE__,__LINE__,__PRETTY_FUNCTION__,args);
 #else
 #define NSLog(x...)
 #endif
