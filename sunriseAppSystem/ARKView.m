@@ -104,7 +104,7 @@
     ARKState *state = [self.stateDictionary objectForKey:sender];
     if (state == nil || state.globalId != globalId) {
         //2. look for global id in dictionary
-        ARKLog(@"gi: %@", globalId);
+//        ARKLog(@"gi: %@", globalId);
         state = [self.stateDictionary objectForKey:globalId];
 //        ARKLog(@"%@", state.globalId);
         if (state == nil) {
@@ -169,6 +169,15 @@
     [self.stateDictionary setObject:state forKey:globalId]; //will overwrite current state
 }
 
+- (void)modifyStateWithGlobalId:(NSString *)globalId withDown:(CGFloat)down andRight:(CGFloat)right andAlpha:(CGFloat)alpha andColor:(UIColor *)color
+{
+    ARKState *state = [self.stateDictionary objectForKey:globalId];
+    state.transform = CGAffineTransformMakeTranslation(right, down);
+    state.alpha = alpha;
+    state.color = color;
+    [self.stateDictionary setObject:state forKey:globalId]; //will overwrite current state
+}
+
 //more general animate methods for state change to use
 - (void)animateTransform:(CGAffineTransform)argTransform andAlpha:(CGFloat)argAlpha andColor:(UIColor *)argColor withDuration:(CGFloat)duration andDelay:(CGFloat)delay
 {
@@ -196,7 +205,7 @@
 //notification center
 - (void)receiveNotification:(NSNotification *)notification
 {
-    ARKLog(@"%@", self.stateDictionary);
+//    ARKLog(@"%@", self.stateDictionary);
     if ([notification.name isEqualToString:State] && self.stateDictionary != nil) { //only do this if object has a stateSwitch
         NSDictionary *dictionary = [notification userInfo];
         NSString *globalId = [dictionary objectForKey:Global];

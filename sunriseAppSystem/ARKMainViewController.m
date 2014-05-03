@@ -81,7 +81,8 @@ static NSMutableArray *stateList;
     testView.ident = @"testView";
     
     //setup
-    
+    [testView modifyStateWithGlobalId:SummaryState withDown:100.0 andRight:0.0 andAlpha:1.0 andColor:nil];
+    [testView modifyStateWithGlobalId:AddState withDown:100.0 andRight:200.0 andAlpha:1.0 andColor:nil];
     
     [testView syncInitialState];
     return testView;
