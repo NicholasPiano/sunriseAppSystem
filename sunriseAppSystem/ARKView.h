@@ -44,6 +44,7 @@
 - (void)syncCurrentStateWithSender:(NSString *)sender;
 - (void)syncInitialState;
 - (void)addState:(ARKState *)state;
+- (void)modifyStateWithGlobalId:(NSString *)globalId withNextGlobalId:(NSString *)nextGlobalId;
 
 //more general animate methods for state change to use
 - (void)animateTransform:(CGAffineTransform)argTransform andAlpha:(CGFloat)argAlpha andColor:(UIColor *)argColor withDuration:(CGFloat)duration andDelay:(CGFloat)delay;

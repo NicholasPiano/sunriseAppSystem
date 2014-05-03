@@ -59,17 +59,13 @@ static NSMutableArray *stateList;
 //-button
 + (ARKButton *)testButton
 {
-    ARKButton *testButton = [[ARKButton alloc] initWithCenter:[ARKDefault centerScreenHorizontalWithVertical:4*buttonRadius] andRadius:buttonRadius];
+    ARKButton *testButton = [[ARKButton alloc] initWithCenter:[ARKDefault centerScreenHorizontalWithVertical:4*buttonRadius] andRadius:buttonRadius andStateList:stateList];
     testButton.ident = @"testButton";
     
     //states
-    ARKState *homeState = [ARKState stateWithGlobalId:HomeState andNextGlobalId:SummaryState andSender:nil];
-    ARKState *moved = [ARKState stateWithGlobalId:SummaryState andNextGlobalId:AddState andSender:nil];
-    ARKState *next = [ARKState stateWithGlobalId:AddState andNextGlobalId:HomeState andSender:nil];
-    
-    [testButton addState:homeState];
-    [testButton addState:moved];
-    [testButton addState:next];
+    [testButton modifyStateWithGlobalId:HomeState withNextGlobalId:SummaryState];
+    [testButton modifyStateWithGlobalId:SummaryState withNextGlobalId:AddState];
+    [testButton modifyStateWithGlobalId:AddState withNextGlobalId:HomeState];
     
     UITapGestureRecognizer *testButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:testButton action:@selector(testButtonTap:)];
     [testButton addGestureRecognizer:testButtonTap];
@@ -81,21 +77,11 @@ static NSMutableArray *stateList;
 //-static view
 + (ARKView *)testView
 {
-    ARKView *testView = [[ARKView alloc] initWithCenter:[ARKDefault centerScreen] andRadius:buttonRadius];
+    ARKView *testView = [[ARKView alloc] initWithCenter:[ARKDefault centerScreen] andRadius:buttonRadius andStateList:stateList];
     testView.ident = @"testView";
     
     //setup
-    ARKState *homeState = [ARKState stateWithGlobalId:HomeState andNextGlobalId:nil andSender:nil];
-    ARKState *moved = [ARKState stateWithGlobalId:SummaryState andNextGlobalId:nil andSender:nil];
-    ARKState *next = [ARKState stateWithGlobalId:AddState andNextGlobalId:nil andSender:nil];
     
-    [moved moveDown:100.0 andRight:10.0];
-    [next moveDown:10.0 andRight:100.0];
-    [next invisible];
-    
-    [testView addState:homeState];
-    [testView addState:moved];
-    [testView addState:next];
     
     [testView syncInitialState];
     return testView;

@@ -37,6 +37,7 @@
 - (void)moveDown:(CGFloat)down andRight:(CGFloat)right;
 - (void)invisible;
 - (void)duration:(CGFloat)argDuration andDelay:(CGFloat)argDelay;
+- (void)nextGlobalId:(NSString *)argNextGlobalId;
 
 #pragma mark - factory
 + (ARKState *)homeState;

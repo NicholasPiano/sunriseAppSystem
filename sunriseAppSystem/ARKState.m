@@ -60,6 +60,11 @@
     self.delay = argDelay;
 }
 
+- (void)nextGlobalId:(NSString *)argNextGlobalId
+{
+    self.nextGlobalId = argNextGlobalId;
+}
+
 #pragma mark - factory
 + (ARKState *)homeState
 {

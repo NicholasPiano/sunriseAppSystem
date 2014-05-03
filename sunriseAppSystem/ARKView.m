@@ -54,6 +54,38 @@
     return self;
 }
 
+- (id)initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andStateList:(NSArray *)stateList
+{
+    CGRect frame = CGRectMake(argCenter.x-argRadius, argCenter.y-argRadius, 2*argRadius, 2*argRadius);
+    self = [self initWithFrame:frame];
+    if (self) {
+        self.radius = argRadius;
+        self.size = CGSizeMake(argRadius, argRadius);
+        
+        //states
+        for (NSString *stateGlobalId in stateList) {
+            [self addState:[ARKState stateWithGlobalId:stateGlobalId andNextGlobalId:nil andSender:nil]];
+        }
+    }
+    return self;
+}
+
+- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andStateList:(NSArray *)stateList
+{
+    CGRect frame = CGRectMake(argCenter.x-argSize.width/2.0f, argCenter.y-argSize.height/2.0f, argSize.width, argSize.height);
+    self = [self initWithFrame:frame];
+    if (self) {
+        self.radius = sqrtf(argSize.width*argSize.width + argSize.height*argSize.height); //circle that fits shape
+        self.size = argSize;
+        
+        //states
+        for (NSString *stateGlobalId in stateList) {
+            [self addState:[ARKState stateWithGlobalId:stateGlobalId andNextGlobalId:nil andSender:nil]];
+        }
+    }
+    return self;
+}
+
 #pragma mark - instance methods
 
 - (void)dealloc
@@ -72,7 +104,7 @@
     ARKState *state = [self.stateDictionary objectForKey:sender];
     if (state == nil || state.globalId != globalId) {
         //2. look for global id in dictionary
-//        ARKLog(@"gi: %@", globalId);
+        ARKLog(@"gi: %@", globalId);
         state = [self.stateDictionary objectForKey:globalId];
 //        ARKLog(@"%@", state.globalId);
         if (state == nil) {
@@ -130,6 +162,13 @@
     }
 }
 
+- (void)modifyStateWithGlobalId:(NSString *)globalId withNextGlobalId:(NSString *)nextGlobalId
+{
+    ARKState *state = [self.stateDictionary objectForKey:globalId];
+    [state nextGlobalId:nextGlobalId];
+    [self.stateDictionary setObject:state forKey:globalId]; //will overwrite current state
+}
+
 //more general animate methods for state change to use
 - (void)animateTransform:(CGAffineTransform)argTransform andAlpha:(CGFloat)argAlpha andColor:(UIColor *)argColor withDuration:(CGFloat)duration andDelay:(CGFloat)delay
 {
@@ -157,6 +196,7 @@
 //notification center
 - (void)receiveNotification:(NSNotification *)notification
 {
+    ARKLog(@"%@", self.stateDictionary);
     if ([notification.name isEqualToString:State] && self.stateDictionary != nil) { //only do this if object has a stateSwitch
         NSDictionary *dictionary = [notification userInfo];
         NSString *globalId = [dictionary objectForKey:Global];
