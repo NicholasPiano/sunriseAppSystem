@@ -51,10 +51,12 @@
     
     //states
     ARKState *homeState = [ARKState stateWithGlobalId:HomeState andNextGlobalId:SummaryState andSender:nil];
-    ARKState *moved = [ARKState stateWithGlobalId:SummaryState andNextGlobalId:HomeState andSender:nil];
+    ARKState *moved = [ARKState stateWithGlobalId:SummaryState andNextGlobalId:AddState andSender:nil];
+    ARKState *next = [ARKState stateWithGlobalId:AddState andNextGlobalId:HomeState andSender:nil];
     
     [testButton addState:homeState];
     [testButton addState:moved];
+    [testButton addState:next];
     
     UITapGestureRecognizer *testButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:testButton action:@selector(testButtonTap:)];
     [testButton addGestureRecognizer:testButtonTap];
@@ -72,11 +74,15 @@
     //setup
     ARKState *homeState = [ARKState stateWithGlobalId:HomeState andNextGlobalId:nil andSender:nil];
     ARKState *moved = [ARKState stateWithGlobalId:SummaryState andNextGlobalId:nil andSender:nil];
+    ARKState *next = [ARKState stateWithGlobalId:AddState andNextGlobalId:nil andSender:nil];
     
-    [moved moveDown:10.0 andRight:10.0];
+    [moved moveDown:100.0 andRight:10.0];
+    [next moveDown:10.0 andRight:100.0];
+    [next invisible];
     
     [testView addState:homeState];
     [testView addState:moved];
+    [testView addState:next];
     
     [testView syncInitialState];
     return testView;
