@@ -44,6 +44,7 @@
 - (void)syncHomeState;
 - (void)addState:(ARKState *)state;
 - (ARKState *)stateWithId:(NSString *)stateId;
+- (void)stateWithId:(NSString *)stateId goesTo:(NSString *)nextStateId;
 
 //more general animate methods for state change to use
 - (void)animateTransform:(CGAffineTransform)argTransform andAlpha:(CGFloat)argAlpha andColor:(UIColor *)argColor withDuration:(CGFloat)duration andDelay:(CGFloat)delay;

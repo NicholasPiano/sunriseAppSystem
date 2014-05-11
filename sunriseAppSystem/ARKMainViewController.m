@@ -60,9 +60,9 @@ static NSMutableArray *stateList;
     [testButton addGestureRecognizer:testButtonTap];
     
     //setup
-    [testButton addState:[ARKState state:[testButton stateWithId:HomeState] withNextStateId:SummaryState]];
-    [testButton addState:[ARKState state:[testButton stateWithId:SummaryState] withNextStateId:AddState]];
-    [testButton addState:[ARKState state:[testButton stateWithId:AddState] withNextStateId:HomeState]];
+    [testButton stateWithId:HomeState goesTo:SummaryState];
+    [testButton stateWithId:SummaryState goesTo:AddState];
+    [testButton stateWithId:AddState goesTo:HomeState];
     
     [testButton syncHomeState];
     return testButton;

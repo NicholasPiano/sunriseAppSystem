@@ -190,6 +190,11 @@
     return [self.stateDictionary objectForKey:stateId];
 }
 
+- (void)stateWithId:(NSString *)stateId goesTo:(NSString *)nextStateId
+{
+    [self addState:[ARKState state:[self stateWithId:stateId] withNextStateId:nextStateId]];
+}
+
 //more general animate methods for state change to use
 - (void)animateTransform:(CGAffineTransform)argTransform andAlpha:(CGFloat)argAlpha andColor:(UIColor *)argColor withDuration:(CGFloat)duration andDelay:(CGFloat)delay
 {
