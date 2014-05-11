@@ -23,13 +23,6 @@ static NSMutableArray *stateList;
 {
     [super viewDidLoad];
     
-    //set up state dictionary
-    self.stateList = [NSMutableArray array];
-    [self.stateList addObject:HomeState];
-    [self.stateList addObject:SummaryState];
-    [self.stateList addObject:AddState];
-    [self.stateList addObject:SettingsState];
-    
     //background
     [self.view setBackgroundColor:[ARKDefault backgroundColor]];
     
@@ -59,32 +52,27 @@ static NSMutableArray *stateList;
 //-button
 + (ARKButton *)testButton
 {
-    ARKButton *testButton = [[ARKButton alloc] initWithCenter:[ARKDefault centerScreenHorizontalWithVertical:4*buttonRadius] andRadius:buttonRadius andStateList:stateList];
+    ARKState *testButtonDefaultState = [ARKState defaultState];
+    ARKButton *testButton = [[ARKButton alloc] initWithCenter:[ARKDefault centerScreenHorizontalWithVertical:4*buttonRadius] andRadius:buttonRadius andDefaultState:testButtonDefaultState andStateList:stateList];
     testButton.ident = @"testButton";
-    
-    //states
-    [testButton modifyStateWithGlobalId:HomeState withNextGlobalId:SummaryState];
-    [testButton modifyStateWithGlobalId:SummaryState withNextGlobalId:AddState];
-    [testButton modifyStateWithGlobalId:AddState withNextGlobalId:HomeState];
     
     UITapGestureRecognizer *testButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:testButton action:@selector(testButtonTap:)];
     [testButton addGestureRecognizer:testButtonTap];
     
-    [testButton syncInitialState];
+    [testButton syncHomeState];
     return testButton;
 }
 
 //-static view
 + (ARKView *)testView
 {
-    ARKView *testView = [[ARKView alloc] initWithCenter:[ARKDefault centerScreen] andRadius:buttonRadius andStateList:stateList];
+    ARKState *testViewDefaultState = [ARKState defaultState];
+    ARKView *testView = [[ARKView alloc] initWithCenter:[ARKDefault centerScreen] andRadius:buttonRadius andDefaultState:testViewDefaultState andStateList:stateList];
     testView.ident = @"testView";
     
     //setup
-    [testView modifyStateWithGlobalId:SummaryState withDown:100.0 andRight:0.0 andAlpha:1.0 andColor:nil];
-    [testView modifyStateWithGlobalId:AddState withDown:100.0 andRight:200.0 andAlpha:1.0 andColor:nil];
     
-    [testView syncInitialState];
+    [testView syncHomeState];
     return testView;
 }
 

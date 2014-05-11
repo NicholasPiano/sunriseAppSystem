@@ -54,33 +54,35 @@
     return self;
 }
 
-- (id)initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andStateList:(NSArray *)stateList
+- (id)initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
 {
     CGRect frame = CGRectMake(argCenter.x-argRadius, argCenter.y-argRadius, 2*argRadius, 2*argRadius);
     self = [self initWithFrame:frame];
     if (self) {
         self.radius = argRadius;
         self.size = CGSizeMake(argRadius, argRadius);
+        self.defaultState = argDefaultState;
         
         //states
-        for (NSString *stateGlobalId in stateList) {
-            [self addState:[ARKState stateWithGlobalId:stateGlobalId andNextGlobalId:nil andSender:nil]];
+        for (NSString *stateId in stateList) {
+            [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
         }
     }
     return self;
 }
 
-- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andStateList:(NSArray *)stateList
+- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
 {
     CGRect frame = CGRectMake(argCenter.x-argSize.width/2.0f, argCenter.y-argSize.height/2.0f, argSize.width, argSize.height);
     self = [self initWithFrame:frame];
     if (self) {
         self.radius = sqrtf(argSize.width*argSize.width + argSize.height*argSize.height); //circle that fits shape
         self.size = argSize;
+        self.defaultState = argDefaultState;
         
         //states
-        for (NSString *stateGlobalId in stateList) {
-            [self addState:[ARKState stateWithGlobalId:stateGlobalId andNextGlobalId:nil andSender:nil]];
+        for (NSString *stateId in stateList) {
+            [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
         }
     }
     return self;
@@ -94,22 +96,16 @@
 }
 
 //state methods
-- (void)syncStateWithGlobalId:(NSString *)globalId andSender:(NSString *)sender
+- (void)syncStateWithId:(NSString *)stateId
 {
     //view object has a number of states. Some have global ids and the sender "self". Others have a specific sender. When receiving a state message with a global id and a sender. This method checks in the stateDictionary for a state with the same sender. The global id is checked. If it finds no sender or the global id is wrong, it will look for the global id in the dictionary. If it finds neither, it will go to the default state.
     
 //    ARKLog(@"dictionary %@: %@", self.ident, self.stateDictionary);
     
     //1. first check sender
-    ARKState *state = [self.stateDictionary objectForKey:sender];
+    ARKState *state = [self.stateDictionary objectForKey:stateId];
     if (state == nil || state.globalId != globalId) {
-        //2. look for global id in dictionary
-//        ARKLog(@"gi: %@", globalId);
-        state = [self.stateDictionary objectForKey:globalId];
-//        ARKLog(@"%@", state.globalId);
-        if (state == nil) {
-            state = self.defaultState;
-        }
+        
     }// else {
 //    ARKLog(@"%f", state.alpha);
     [self syncState:state];

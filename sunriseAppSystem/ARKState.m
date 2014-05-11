@@ -53,6 +53,11 @@
 }
 
 #pragma mark - factory
++ (ARKState *)defaultState
+{
+    return [[self alloc] initWithStateId:nil andNextStateId:nil];
+}
+
 + (ARKState *)homeState
 {
     ARKState *state = [[self alloc] initWithStateId:HomeState andNextStateId:nil];
@@ -61,7 +66,21 @@
     return state;
 }
 
-
++ (ARKState *)stateFromState:(ARKState *)state withStateId:(NSString *)stateId andNextStateId:(NSString *)nextStateId
+{
+    ARKState *newState = [[ARKState alloc] initWithStateId:stateId andNextStateId:nextStateId];
+    if (stateId == nil && nextStateId == nil) {
+        newState.stateId = state.stateId;
+        newState.nextStateId = state.nextStateId;
+    }
+    newState.transform = state.transform;
+    newState.color = state.color;
+    newState.alpha = state.alpha;
+    newState.duration = state.duration;
+    newState.delay = state.delay;
+    
+    return newState;
+}
 
 
 

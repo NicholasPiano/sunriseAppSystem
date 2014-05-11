@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 //DEFINITIONS
-//global states
+//state ids
 #define HomeState @"home"
 #define SummaryState @"summary"
 #define AddState @"add"
