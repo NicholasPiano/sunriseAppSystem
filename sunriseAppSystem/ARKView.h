@@ -38,14 +38,11 @@
 - (void)dealloc; //for removing observer
 
 //state methods
-- (void)syncStateWithGlobalId:(NSString *)globalId andSender:(NSString *)sender; //receiver
+- (void)syncStateWithId:(NSString *)stateId;
 - (void)syncState:(ARKState *)state;
 - (void)syncCurrentState;
-- (void)syncCurrentStateWithSender:(NSString *)sender;
-- (void)syncInitialState;
+- (void)syncHomeState;
 - (void)addState:(ARKState *)state;
-- (void)modifyStateWithGlobalId:(NSString *)globalId withNextGlobalId:(NSString *)nextGlobalId;
-- (void)modifyStateWithGlobalId:(NSString *)globalId withDown:(CGFloat)down andRight:(CGFloat)right andAlpha:(CGFloat)alpha andColor:(UIColor *)color;
 
 //more general animate methods for state change to use
 - (void)animateTransform:(CGAffineTransform)argTransform andAlpha:(CGFloat)argAlpha andColor:(UIColor *)argColor withDuration:(CGFloat)duration andDelay:(CGFloat)delay;
@@ -54,8 +51,8 @@
 //notification center
 - (void)receiveNotification:(NSNotification *)notification;
 - (void)postNotification:(NSNotification *)notification;
-- (void)postStateWithGlobalId:(NSString *)globalId;
-- (void)postNextId;
+- (void)postStateWithId:(NSString *)stateId;
+- (void)postNextStateId;
 
 //user defaults
 - (void)pullDictionaryFromUserDefaults; //pulls on category not ident

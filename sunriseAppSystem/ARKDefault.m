@@ -135,6 +135,11 @@ static UIColor *backgroundColor = nil, *interfaceColor = nil, *yesColor = nil, *
     return [[NSProcessInfo processInfo] globallyUniqueString];
 }
 
++ (NSString *)stateId:(NSString *)stateId withSender:(NSString *)sender
+{
+    return [NSString stringWithFormat:@"%@-%@", stateId, sender];
+}
+
 + (BOOL)localNotificationExistsWithIdent:(NSString *)localNotificationIdent
 {
     BOOL test = NO; //false by default

@@ -76,6 +76,7 @@
 
 //local notifications
 + (NSString *)uniqueString;
++ (NSString *)stateId:(NSString *)stateId withSender:(NSString *)sender; //stroke of genius
 + (BOOL)localNotificationExistsWithIdent:(NSString *)localNotificationIdent;
 + (void)postLocalNotificationWithDate:(NSDate *)date andIdent:(NSString *)ident andValue:(CGFloat)value isRecurring:(BOOL)isRecurring;
 + (CGFloat)getValueFromLocalNotificationWithIdent:(NSString *)ident;

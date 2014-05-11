@@ -8,11 +8,21 @@
 
 #import "ARKState.h"
 
+//#pragma mark factory
+//+ (ARKState *)nullState;
+//+ (ARKState *)invisibleState;
+//+ (ARKState *)moveDown:(CGFloat)down andRight:(CGFloat)right;
+//+ (ARKState *)moveDown:(CGFloat)down;
+//+ (ARKState *)moveRight:(CGFloat)right;
+//+ (ARKState *)moveToPosition:(CGPoint)position fromInitialPosition:(CGPoint)initalPosition;
+//+ (ARKState *)moveToInvisiblePosition:(CGPoint)position fromInitialPosition:(CGPoint)initalPosition;
+//+ (ARKState *)rotatedStateWithAngle:(CGFloat)angle;
+
 @implementation ARKState
 
 #pragma mark - properties
 //identification
-@synthesize globalId, nextGlobalId, sender;
+@synthesize stateId, nextStateId;
 
 //state variables
 @synthesize transform, color, alpha;
@@ -21,13 +31,12 @@
 @synthesize duration, delay;
 
 #pragma mark - initialiser
-- (id)initWithGlobalId:(NSString *)argGlobalId andNextGlobalId:(NSString *)argNextGlobalId andSender:(NSString *)argSender
+- (id)initWithStateId:(NSString *)argStateId andNextStateId:(NSString *)argNextStateId
 {
     self = [super init];
     if (self) {
-        self.globalId = argGlobalId;
-        self.nextGlobalId = argNextGlobalId;
-        self.sender = argSender;
+        self.stateId = argStateId;
+        self.nextStateId = argNextStateId;
         self.transform = CGAffineTransformIdentity;
         self.color = nil;
         self.alpha = 1.0;
@@ -40,43 +49,20 @@
 //compare
 - (BOOL)isEqualToState:(ARKState *)state
 {
-    return [self.globalId isEqualToString:state.globalId]; //may compare based on other things to account for replacement while in a certain state.
-}
-
-//modifiers
-- (void)moveDown:(CGFloat)down andRight:(CGFloat)right
-{
-    self.transform = CGAffineTransformMakeTranslation(right, down);
-}
-
-- (void)invisible
-{
-    self.alpha = 0.0;
-}
-
-- (void)duration:(CGFloat)argDuration andDelay:(CGFloat)argDelay
-{
-    self.duration = argDuration;
-    self.delay = argDelay;
-}
-
-- (void)nextGlobalId:(NSString *)argNextGlobalId
-{
-    self.nextGlobalId = argNextGlobalId;
+    return [self.stateId isEqualToString:state.stateId]; //may compare based on other things to account for replacement while in a certain state.
 }
 
 #pragma mark - factory
 + (ARKState *)homeState
 {
-    ARKState *state = [[self alloc] initWithGlobalId:HomeState andNextGlobalId:HomeState andSender:Self];
+    ARKState *state = [[self alloc] initWithStateId:HomeState andNextStateId:nil];
     state.duration = 0.0;
     state.delay = 0.0;
     return state;
 }
 
-+ (ARKState *)stateWithGlobalId:globalId andNextGlobalId:nextGlobalId andSender:sender
-{
-    return [[ARKState alloc] initWithGlobalId:globalId andNextGlobalId:nextGlobalId andSender:sender];
-}
+
+
+
 
 @end

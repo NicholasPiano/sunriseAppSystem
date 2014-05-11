@@ -12,11 +12,11 @@
 
 #pragma mark - properties
 //recursion
+@property (strong, nonatomic) ARKState *callbackState; //animation run after main state is finished
 
 //identification
-@property (strong, nonatomic) NSString *globalId;
-@property (strong, nonatomic) NSString *nextGlobalId;
-@property (strong, nonatomic) NSString *sender;
+@property (strong, nonatomic) NSString *stateId;
+@property (strong, nonatomic) NSString *nextStateId;
 
 //state variables
 @property (nonatomic) CGAffineTransform transform;
@@ -28,7 +28,7 @@
 @property (nonatomic) CGFloat delay;
 
 #pragma mark - initialiser
-- (id)initWithGlobalId:(NSString *)argGlobalId andNextGlobalId:(NSString *)argNextGlobalId andSender:(NSString *)argSender;
+- (id)initWithStateId:(NSString *)argStateId andNextStateId:(NSString *)argNextStateId;
 
 //compare
 - (BOOL)isEqualToState:(ARKState *)state;
@@ -41,6 +41,11 @@
 
 #pragma mark - factory
 + (ARKState *)homeState;
-+ (ARKState *)stateWithGlobalId:globalId andNextGlobalId:nextGlobalId andSender:sender;
++ (ARKState *)stateWithId:(NSString *)stateId moveDown:(CGFloat)down andRight:(CGFloat)right;
++ (ARKState *)stateWithId:(NSString *)stateId moveDown:(CGFloat)down;
++ (ARKState *)stateWithId:(NSString *)stateId moveRight:(CGFloat)right;
++ (ARKState *)stateWithId:(NSString *)stateId moveToPosition:(CGPoint)position fromInitialPosition:(CGPoint)initalPosition;
++ (ARKState *)stateWithId:(NSString *)stateId moveToInvisiblePosition:(CGPoint)position fromInitialPosition:(CGPoint)initalPosition;
++ (ARKState *)stateWithId:(NSString *)stateId rotatedStateWithAngle:(CGFloat)angle;
 
 @end

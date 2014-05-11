@@ -206,7 +206,7 @@
 - (void)receiveNotification:(NSNotification *)notification
 {
 //    ARKLog(@"%@", self.stateDictionary);
-    if ([notification.name isEqualToString:State] && self.stateDictionary != nil) { //only do this if object has a stateSwitch
+    if ([notification.name isEqualToString:State] && self.stateDictionary != nil) {
         NSDictionary *dictionary = [notification userInfo];
         NSString *globalId = [dictionary objectForKey:Global];
         NSString *sender = [dictionary objectForKey:Sender];
