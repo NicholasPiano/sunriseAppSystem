@@ -66,6 +66,12 @@
     return state;
 }
 
++ (ARKState *)state:(ARKState *)state withNextStateId:(NSString *)nextStateId
+{
+    state.nextStateId = nextStateId;
+    return state;
+}
+
 + (ARKState *)stateFromState:(ARKState *)state withStateId:(NSString *)stateId andNextStateId:(NSString *)nextStateId
 {
     ARKState *newState = [[ARKState alloc] initWithStateId:stateId andNextStateId:nextStateId];
@@ -82,6 +88,25 @@
     return newState;
 }
 
++ (ARKState *)stateWithId:(NSString *)stateId moveDown:(CGFloat)down andRight:(CGFloat)right
+{
+    ARKState *state = [[ARKState alloc] initWithStateId:stateId andNextStateId:nil];
+    state.transform = CGAffineTransformMakeTranslation(right, down);
+    return state;
+}
 
++ (ARKState *)stateWithId:(NSString *)stateId moveDown:(CGFloat)down
+{
+    ARKState *state = [[ARKState alloc] initWithStateId:stateId andNextStateId:nil];
+    state.transform = CGAffineTransformMakeTranslation(0, down);
+    return state;
+}
+
++ (ARKState *)stateWithId:(NSString *)stateId moveRight:(CGFloat)right
+{
+    ARKState *state = [[ARKState alloc] initWithStateId:stateId andNextStateId:nil];
+    state.transform = CGAffineTransformMakeTranslation(right, 0);
+    return state;
+}
 
 @end

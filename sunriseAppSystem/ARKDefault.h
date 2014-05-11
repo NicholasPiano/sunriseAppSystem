@@ -30,8 +30,7 @@
 
 //local notifications
 #define State @"state"
-#define Sender @"sender"
-#define Global @"global"
+#define StateId @"id"
 #define Category @"category"
 
 //CLASS FOR MORE COMPLEX DEFAULT OBJECTS

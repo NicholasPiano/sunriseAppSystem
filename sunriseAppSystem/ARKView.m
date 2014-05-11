@@ -100,30 +100,63 @@
 {
     //view object has a number of states. Some have global ids and the sender "self". Others have a specific sender. When receiving a state message with a global id and a sender. This method checks in the stateDictionary for a state with the same sender. The global id is checked. If it finds no sender or the global id is wrong, it will look for the global id in the dictionary. If it finds neither, it will go to the default state.
     
-//    ARKLog(@"dictionary %@: %@", self.ident, self.stateDictionary);
-    
-    //1. first check sender
     ARKState *state = [self.stateDictionary objectForKey:stateId];
-    if (state == nil || state.globalId != globalId) {
-        
-    }// else {
-//    ARKLog(@"%f", state.alpha);
-    [self syncState:state];
-    //}
-    
+    if (state != nil) {
+        [self syncState:state];
+    }
 }
 
 - (void)syncState:(ARKState *)state
 {
+    //http://stackoverflow.com/questions/17949511/the-proper-way-of-doing-chain-animations/17956396#17956396
+    __block NSMutableArray* animationBlocks = [NSMutableArray new];
+    typedef void(^animationBlock)(BOOL);
+    
+    // getNextAnimation
+    // removes the first block in the queue and returns it
+    animationBlock (^getNextAnimation)() = ^{
+        
+        if ([animationBlocks count] > 0){
+            animationBlock block = (animationBlock)[animationBlocks objectAtIndex:0];
+            [animationBlocks removeObjectAtIndex:0];
+            return block;
+        } else {
+            return ^(BOOL finished){
+                animationBlocks = nil;
+            };
+        }
+    };
+    
     if (state != nil) {
         //reset active state
         self.activeState = state;
         
         //set up animation
-//        ARKLog(@"%@ %@", self.ident, state.color);
-        [self animateTransform:state.transform andAlpha:state.alpha andColor:state.color withDuration:state.duration andDelay:state.delay];
-//        ARKLog(@"%@ %f", self.ident, self.alpha);
+        [animationBlocks addObject:^(BOOL finished){
+            [UIView animateWithDuration:state.duration delay:state.delay options:UIViewAnimationOptionCurveLinear animations:^{
+                self.transform = state.transform;
+                self.alpha = state.alpha;
+                if (state.color != nil) {
+                    self.backgroundColor = state.color;
+                }
+            } completion: getNextAnimation()];
+        }];
     }
+    if (state.callbackState != nil) {
+        //set up animation
+        [animationBlocks addObject:^(BOOL finished){
+            [UIView animateWithDuration:state.callbackState.duration delay:state.callbackState.delay options:UIViewAnimationOptionCurveLinear animations:^{
+                self.transform = state.callbackState.transform;
+                self.alpha = state.callbackState.alpha;
+                if (state.callbackState.color != nil) {
+                    self.backgroundColor = state.callbackState.color;
+                }
+            } completion: getNextAnimation()];
+        }];
+    }
+    
+    //begin
+    getNextAnimation()(YES);
 }
 
 - (void)syncCurrentState
@@ -133,12 +166,12 @@
 
 - (void)syncCurrentStateWithSender:(NSString *)sender
 {
-    [self syncStateWithGlobalId:self.activeState.globalId andSender:sender];
+    [self syncState:self.activeState];
 }
 
-- (void)syncInitialState
+- (void)syncHomeState
 {
-    [self syncStateWithGlobalId:HomeState andSender:Self];
+    [self syncStateWithId:HomeState];
 }
 
 - (void)addState:(ARKState *)state
@@ -149,29 +182,12 @@
     if (self.stateDictionary == nil) {
         self.stateDictionary = [NSMutableDictionary dictionary];
     }
-    
-    //2. if state has a sender, add by sender, else by global id
-    if (state.sender != nil) {
-        [self.stateDictionary setObject:state forKey:state.sender]; //local states
-    } else {
-        [self.stateDictionary setObject:state forKey:state.globalId]; //global states
-    }
+    [self.stateDictionary setObject:state forKey:state.stateId];
 }
 
-- (void)modifyStateWithGlobalId:(NSString *)globalId withNextGlobalId:(NSString *)nextGlobalId
+- (ARKState *)stateWithId:(NSString *)stateId
 {
-    ARKState *state = [self.stateDictionary objectForKey:globalId];
-    [state nextGlobalId:nextGlobalId];
-    [self.stateDictionary setObject:state forKey:globalId]; //will overwrite current state
-}
-
-- (void)modifyStateWithGlobalId:(NSString *)globalId withDown:(CGFloat)down andRight:(CGFloat)right andAlpha:(CGFloat)alpha andColor:(UIColor *)color
-{
-    ARKState *state = [self.stateDictionary objectForKey:globalId];
-    state.transform = CGAffineTransformMakeTranslation(right, down);
-    state.alpha = alpha;
-    state.color = color;
-    [self.stateDictionary setObject:state forKey:globalId]; //will overwrite current state
+    return [self.stateDictionary objectForKey:stateId];
 }
 
 //more general animate methods for state change to use
@@ -204,10 +220,9 @@
 //    ARKLog(@"%@", self.stateDictionary);
     if ([notification.name isEqualToString:State] && self.stateDictionary != nil) {
         NSDictionary *dictionary = [notification userInfo];
-        NSString *globalId = [dictionary objectForKey:Global];
-        NSString *sender = [dictionary objectForKey:Sender];
+        NSString *stateId = [dictionary objectForKey:StateId];
         
-        [self syncStateWithGlobalId:globalId andSender:sender];
+        [self syncStateWithId:stateId];
     }
 }
 
@@ -216,16 +231,15 @@
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
-- (void)postStateWithGlobalId:(NSString *)globalId
+- (void)postStateWithId:(NSString *)stateId
 {
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.ident, Sender, globalId, Global, nil];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:stateId forKey:StateId];
     [self postNotification:[NSNotification notificationWithName:State object:nil userInfo:dictionary]]; //not using object. Requires cast. May use in the future.
 }
 
-- (void)postNextId
+- (void)postNextStateId
 {
-//    ARKLog(@"next: %@", self.activeState.nextGlobalId);
-    [self postStateWithGlobalId:self.activeState.nextGlobalId];
+    [self postStateWithId:self.activeState.nextStateId];
 }
 
 //user defaults

@@ -59,6 +59,11 @@ static NSMutableArray *stateList;
     UITapGestureRecognizer *testButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:testButton action:@selector(testButtonTap:)];
     [testButton addGestureRecognizer:testButtonTap];
     
+    //setup
+    [testButton addState:[ARKState state:[testButton stateWithId:HomeState] withNextStateId:SummaryState]];
+    [testButton addState:[ARKState state:[testButton stateWithId:SummaryState] withNextStateId:AddState]];
+    [testButton addState:[ARKState state:[testButton stateWithId:AddState] withNextStateId:HomeState]];
+    
     [testButton syncHomeState];
     return testButton;
 }
@@ -71,6 +76,10 @@ static NSMutableArray *stateList;
     testView.ident = @"testView";
     
     //setup
+    [testView addState:[ARKState stateWithId:SummaryState moveDown:100.0]];
+    ARKState *add = [ARKState stateWithId:AddState moveDown:100.0 andRight:100.0];
+    add.callbackState = [ARKState stateWithId:nil moveRight:100.0];
+    [testView addState:add];
     
     [testView syncHomeState];
     return testView;
