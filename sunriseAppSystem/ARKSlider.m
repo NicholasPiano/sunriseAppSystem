@@ -44,12 +44,28 @@
 //commands and reactions
 - (IBAction)tapThumb:(UITapGestureRecognizer *)argTapGestureRecognizer
 {
-    ARKLog(@"hello");
+    ARKLog(@"start tap");
     //what happens when you tap the slider button?
     if (argTapGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        
-    } else if (argTapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        
+        ARKLog(@"began");
+    }
+    if (argTapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        ARKLog(@"ended");
+    }
+    if (argTapGestureRecognizer.state == UIGestureRecognizerStateCancelled) {
+        ARKLog(@"cancel");
+    }
+    if (argTapGestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        ARKLog(@"change");
+    }
+    if (argTapGestureRecognizer.state == UIGestureRecognizerStateFailed) {
+        ARKLog(@"fail");
+    }
+    if (argTapGestureRecognizer.state == UIGestureRecognizerStatePossible) {
+        ARKLog(@"possible");
+    }
+    if (argTapGestureRecognizer.state == UIGestureRecognizerStateRecognized) {
+        ARKLog(@"recognized");
     }
 }
 
@@ -95,6 +111,7 @@
 {
     self.thumb = argThumb;
     [self.thumb addGestureRecognizer:self.panThumbRecognizer];
+    [self.thumb addGestureRecognizer:self.tapThumbRecognizer];
     [self addSubview:self.thumb];
 }
 

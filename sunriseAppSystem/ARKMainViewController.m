@@ -44,7 +44,7 @@ static NSMutableArray *stateList;
 + (ARKSlider *)testSlider
 {
     ARKState *testSliderDefaultState = [ARKState defaultState];
-    ARKSlider *testSlider = [[ARKSlider alloc] initWithCenter:[ARKDefault centerScreen] andSize:CGSizeMake(48.0, 200.0) andDefaultState:testSliderDefaultState andStateList:stateList];
+    ARKSlider *testSlider = [ARKSlider verticalSliderWithCenter:[ARKDefault centerScreen] andSize:CGSizeMake(48.0, 200.0) andDefaultState:testSliderDefaultState andStateList:stateList];
     
     testSlider.backgroundColor = [ARKDefault interfaceColor];
     [testSlider addThumb:[ARKMainViewController testSliderThumb]];
