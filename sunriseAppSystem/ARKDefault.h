@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 //DEFINITIONS
+//state id
+#define HomeState @"home"
+
 //default sender
 #define Self @"self"
 

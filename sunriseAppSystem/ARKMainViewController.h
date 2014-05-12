@@ -11,7 +11,6 @@
 #import "ARKButton.h"
 
 //state ids
-#define HomeState @"home"
 #define SummaryState @"summary"
 #define AddState @"add"
 #define SettingsState @"settings"
