@@ -48,41 +48,5 @@ static NSMutableArray *stateList;
 }
 
 #pragma mark - factory
-//test views
-//-button
-+ (ARKButton *)testButton
-{
-    ARKState *testButtonDefaultState = [ARKState defaultState];
-    ARKButton *testButton = [[ARKButton alloc] initWithCenter:[ARKDefault centerScreenHorizontalWithVertical:4*buttonRadius] andRadius:buttonRadius andDefaultState:testButtonDefaultState andStateList:stateList];
-    testButton.ident = @"testButton";
-    
-    UITapGestureRecognizer *testButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:testButton action:@selector(testButtonTap:)];
-    [testButton addGestureRecognizer:testButtonTap];
-    
-    //setup
-    [testButton stateWithId:HomeState goesTo:SummaryState];
-    [testButton stateWithId:SummaryState goesTo:AddState];
-    [testButton stateWithId:AddState goesTo:HomeState];
-    
-    [testButton syncHomeState];
-    return testButton;
-}
-
-//-static view
-+ (ARKView *)testView
-{
-    ARKState *testViewDefaultState = [ARKState defaultState];
-    ARKView *testView = [[ARKView alloc] initWithCenter:[ARKDefault centerScreen] andRadius:buttonRadius andDefaultState:testViewDefaultState andStateList:stateList];
-    testView.ident = @"testView";
-    
-    //setup
-    [testView addState:[ARKState stateWithId:SummaryState moveDown:100.0]];
-    ARKState *add = [ARKState stateWithId:[ARKDefault stateId:AddState withSender:@"testButton"] moveDown:100.0 andRight:100.0];
-    add.callbackState = [ARKState stateWithId:nil moveRight:100.0];
-    [testView addState:add];
-    
-    [testView syncHomeState];
-    return testView;
-}
 
 @end

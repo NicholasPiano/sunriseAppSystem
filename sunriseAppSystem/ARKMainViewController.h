@@ -16,11 +16,6 @@
 @property (strong, nonatomic) NSMutableArray *stateList;
 
 #pragma mark - factory
-//test views
-//-button
-+ (ARKButton *)testButton;
-
-//-static view
-+ (ARKView *)testView;
+//put test object declarations here
 
 @end
