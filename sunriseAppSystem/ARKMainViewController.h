@@ -10,6 +10,12 @@
 #import "ARKView.h"
 #import "ARKButton.h"
 
+//state ids
+#define HomeState @"home"
+#define SummaryState @"summary"
+#define AddState @"add"
+#define SettingsState @"settings"
+
 @interface ARKMainViewController : UIViewController
 
 //all objects used in the view controller should be produced by factory methods in the view controller.

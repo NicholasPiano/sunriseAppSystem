@@ -56,11 +56,8 @@
 
 - (id)initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
 {
-    CGRect frame = CGRectMake(argCenter.x-argRadius, argCenter.y-argRadius, 2*argRadius, 2*argRadius);
-    self = [self initWithFrame:frame];
+    self = [self initWithCenter:argCenter andRadius:argRadius];
     if (self) {
-        self.radius = argRadius;
-        self.size = CGSizeMake(argRadius, argRadius);
         self.defaultState = argDefaultState;
         
         //states
@@ -73,11 +70,8 @@
 
 - (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
 {
-    CGRect frame = CGRectMake(argCenter.x-argSize.width/2.0f, argCenter.y-argSize.height/2.0f, argSize.width, argSize.height);
-    self = [self initWithFrame:frame];
+    self = [self initWithCenter:argCenter andSize:argSize];
     if (self) {
-        self.radius = sqrtf(argSize.width*argSize.width + argSize.height*argSize.height); //circle that fits shape
-        self.size = argSize;
         self.defaultState = argDefaultState;
         
         //states

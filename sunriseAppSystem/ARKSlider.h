@@ -23,8 +23,13 @@
 @property (strong, nonatomic) ARKRect *lowerTrack;
 @property (strong, nonatomic) ARKButton *thumb;
 
-#pragma mark - initialisers
+//tracking
+@property (nonatomic) CGFloat lastButtonTransform;
+@property (strong, nonatomic) UITapGestureRecognizer *tapThumbRecognizer;
+@property (strong, nonatomic) UIPanGestureRecognizer *panThumbRecognizer;
 
+#pragma mark - initialisers
+-(id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList;
 
 #pragma mark - instance methods
 //commands and reactions
