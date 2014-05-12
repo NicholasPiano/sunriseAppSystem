@@ -30,6 +30,7 @@
 
 //local notifications
 #define State @"state"
+#define Sender @"sender"
 #define StateId @"id"
 #define Category @"category"
 

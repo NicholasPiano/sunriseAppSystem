@@ -38,7 +38,7 @@
 - (void)dealloc; //for removing observer
 
 //state methods
-- (void)syncStateWithId:(NSString *)stateId;
+- (void)syncStateWithId:(NSString *)stateId andSender:(NSString *)sender;
 - (void)syncState:(ARKState *)state;
 - (void)syncCurrentState;
 - (void)syncHomeState;
@@ -53,7 +53,7 @@
 //notification center
 - (void)receiveNotification:(NSNotification *)notification;
 - (void)postNotification:(NSNotification *)notification;
-- (void)postStateWithId:(NSString *)stateId;
+- (void)postStateWithId:(NSString *)stateId andSender:(NSString *)sender;
 - (void)postNextStateId;
 
 //user defaults

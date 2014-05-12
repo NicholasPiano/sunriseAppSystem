@@ -77,7 +77,7 @@ static NSMutableArray *stateList;
     
     //setup
     [testView addState:[ARKState stateWithId:SummaryState moveDown:100.0]];
-    ARKState *add = [ARKState stateWithId:AddState moveDown:100.0 andRight:100.0];
+    ARKState *add = [ARKState stateWithId:[ARKDefault stateId:AddState withSender:@"testButton"] moveDown:100.0 andRight:100.0];
     add.callbackState = [ARKState stateWithId:nil moveRight:100.0];
     [testView addState:add];
     

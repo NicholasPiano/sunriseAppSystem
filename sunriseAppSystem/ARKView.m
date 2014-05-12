@@ -96,12 +96,20 @@
 }
 
 //state methods
-- (void)syncStateWithId:(NSString *)stateId
+- (void)syncStateWithId:(NSString *)stateId andSender:(NSString *)sender
 {
     //view object has a number of states. Some have global ids and the sender "self". Others have a specific sender. When receiving a state message with a global id and a sender. This method checks in the stateDictionary for a state with the same sender. The global id is checked. If it finds no sender or the global id is wrong, it will look for the global id in the dictionary. If it finds neither, it will go to the default state.
     
-    ARKState *state = [self.stateDictionary objectForKey:stateId];
-    if (state != nil) {
+    //check sender
+    ARKState *state = [self.stateDictionary objectForKey:sender];
+//    ARKLog(@"%@ in %@ trying sender: %@", self.ident, self.activeState.stateId, sender);
+    if (state == nil) {
+//        ARKLog(@"%@ in %@ failed, trying state id: %@", self.ident, self.activeState.stateId, stateId);
+        state = [self.stateDictionary objectForKey:stateId];
+        if (state != nil) {
+            [self syncState:state];
+        }
+    } else {
         [self syncState:state];
     }
 }
@@ -171,7 +179,7 @@
 
 - (void)syncHomeState
 {
-    [self syncStateWithId:HomeState];
+    [self syncStateWithId:HomeState andSender:nil];
 }
 
 - (void)addState:(ARKState *)state
@@ -222,12 +230,12 @@
 //notification center
 - (void)receiveNotification:(NSNotification *)notification
 {
-//    ARKLog(@"%@", self.stateDictionary);
     if ([notification.name isEqualToString:State] && self.stateDictionary != nil) {
         NSDictionary *dictionary = [notification userInfo];
         NSString *stateId = [dictionary objectForKey:StateId];
+        NSString *sender = [dictionary objectForKey:Sender];
         
-        [self syncStateWithId:stateId];
+        [self syncStateWithId:stateId andSender:sender];
     }
 }
 
@@ -236,15 +244,15 @@
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
-- (void)postStateWithId:(NSString *)stateId
+- (void)postStateWithId:(NSString *)stateId andSender:(NSString *)sender
 {
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:stateId forKey:StateId];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:stateId, StateId, sender, Sender, nil];
     [self postNotification:[NSNotification notificationWithName:State object:nil userInfo:dictionary]]; //not using object. Requires cast. May use in the future.
 }
 
 - (void)postNextStateId
 {
-    [self postStateWithId:self.activeState.nextStateId];
+    [self postStateWithId:self.activeState.nextStateId andSender:[ARKDefault stateId:self.activeState.nextStateId withSender:self.ident]];
 }
 
 //user defaults
