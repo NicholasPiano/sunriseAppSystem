@@ -38,8 +38,13 @@
 
 //maybe other tap and drag gestures for other parts of the slider.
 
+//construct
+- (void)addUpperTrack:(ARKRect *)argUpperTrack;
+- (void)addLowerTrack:(ARKRect *)argLowerTrack;
+- (void)addThumb:(ARKButton *)argThumb;
+
 #pragma mark - factory
-+ (ARKSlider *)horizontalSlider;
-+ (ARKSlider *)verticalSlider;
++ (ARKSlider *)horizontalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList;
++ (ARKSlider *)verticalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList;
 
 @end

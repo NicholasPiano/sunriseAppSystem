@@ -31,6 +31,9 @@
         self.tapThumbRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapThumb:)];
         self.panThumbRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panThumb:)];
         [self.tapThumbRecognizer requireGestureRecognizerToFail:self.panThumbRecognizer];
+        
+        //vertical?
+        self.isVertical = YES;
     }
     return self;
 }
@@ -55,21 +58,53 @@
     if (argPanGestureRecognizer.state == UIGestureRecognizerStateBegan) {
         
     } else if (argPanGestureRecognizer.state == UIGestureRecognizerStateEnded || argPanGestureRecognizer.state == UIGestureRecognizerStateCancelled) {
-        self.lastButtonTransform = self.thumb.transform.ty; //reset after each gesture
+        if (self.isVertical) { //reset after each gesture
+            self.lastButtonTransform = self.thumb.transform.ty;
+        } else {
+            self.lastButtonTransform = self.thumb.transform.tx;
+        }
     } else if (argPanGestureRecognizer.state == UIGestureRecognizerStateChanged) { //still dragging
-        
+        //1. get translation
+        CGPoint translation = [argPanGestureRecognizer translationInView:self];
+        //2. set button transform to follow touch
+        if (self.isVertical) {
+            self.thumb.transform = CGAffineTransformMakeTranslation(0, self.lastButtonTransform + translation.y);
+        } else {
+            self.thumb.transform = CGAffineTransformMakeTranslation(self.lastButtonTransform + translation.x, 0);
+        }
     }
 }
 
-#pragma mark - factory
-+ (ARKSlider *)horizontalSlider
+//construct
+- (void)addUpperTrack:(ARKRect *)argUpperTrack
 {
-    return [[ARKSlider alloc] init];
+    self.upperTrack = argUpperTrack;
+    [self addSubview:self.upperTrack];
 }
 
-+ (ARKSlider *)verticalSlider
+- (void)addLowerTrack:(ARKRect *)argLowerTrack
 {
-    return [[ARKSlider alloc] init];    
+    self.lowerTrack = argLowerTrack;
+    [self addSubview:self.lowerTrack];
+}
+
+- (void)addThumb:(ARKButton *)argThumb
+{
+    self.thumb = argThumb;
+    [self addSubview:self.thumb];
+}
+
+#pragma mark - factory
++ (ARKSlider *)horizontalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
+{
+    ARKSlider *slider = [[ARKSlider alloc] initWithCenter:argCenter andSize:argSize andDefaultState:argDefaultState andStateList:stateList];
+    slider.isVertical = NO;
+    return slider;
+}
+
++ (ARKSlider *)verticalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
+{
+    return [[ARKSlider alloc] initWithCenter:argCenter andSize:argSize andDefaultState:argDefaultState andStateList:stateList];
 }
 
 @end
