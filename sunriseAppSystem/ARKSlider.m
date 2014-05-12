@@ -30,6 +30,8 @@
         //in order of heirarchy: tapThumb, panThumb, panSlider
         self.tapThumbRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapThumb:)];
         self.panThumbRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panThumb:)];
+        self.panThumbRecognizer.maximumNumberOfTouches = 1;
+        self.panThumbRecognizer.minimumNumberOfTouches = 1;
         [self.tapThumbRecognizer requireGestureRecognizerToFail:self.panThumbRecognizer];
         
         //vertical?
@@ -42,6 +44,7 @@
 //commands and reactions
 - (IBAction)tapThumb:(UITapGestureRecognizer *)argTapGestureRecognizer
 {
+    ARKLog(@"hello");
     //what happens when you tap the slider button?
     if (argTapGestureRecognizer.state == UIGestureRecognizerStateBegan) {
         
@@ -91,6 +94,7 @@
 - (void)addThumb:(ARKButton *)argThumb
 {
     self.thumb = argThumb;
+    [self.thumb addGestureRecognizer:self.panThumbRecognizer];
     [self addSubview:self.thumb];
 }
 

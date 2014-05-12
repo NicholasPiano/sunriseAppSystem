@@ -27,7 +27,7 @@ static NSMutableArray *stateList;
     [self.view setBackgroundColor:[ARKDefault backgroundColor]];
     
     //objects
-
+    [self.view addSubview:[ARKMainViewController testSlider]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,5 +41,25 @@ static NSMutableArray *stateList;
 }
 
 #pragma mark - factory
++ (ARKSlider *)testSlider
+{
+    ARKState *testSliderDefaultState = [ARKState defaultState];
+    ARKSlider *testSlider = [[ARKSlider alloc] initWithCenter:[ARKDefault centerScreen] andSize:CGSizeMake(48.0, 200.0) andDefaultState:testSliderDefaultState andStateList:stateList];
+    
+    testSlider.backgroundColor = [ARKDefault interfaceColor];
+    [testSlider addThumb:[ARKMainViewController testSliderThumb]];
+    
+    return testSlider;
+}
+
++ (ARKButton *)testSliderThumb
+{
+    CGFloat radius = 24.0;
+    ARKButton *testSliderThumb = [[ARKButton alloc] initWithCenter:CGPointMake(radius, radius) andRadius:radius];
+    
+    testSliderThumb.backgroundColor = [ARKDefault yesColor];
+    
+    return testSliderThumb;
+}
 
 @end
