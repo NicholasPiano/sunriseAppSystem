@@ -27,14 +27,6 @@ static NSMutableArray *stateList;
     [self.view setBackgroundColor:[ARKDefault backgroundColor]];
     
     //objects
-    
-    //-button
-    ARKButton *testButton = [ARKMainViewController testButton];
-    [self.view addSubview:testButton];
-    
-    //-view
-    ARKView *testView = [ARKMainViewController testView];
-    [self.view addSubview:testView];
 }
 
 - (void)didReceiveMemoryWarning
