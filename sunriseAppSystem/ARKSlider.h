@@ -31,6 +31,8 @@
 - (IBAction)tapThumb:(UITapGestureRecognizer *)argTapGestureRecognizer;
 - (IBAction)panThumb:(UIPanGestureRecognizer *)argPanGestureRecognizer;
 
+//maybe other tap and drag gestures for other parts of the slider.
+
 #pragma mark - factory
 + (ARKSlider *)horizontalSlider;
 + (ARKSlider *)verticalSlider;
