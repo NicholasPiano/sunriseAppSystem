@@ -23,7 +23,5 @@
 
 #pragma mark - factory
 //put test object declarations here
-+ (ARKSlider *)testSlider;
-+ (ARKButton *)testSliderThumb;
 
 @end
