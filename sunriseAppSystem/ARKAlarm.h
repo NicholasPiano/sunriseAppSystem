@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ARKView.h"
 
-@interface ARKAlarm : NSObject
+@interface ARKAlarm : ARKView
+
+
 
 @end

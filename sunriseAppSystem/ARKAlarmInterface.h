@@ -10,4 +10,13 @@
 
 @interface ARKAlarmInterface : ARKView
 
+#pragma mark - properties
+
+#pragma mark - initialiser
+
+#pragma mark - instance methods
+
+#pragma mark - factory
+//everything needed to properly define a single interface element capable of modifying an alarm.
+
 @end
