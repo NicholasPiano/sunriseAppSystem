@@ -228,6 +228,8 @@
         NSString *stateId = [dictionary objectForKey:StateId];
         NSString *sender = [dictionary objectForKey:Sender];
         
+//        ARKLog(@"sender: %@", sender);
+        
         [self syncStateWithId:stateId andSender:sender];
     }
 }
@@ -239,7 +241,9 @@
 
 - (void)postStateWithId:(NSString *)stateId andSender:(NSString *)sender
 {
+//    ARKLog(@"sender: %@", sender);
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:stateId, StateId, sender, Sender, nil];
+//    ARKLog(@"object for key sender: %@", [dictionary objectForKey:Sender]);
     [self postNotification:[NSNotification notificationWithName:State object:nil userInfo:dictionary]]; //not using object. Requires cast. May use in the future.
 }
 

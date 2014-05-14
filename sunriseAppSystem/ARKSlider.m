@@ -78,7 +78,6 @@
     //1. Does it depend what spate you are in?
     //2. Are there any effects that need triggering at certain points?
     if (argPanGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        
     } else if (argPanGestureRecognizer.state == UIGestureRecognizerStateEnded || argPanGestureRecognizer.state == UIGestureRecognizerStateCancelled) {
         if (self.isVertical) { //reset after each gesture
             self.lastButtonTransform = self.thumb.transform.ty;
@@ -86,11 +85,12 @@
             self.lastButtonTransform = self.thumb.transform.tx;
         }
         
-        //do stuff
-        CGPoint touchPoint = [argPanGestureRecognizer locationInView:self];
+        //regions
+        CGPoint thumbCenter = CGPointMake(thumb.bounds.size.width/2.0, thumb.transform.ty + thumb.bounds.size.height/2.0);
         for (ARKSliderRegion *region in regionArray) {
-            if (CGRectContainsPoint(region.frame, touchPoint)) {
-                [self postStateWithId:self.ident andSender:region.touchUpStateId]; //bit of a hack with the name combining. Might need more formal way of doing this.
+            if (CGRectContainsPoint(region.frame, thumbCenter)) {
+                [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:region.touchUpStateId]]; //bit of a hack with the name combining. Might need more formal way of doing this.
+                self.lastButtonTransform = region.center.y-thumb.bounds.size.height/2.0; //account for initial position
             }
         }
         
@@ -104,8 +104,13 @@
             self.thumb.transform = CGAffineTransformMakeTranslation(self.lastButtonTransform + translation.x, 0);
         }
         
-        //do stuff
-        
+        //regions
+        CGPoint thumbCenter = CGPointMake(thumb.bounds.size.width/2.0, thumb.transform.ty + thumb.bounds.size.height/2.0);
+        for (ARKSliderRegion *region in regionArray) {
+            if (CGRectContainsPoint(region.frame, thumbCenter)) {
+                ARKLog(@"region: %@", region.touchUpStateId);
+            }
+        }
     }
 }
 
@@ -145,7 +150,7 @@
     [self.regionArray addObject:region];
     
     //3. slider thumb state for region
-    NSString *index = [NSString stringWithFormat:@"%d", [self.regionArray count]]; //get position in array after entering object
+    NSString *index = [NSString stringWithFormat:@"region%d", [self.regionArray count]]; //get position in array after entering object
     ARKState *regionState = [ARKState stateWithId:[ARKDefault stateId:self.ident withSender:index] moveToPosition:snapPoint fromInitialPosition:thumb.center];
     [self.thumb addState:regionState];
 }

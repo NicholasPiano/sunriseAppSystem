@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSString *enteredStateId; //state id to be broadcast when entering the region.
 @property (strong, nonatomic) NSString *exitStateId;
 @property (strong, nonatomic) NSString *touchUpStateId;
+@property (nonatomic) CGPoint snapPoint;
 
 #pragma mark - initialiser
 - (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andTouchUpStateId:(NSString *)argTouchUpStateId;
