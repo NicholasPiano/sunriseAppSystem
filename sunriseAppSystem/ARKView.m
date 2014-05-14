@@ -63,8 +63,18 @@
         
         //states
         for (NSString *stateId in stateList) {
-            [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
+            if ([stateId isEqualToString:HomeState]) {
+                ARKState *homeState = self.defaultState;
+                homeState.duration = 0.0;
+                homeState.delay = 0.0;
+                [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
+            } else {
+                [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
+            }
         }
+        
+        //sync home state
+        [self syncHomeState];
     }
     return self;
 }
@@ -78,8 +88,18 @@
         
         //states
         for (NSString *stateId in stateList) {
-            [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
+            if ([stateId isEqualToString:HomeState]) {
+                ARKState *homeState = self.defaultState;
+                homeState.duration = 0.0;
+                homeState.delay = 0.0;
+                [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
+            } else {
+                [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
+            }
         }
+        
+        //sync home state
+        [self syncHomeState];
     }
     return self;
 }
@@ -227,8 +247,6 @@
         NSDictionary *dictionary = [notification userInfo];
         NSString *stateId = [dictionary objectForKey:StateId];
         NSString *sender = [dictionary objectForKey:Sender];
-        
-//        ARKLog(@"sender: %@", sender);
         
         [self syncStateWithId:stateId andSender:sender];
     }
