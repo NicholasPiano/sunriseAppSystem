@@ -11,6 +11,7 @@
 #import "ARKRect.h"
 #import "ARKGlyph.h"
 #import "ARKButton.h"
+#import "ARKSliderRegion.h"
 
 @interface ARKSlider : ARKView
 
@@ -27,6 +28,7 @@
 @property (nonatomic) CGFloat lastButtonTransform;
 @property (strong, nonatomic) UITapGestureRecognizer *tapThumbRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *panThumbRecognizer;
+@property (strong, nonatomic) NSMutableArray *regionArray;
 
 #pragma mark - initialisers
 -(id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList;
@@ -42,6 +44,10 @@
 - (void)addUpperTrack:(ARKRect *)argUpperTrack;
 - (void)addLowerTrack:(ARKRect *)argLowerTrack;
 - (void)addThumb:(ARKButton *)argThumb;
+
+//regions
+- (void)addRegion:(ARKSliderRegion *)region;
+- (void)addRegion:(ARKSliderRegion *)region withSnapPoint:(CGPoint)snapPoint;
 
 #pragma mark - factory
 + (ARKSlider *)horizontalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList;

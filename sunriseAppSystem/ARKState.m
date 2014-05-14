@@ -109,4 +109,11 @@
     return state;
 }
 
++ (ARKState *)stateWithId:(NSString *)stateId moveToPosition:(CGPoint)position fromInitialPosition:(CGPoint)initalPosition
+{
+    ARKState *state = [[ARKState alloc] initWithStateId:stateId andNextStateId:nil];
+    state.transform = CGAffineTransformMakeTranslation(position.x-initalPosition.x, position.y-initalPosition.y);
+    return state;
+}
+
 @end

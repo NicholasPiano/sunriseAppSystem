@@ -18,7 +18,7 @@
 @synthesize upperTrack, lowerTrack, thumb;
 
 //tracking
-@synthesize lastButtonTransform, tapThumbRecognizer, panThumbRecognizer;
+@synthesize lastButtonTransform, tapThumbRecognizer, panThumbRecognizer, regionArray;
 
 #pragma mark - initialisers
 - (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
@@ -36,6 +36,9 @@
         
         //vertical?
         self.isVertical = YES;
+        
+        //regions
+        self.regionArray = [NSMutableArray array];
     }
     return self;
 }
@@ -82,6 +85,15 @@
         } else {
             self.lastButtonTransform = self.thumb.transform.tx;
         }
+        
+        //do stuff
+        CGPoint touchPoint = [argPanGestureRecognizer locationInView:self];
+        for (ARKSliderRegion *region in regionArray) {
+            if (CGRectContainsPoint(region.frame, touchPoint)) {
+                [self postStateWithId:self.ident andSender:region.touchUpStateId]; //bit of a hack with the name combining. Might need more formal way of doing this.
+            }
+        }
+        
     } else if (argPanGestureRecognizer.state == UIGestureRecognizerStateChanged) { //still dragging
         //1. get translation
         CGPoint translation = [argPanGestureRecognizer translationInView:self];
@@ -91,6 +103,9 @@
         } else {
             self.thumb.transform = CGAffineTransformMakeTranslation(self.lastButtonTransform + translation.x, 0);
         }
+        
+        //do stuff
+        
     }
 }
 
@@ -113,6 +128,26 @@
     [self.thumb addGestureRecognizer:self.panThumbRecognizer];
     [self.thumb addGestureRecognizer:self.tapThumbRecognizer];
     [self addSubview:self.thumb];
+}
+
+//regions
+- (void)addRegion:(ARKSliderRegion *)region
+{
+    [self addRegion:region withSnapPoint:region.center];
+}
+
+- (void)addRegion:(ARKSliderRegion *)region withSnapPoint:(CGPoint)snapPoint
+{
+    //1. add region at the bottom of the subviews list to ensure it doesn't swallow touches.
+    [self insertSubview:region atIndex:0]; //all back of the bus
+    
+    //2. Add to array of regions
+    [self.regionArray addObject:region];
+    
+    //3. slider thumb state for region
+    NSString *index = [NSString stringWithFormat:@"%d", [self.regionArray count]]; //get position in array after entering object
+    ARKState *regionState = [ARKState stateWithId:[ARKDefault stateId:self.ident withSender:index] moveToPosition:snapPoint fromInitialPosition:thumb.center];
+    [self.thumb addState:regionState];
 }
 
 #pragma mark - factory

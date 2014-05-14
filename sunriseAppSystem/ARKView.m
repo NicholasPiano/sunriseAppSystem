@@ -59,6 +59,7 @@
     self = [self initWithCenter:argCenter andRadius:argRadius];
     if (self) {
         self.defaultState = argDefaultState;
+        self.stateDictionary = [NSMutableDictionary dictionary];
         
         //states
         for (NSString *stateId in stateList) {
@@ -73,6 +74,7 @@
     self = [self initWithCenter:argCenter andSize:argSize];
     if (self) {
         self.defaultState = argDefaultState;
+        self.stateDictionary = [NSMutableDictionary dictionary];
         
         //states
         for (NSString *stateId in stateList) {
@@ -181,9 +183,6 @@
     //this method searches the current stateDictionary for a state with the matching global id and sender in a manner similar to -syncStateWithGlobalId. If the state exists, it will replace it; if not, it will add it to the dictionary.
     
     //1. if state dictionary is nil, make it.
-    if (self.stateDictionary == nil) {
-        self.stateDictionary = [NSMutableDictionary dictionary];
-    }
     [self.stateDictionary setObject:state forKey:state.stateId];
 }
 
