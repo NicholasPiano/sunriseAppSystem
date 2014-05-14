@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8906B4BE18FB5B6500D4EF77 /* ARKDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906B4BD18FB5B6500D4EF77 /* ARKDefault.m */; };
-		89105F351920FA88001A115F /* ARKSnapPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 89105F341920FA88001A115F /* ARKSnapPoint.m */; };
 		89105F381920FBB9001A115F /* ARKCompositeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89105F371920FBB9001A115F /* ARKCompositeView.m */; };
 		8912A1FA19146C4300BEB211 /* ARKLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 8912A1F919146C4300BEB211 /* ARKLog.m */; };
+		89A56E1D19230A4D00242563 /* ARKSliderRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A56E1C19230A4D00242563 /* ARKSliderRegion.m */; };
 		89AA602218EF78D0002195FD /* ARKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AA602118EF78D0002195FD /* ARKView.m */; };
 		89AA602618EF9589002195FD /* ARKState.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AA602518EF9589002195FD /* ARKState.m */; };
 		89AB47A61907FBBF00A0D5B7 /* ARKMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AB47A51907FBBF00A0D5B7 /* ARKMainViewController.m */; };
@@ -52,12 +52,12 @@
 /* Begin PBXFileReference section */
 		8906B4BC18FB5B6500D4EF77 /* ARKDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKDefault.h; sourceTree = "<group>"; };
 		8906B4BD18FB5B6500D4EF77 /* ARKDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKDefault.m; sourceTree = "<group>"; };
-		89105F331920FA88001A115F /* ARKSnapPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKSnapPoint.h; sourceTree = "<group>"; };
-		89105F341920FA88001A115F /* ARKSnapPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKSnapPoint.m; sourceTree = "<group>"; };
 		89105F361920FBB9001A115F /* ARKCompositeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKCompositeView.h; sourceTree = "<group>"; };
 		89105F371920FBB9001A115F /* ARKCompositeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKCompositeView.m; sourceTree = "<group>"; };
 		8912A1F819146C4300BEB211 /* ARKLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKLog.h; sourceTree = "<group>"; };
 		8912A1F919146C4300BEB211 /* ARKLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKLog.m; sourceTree = "<group>"; };
+		89A56E1B19230A4D00242563 /* ARKSliderRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKSliderRegion.h; sourceTree = "<group>"; };
+		89A56E1C19230A4D00242563 /* ARKSliderRegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKSliderRegion.m; sourceTree = "<group>"; };
 		89AA602018EF78D0002195FD /* ARKView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKView.h; sourceTree = "<group>"; };
 		89AA602118EF78D0002195FD /* ARKView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKView.m; sourceTree = "<group>"; };
 		89AA602418EF9589002195FD /* ARKState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKState.h; sourceTree = "<group>"; };
@@ -129,10 +129,10 @@
 		8912A1F719133DD700BEB211 /* Slider */ = {
 			isa = PBXGroup;
 			children = (
-				89105F331920FA88001A115F /* ARKSnapPoint.h */,
-				89105F341920FA88001A115F /* ARKSnapPoint.m */,
 				89AB47B1190805D500A0D5B7 /* ARKSlider.h */,
 				89AB47B2190805D500A0D5B7 /* ARKSlider.m */,
+				89A56E1B19230A4D00242563 /* ARKSliderRegion.h */,
+				89A56E1C19230A4D00242563 /* ARKSliderRegion.m */,
 			);
 			name = Slider;
 			sourceTree = "<group>";
@@ -390,6 +390,7 @@
 				89105F381920FBB9001A115F /* ARKCompositeView.m in Sources */,
 				89AA602618EF9589002195FD /* ARKState.m in Sources */,
 				89B2229F18E702B90042FF24 /* main.m in Sources */,
+				89A56E1D19230A4D00242563 /* ARKSliderRegion.m in Sources */,
 				89AB47A61907FBBF00A0D5B7 /* ARKMainViewController.m in Sources */,
 				89AA602218EF78D0002195FD /* ARKView.m in Sources */,
 				89AB47BF1908074800A0D5B7 /* ARKAlarm.m in Sources */,
@@ -397,7 +398,6 @@
 				89AB47C519081FF800A0D5B7 /* ARKLibrary.m in Sources */,
 				89B222A618E702B90042FF24 /* sunriseAppSystem.xcdatamodeld in Sources */,
 				89AB47CB1908249F00A0D5B7 /* ARKArc.m in Sources */,
-				89105F351920FA88001A115F /* ARKSnapPoint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
