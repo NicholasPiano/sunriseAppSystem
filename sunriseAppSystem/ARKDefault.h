@@ -16,7 +16,7 @@
 #define Self @"self"
 
 //standard metrics
-#define buttonRadius 24.0
+#define buttonRadius 12.0
 
 //animation
 #define animationDuration 0.2

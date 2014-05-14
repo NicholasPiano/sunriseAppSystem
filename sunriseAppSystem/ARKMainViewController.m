@@ -44,7 +44,8 @@ static NSMutableArray *stateList;
 + (ARKSlider *)testSlider
 {
     ARKState *testSliderDefaultState = [ARKState defaultState];
-    ARKSlider *testSlider = [ARKSlider verticalSliderWithCenter:[ARKDefault centerScreen] andSize:CGSizeMake(48.0, 400.0) andDefaultState:testSliderDefaultState andStateList:stateList];
+    CGFloat height = 400.0;
+    ARKSlider *testSlider = [ARKSlider verticalSliderWithCenter:[ARKDefault centerScreen] andSize:CGSizeMake(buttonRadius*2.0, height) andDefaultState:testSliderDefaultState andStateList:stateList];
     testSlider.ident = @"testSlider";
     
     testSlider.backgroundColor = [ARKDefault interfaceColor];
@@ -52,9 +53,12 @@ static NSMutableArray *stateList;
     
     //regions
     for (int i=0; i<10; i++) {
-        CGPoint center = CGPointMake(24.0, 20*(2*i+1));
-        CGSize size = CGSizeMake(48.0, 40.0);
+        CGPoint center = CGPointMake(buttonRadius, height/20.0*(2*i+1));
+        CGSize size = CGSizeMake(buttonRadius*2.0, 40.0);
         ARKSliderRegion *region = [ARKSliderRegion sliderRegionWithCenter:center andSize:size andTouchUpStateId:[NSString stringWithFormat:@"region%d", i]];
+        if (i%2==0) {
+            [region setBackgroundColor:[ARKDefault noColor]];
+        }
         [testSlider addRegion:region];
     }
     
@@ -64,7 +68,7 @@ static NSMutableArray *stateList;
 
 + (ARKButton *)testSliderThumb
 {
-    CGFloat radius = 24.0;
+    CGFloat radius = buttonRadius;
     ARKState *testSliderThumbDefaultState = [ARKState defaultState];
     ARKButton *testSliderThumb = [[ARKButton alloc] initWithCenter:CGPointMake(radius, radius) andRadius:radius andDefaultState:testSliderThumbDefaultState andStateList:stateList];
     testSliderThumb.ident = @"testSliderThumb";

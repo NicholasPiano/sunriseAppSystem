@@ -85,14 +85,22 @@
             self.lastButtonTransform = self.thumb.transform.tx;
         }
         
-        //regions
+        //regions - maybe redundant given section in dragging state
+        BOOL noRegion = YES;
         CGPoint thumbCenter = CGPointMake(thumb.bounds.size.width/2.0, thumb.transform.ty + thumb.bounds.size.height/2.0);
         for (ARKSliderRegion *region in regionArray) {
             if (CGRectContainsPoint(region.frame, thumbCenter)) {
                 [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:region.touchUpStateId]]; //bit of a hack with the name combining. Might need more formal way of doing this.
                 self.lastButtonTransform = region.center.y-thumb.bounds.size.height/2.0; //account for initial position
-                self.currentRegion = region.touchUpStateId;
+                self.currentRegion = region;
+                noRegion = NO;
             }
+        }
+        
+        if (noRegion) {
+//            ARKLog(@"no region stopped but last region: %@", self.currentRegion);
+            [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:self.currentRegion.touchUpStateId]]; //sync last region if gone past edges
+            self.lastButtonTransform = self.currentRegion.center.y-thumb.bounds.size.height/2.0; //account for initial position
         }
         
     } else if (argPanGestureRecognizer.state == UIGestureRecognizerStateChanged) { //still dragging
@@ -106,14 +114,20 @@
         }
         
         //regions
+        BOOL noRegion = YES;
         CGPoint thumbCenter = CGPointMake(thumb.bounds.size.width/2.0, thumb.transform.ty + thumb.bounds.size.height/2.0);
         for (ARKSliderRegion *region in regionArray) {
             if (CGRectContainsPoint(region.frame, thumbCenter)) {
-                if (self.currentRegion != region.touchUpStateId) {
-                    self.currentRegion = region.touchUpStateId;
-//                    ARKLog(@"region: %@", region.touchUpStateId);
+                if (self.currentRegion.touchUpStateId != region.touchUpStateId) {
+                    self.currentRegion = region;
                 }
+                noRegion = NO;
             }
+        }
+        
+        //no region
+        if (noRegion) {
+//            ARKLog(@"no region while tracking but last region: %@", self.currentRegion);
         }
     }
 }
