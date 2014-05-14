@@ -56,12 +56,10 @@
 
 - (id)initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
 {
-    CGRect frame = CGRectMake(argCenter.x-argRadius, argCenter.y-argRadius, 2*argRadius, 2*argRadius);
-    self = [self initWithFrame:frame];
+    self = [self initWithCenter:argCenter andRadius:argRadius];
     if (self) {
-        self.radius = argRadius;
-        self.size = CGSizeMake(argRadius, argRadius);
         self.defaultState = argDefaultState;
+        self.stateDictionary = [NSMutableDictionary dictionary];
         
         //states
         for (NSString *stateId in stateList) {
@@ -73,12 +71,10 @@
 
 - (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
 {
-    CGRect frame = CGRectMake(argCenter.x-argSize.width/2.0f, argCenter.y-argSize.height/2.0f, argSize.width, argSize.height);
-    self = [self initWithFrame:frame];
+    self = [self initWithCenter:argCenter andSize:argSize];
     if (self) {
-        self.radius = sqrtf(argSize.width*argSize.width + argSize.height*argSize.height); //circle that fits shape
-        self.size = argSize;
         self.defaultState = argDefaultState;
+        self.stateDictionary = [NSMutableDictionary dictionary];
         
         //states
         for (NSString *stateId in stateList) {
@@ -187,9 +183,6 @@
     //this method searches the current stateDictionary for a state with the matching global id and sender in a manner similar to -syncStateWithGlobalId. If the state exists, it will replace it; if not, it will add it to the dictionary.
     
     //1. if state dictionary is nil, make it.
-    if (self.stateDictionary == nil) {
-        self.stateDictionary = [NSMutableDictionary dictionary];
-    }
     [self.stateDictionary setObject:state forKey:state.stateId];
 }
 
@@ -235,6 +228,8 @@
         NSString *stateId = [dictionary objectForKey:StateId];
         NSString *sender = [dictionary objectForKey:Sender];
         
+//        ARKLog(@"sender: %@", sender);
+        
         [self syncStateWithId:stateId andSender:sender];
     }
 }
@@ -246,7 +241,9 @@
 
 - (void)postStateWithId:(NSString *)stateId andSender:(NSString *)sender
 {
+//    ARKLog(@"sender: %@", sender);
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:stateId, StateId, sender, Sender, nil];
+//    ARKLog(@"object for key sender: %@", [dictionary objectForKey:Sender]);
     [self postNotification:[NSNotification notificationWithName:State object:nil userInfo:dictionary]]; //not using object. Requires cast. May use in the future.
 }
 

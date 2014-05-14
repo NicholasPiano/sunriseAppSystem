@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "ARKView.h"
 #import "ARKButton.h"
+#import "ARKSlider.h"
+
+//state ids
+#define SummaryState @"summary"
+#define AddState @"add"
+#define SettingsState @"settings"
 
 @interface ARKMainViewController : UIViewController
 
@@ -17,5 +23,7 @@
 
 #pragma mark - factory
 //put test object declarations here
++ (ARKSlider *)testSlider;
++ (ARKButton *)testSliderThumb;
 
 @end

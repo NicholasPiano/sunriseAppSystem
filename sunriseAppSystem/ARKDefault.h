@@ -9,17 +9,14 @@
 #import <Foundation/Foundation.h>
 
 //DEFINITIONS
-//state ids
+//state id
 #define HomeState @"home"
-#define SummaryState @"summary"
-#define AddState @"add"
-#define SettingsState @"settings"
 
 //default sender
 #define Self @"self"
 
 //standard metrics
-#define buttonRadius 24.0
+#define buttonRadius 12.0
 
 //animation
 #define animationDuration 0.2
