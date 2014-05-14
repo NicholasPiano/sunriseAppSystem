@@ -44,20 +44,19 @@ static NSMutableArray *stateList;
 + (ARKSlider *)testSlider
 {
     ARKState *testSliderDefaultState = [ARKState defaultState];
-    ARKSlider *testSlider = [ARKSlider verticalSliderWithCenter:[ARKDefault centerScreen] andSize:CGSizeMake(48.0, 200.0) andDefaultState:testSliderDefaultState andStateList:stateList];
+    ARKSlider *testSlider = [ARKSlider verticalSliderWithCenter:[ARKDefault centerScreen] andSize:CGSizeMake(48.0, 400.0) andDefaultState:testSliderDefaultState andStateList:stateList];
     testSlider.ident = @"testSlider";
-    
-    //regions
-    ARKSliderRegion *region1 = [ARKSliderRegion sliderRegionWithCenter:CGPointMake(24.0, 50.0) andSize:CGSizeMake(48.0, 100.0) andTouchUpStateId:@"region1"];
-    region1.backgroundColor = [UIColor blueColor];
-    ARKSliderRegion *region2 = [ARKSliderRegion sliderRegionWithCenter:CGPointMake(24.0, 150.0) andSize:CGSizeMake(48.0, 100.0) andTouchUpStateId:@"region2"];
-    region2.backgroundColor = [ARKDefault noColor];
     
     testSlider.backgroundColor = [ARKDefault interfaceColor];
     [testSlider addThumb:[ARKMainViewController testSliderThumb]];
     
-    [testSlider addRegion:region1];
-    [testSlider addRegion:region2];
+    //regions
+    for (int i=0; i<10; i++) {
+        CGPoint center = CGPointMake(24.0, 20*(2*i+1));
+        CGSize size = CGSizeMake(48.0, 40.0);
+        ARKSliderRegion *region = [ARKSliderRegion sliderRegionWithCenter:center andSize:size andTouchUpStateId:[NSString stringWithFormat:@"region%d", i]];
+        [testSlider addRegion:region];
+    }
     
     [testSlider syncHomeState];
     return testSlider;

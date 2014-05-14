@@ -91,6 +91,7 @@
             if (CGRectContainsPoint(region.frame, thumbCenter)) {
                 [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:region.touchUpStateId]]; //bit of a hack with the name combining. Might need more formal way of doing this.
                 self.lastButtonTransform = region.center.y-thumb.bounds.size.height/2.0; //account for initial position
+                self.currentRegion = region.touchUpStateId;
             }
         }
         
@@ -108,7 +109,10 @@
         CGPoint thumbCenter = CGPointMake(thumb.bounds.size.width/2.0, thumb.transform.ty + thumb.bounds.size.height/2.0);
         for (ARKSliderRegion *region in regionArray) {
             if (CGRectContainsPoint(region.frame, thumbCenter)) {
-                ARKLog(@"region: %@", region.touchUpStateId);
+                if (self.currentRegion != region.touchUpStateId) {
+                    self.currentRegion = region.touchUpStateId;
+//                    ARKLog(@"region: %@", region.touchUpStateId);
+                }
             }
         }
     }
@@ -150,8 +154,7 @@
     [self.regionArray addObject:region];
     
     //3. slider thumb state for region
-    NSString *index = [NSString stringWithFormat:@"region%d", [self.regionArray count]]; //get position in array after entering object
-    ARKState *regionState = [ARKState stateWithId:[ARKDefault stateId:self.ident withSender:index] moveToPosition:snapPoint fromInitialPosition:thumb.center];
+    ARKState *regionState = [ARKState stateWithId:[ARKDefault stateId:self.ident withSender:region.touchUpStateId] moveToPosition:snapPoint fromInitialPosition:thumb.center];
     [self.thumb addState:regionState];
 }
 

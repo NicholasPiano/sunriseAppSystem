@@ -26,6 +26,7 @@
 
 //tracking
 @property (nonatomic) CGFloat lastButtonTransform;
+@property (strong, nonatomic) NSString *currentRegion;
 @property (strong, nonatomic) UITapGestureRecognizer *tapThumbRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *panThumbRecognizer;
 @property (strong, nonatomic) NSMutableArray *regionArray;
