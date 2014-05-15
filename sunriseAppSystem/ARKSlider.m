@@ -133,8 +133,9 @@
         for (ARKSliderRegion *region in regionArray) {
             if (CGRectContainsPoint(region.frame, thumbCenter)) {
                 if (self.currentRegion.touchUpStateId != region.touchUpStateId) {
+                    [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:self.currentRegion.exitStateId]];
                     self.currentRegion = region;
-//                    ARKLog(@"region: %@", self.currentRegion.touchUpStateId);
+                    [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:region.enteredStateId]];
                 }
                 noRegion = NO;
             }
