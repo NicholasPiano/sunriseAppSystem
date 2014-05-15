@@ -37,6 +37,7 @@
 		89B222B218E702B90042FF24 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B2229618E702B80042FF24 /* CoreData.framework */; };
 		89B222BA18E702B90042FF24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 89B222B818E702B90042FF24 /* InfoPlist.strings */; };
 		89B222BC18E702B90042FF24 /* sunriseAppSystemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B222BB18E702B90042FF24 /* sunriseAppSystemTests.m */; };
+		89DCDBDB19244AB0001614D7 /* ARKLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DCDBDA19244AB0001614D7 /* ARKLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,8 @@
 		89B222B718E702B90042FF24 /* sunriseAppSystemTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "sunriseAppSystemTests-Info.plist"; sourceTree = "<group>"; };
 		89B222B918E702B90042FF24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		89B222BB18E702B90042FF24 /* sunriseAppSystemTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = sunriseAppSystemTests.m; sourceTree = "<group>"; };
+		89DCDBD919244AB0001614D7 /* ARKLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKLabel.h; sourceTree = "<group>"; };
+		89DCDBDA19244AB0001614D7 /* ARKLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +191,8 @@
 				89AB47B5190805DF00A0D5B7 /* ARKButton.m */,
 				89105F361920FBB9001A115F /* ARKCompositeView.h */,
 				89105F371920FBB9001A115F /* ARKCompositeView.m */,
+				89DCDBD919244AB0001614D7 /* ARKLabel.h */,
+				89DCDBDA19244AB0001614D7 /* ARKLabel.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -389,6 +394,7 @@
 				89AB47CF190824DC00A0D5B7 /* ARKGlyph.m in Sources */,
 				89105F381920FBB9001A115F /* ARKCompositeView.m in Sources */,
 				89AA602618EF9589002195FD /* ARKState.m in Sources */,
+				89DCDBDB19244AB0001614D7 /* ARKLabel.m in Sources */,
 				89B2229F18E702B90042FF24 /* main.m in Sources */,
 				89A56E1D19230A4D00242563 /* ARKSliderRegion.m in Sources */,
 				89AB47A61907FBBF00A0D5B7 /* ARKMainViewController.m in Sources */,

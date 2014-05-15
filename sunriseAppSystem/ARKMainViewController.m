@@ -27,6 +27,7 @@ static NSMutableArray *stateList;
     [self.view setBackgroundColor:[ARKDefault backgroundColor]];
     
     //objects
+    [self.view addSubview:[[ARKView alloc] initWithCenter:[ARKDefault centerScreen] andRadius:buttonRadius]];
 }
 
 - (void)didReceiveMemoryWarning
