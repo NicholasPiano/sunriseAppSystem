@@ -9,16 +9,26 @@
 #import "ARKView.h"
 #import "ARKSlider.h"
 #import "ARKLabel.h"
+#import "ARKAlarm.h"
 
 @interface ARKAlarmInterface : ARKView
 
 #pragma mark - properties
+
+//identifiers
+@property (strong, nonatomic) NSNumber *day;
+@property (strong, nonatomic) NSNumber *hour;
+@property (strong, nonatomic) NSNumber *minute;
+
 //interface elements
 @property (strong, nonatomic) ARKSlider *slider;
 @property (strong, nonatomic) ARKButton *plusButton;
 @property (strong, nonatomic) ARKButton *minusButton;
 @property (strong, nonatomic) ARKLabel *hourLabel;
 @property (strong, nonatomic) ARKLabel *minuteLabel;
+
+//backend
+@property (strong, nonatomic) ARKAlarm *alarm;
 
 #pragma mark - initialiser
 
