@@ -20,9 +20,9 @@
 @synthesize alarm;
 
 #pragma mark - initialiser
-- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
+- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
 {
-    self = [super initWithCenter:argCenter andSize:argSize andStateList:stateList];
+    self = [super initViewWithStatesWithCenter:argCenter andSize:argSize];
     if (self) {
         
     }
@@ -33,46 +33,53 @@
 
 #pragma mark - factory
 //everything needed to properly define a single interface element capable of modifying an alarm.
-+ (ARKAlarmInterface *)alarmInterfaceWithIndex:(int)index andStateList:(NSArray *)stateList
++ (ARKAlarmInterface *)alarmInterfaceWithIndex:(int)index
 {
     //make ident
-    NSString *ident = [NSString stringWithFormat:@"alarm-interface-%d", index];
-    
-    //metrics
-    CGFloat width = [ARKDefault screenWidth]/6.0;
-    CGFloat height = [ARKDefault screenHeight];
-    CGPoint center = [ARKDefault centerScreenVerticalWithHorizontal:width*(2*index + 1)]; //leave space for menu gutter
-    CGSize size = CGSizeMake(width, height);
+    NSString *ident = [NSString stringWithFormat:alarmInterfaceIdent, index];
     
     //initialise
-    ARKAlarmInterface *alarmInterface = [[self alloc] initWithCenter:center andSize:size andStateList:stateList];
+    ARKAlarmInterface *alarmInterface = [[self alloc] initViewWithStatesWithCenter:[ARKF alarmInterfaceCenterWithIndex:index] andSize:[ARKF alarmInterfaceSize]];
     
     //build components
+    alarmInterface.slider = [self sliderWithIdent:ident];
+    alarmInterface.plusButton = [self plusButtonWithIdent:ident];
+    alarmInterface.minusButton = [self minusButtonWithIdent:ident];
+    alarmInterface.hourLabel = [self hourLabelWithIdent:ident];
+    alarmInterface.minuteLabel = [self minuteLabelWithIdent:ident];
+    alarmInterface.alarm = [self alarmWithIdent:ident];
+    
+    return alarmInterface;
 }
 
-+ (ARKSlider *)sliderWithIdent:(NSString *)ident
-{
-    
-}
-
-+ (ARKButton *)plusButtonWithIdent:(NSString *)ident
-{
-    
-}
-
-+ (ARKButton *)minusButtonWithIdent:(NSString *)ident
-{
-    
-}
-
-+ (ARKLabel *)hourLabelWithIdent:(NSString *)ident
-{
-    
-}
-
-+ (ARKLabel *)minuteLabelWithIdent:(NSString *)ident
-{
-    
-}
+//+ (ARKSlider *)sliderWithIdent:(NSString *)ident
+//{
+//    
+//}
+//
+//+ (ARKButton *)plusButtonWithIdent:(NSString *)ident
+//{
+//    
+//}
+//
+//+ (ARKButton *)minusButtonWithIdent:(NSString *)ident
+//{
+//    
+//}
+//
+//+ (ARKLabel *)hourLabelWithIdent:(NSString *)ident
+//{
+//    
+//}
+//
+//+ (ARKLabel *)minuteLabelWithIdent:(NSString *)ident
+//{
+//    
+//}
+//
+//+ (ARKAlarm *)alarmWithIdent:(NSString *)ident
+//{
+//    
+//}
 
 @end

@@ -15,16 +15,6 @@
 //default sender
 #define Self @"self"
 
-//standard metrics
-#define buttonRadius 12.0
-
-//animation
-#define animationDuration 0.2
-#define animationDelay 0.0
-
-//slider
-#define sliderTimeInterval 15.0 //minutes
-
 //local notifications
 #define State @"state"
 #define Sender @"sender"
@@ -46,16 +36,6 @@
 + (CGPoint)centerScreenHorizontalWithVertical:(CGFloat)vertical;
 + (CGFloat)screenHeight;
 + (CGFloat)screenWidth;
-
-//standard metrics
-+ (CGFloat)buttonRadiusWithModifier:(CGFloat)modifier;
-
-//colors
-+ (UIColor *)backgroundColor;
-+ (UIColor *)interfaceColor;
-+ (UIColor *)yesColor;
-+ (UIColor *)noColor;
-+ (UIColor *)transparent;
 
 //time
 + (int)currentDayNumber;

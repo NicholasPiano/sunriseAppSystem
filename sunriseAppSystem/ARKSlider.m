@@ -21,9 +21,9 @@
 @synthesize lastButtonTransform, tapThumbRecognizer, panThumbRecognizer, regionArray;
 
 #pragma mark - initialisers
-- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
+- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
 {
-    self = [super initWithCenter:argCenter andSize:argSize andDefaultState:argDefaultState andStateList:stateList];
+    self = [super initViewWithStatesWithCenter:argCenter andSize:argSize];
     if (self) {
         //setup recognizers
         self.lastButtonTransform = 0.0;
@@ -189,16 +189,16 @@
 }
 
 #pragma mark - factory
-+ (ARKSlider *)horizontalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
++ (ARKSlider *)horizontalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState
 {
-    ARKSlider *slider = [[ARKSlider alloc] initWithCenter:argCenter andSize:argSize andDefaultState:argDefaultState andStateList:stateList];
+    ARKSlider *slider = [[ARKSlider alloc] initViewWithStatesWithCenter:argCenter andSize:argSize andDefaultState:argDefaultState];
     slider.isVertical = NO;
     return slider;
 }
 
-+ (ARKSlider *)verticalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
++ (ARKSlider *)verticalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState
 {
-    return [[ARKSlider alloc] initWithCenter:argCenter andSize:argSize andDefaultState:argDefaultState andStateList:stateList];
+    return [[ARKSlider alloc] initViewWithStatesWithCenter:argCenter andSize:argSize andDefaultState:argDefaultState];
 }
 
 @end

@@ -11,8 +11,6 @@
 #pragma mark static vars
 //idents
 static NSArray *weekIdentArray = nil, *weekLabelArray = nil;
-//colors
-static UIColor *backgroundColor = nil, *interfaceColor = nil, *yesColor = nil, *noColor = nil;
 
 @implementation ARKDefault
 
@@ -23,12 +21,6 @@ static UIColor *backgroundColor = nil, *interfaceColor = nil, *yesColor = nil, *
         //idents
         weekIdentArray = [NSArray arrayWithObjects:@"monday", @"tuesday", @"wednesday", @"thursday", @"friday", @"saturday", @"sunday", nil];
         weekLabelArray = [NSArray arrayWithObjects:@"M", @"T", @"W", @"T", @"F", @"S", @"S", nil];
-        
-        //colors
-        backgroundColor = [[UIColor alloc] initWithRed:0.1725 green:0.5412 blue:0.9804 alpha:1];
-        interfaceColor = [[UIColor alloc] initWithRed:0.8314 green:0.8314 blue:0.8314 alpha:1];
-        yesColor = [[UIColor alloc] initWithRed:(40.0f/255.0f) green:(180.0f/255.0f) blue:(30.0/255.0) alpha:1];
-        noColor = [[UIColor alloc] initWithRed:(200.0f/255.0f) green:(35.0f/255.0f) blue:(35.0/255.0) alpha:1];
     }
 }
 
@@ -65,38 +57,6 @@ static UIColor *backgroundColor = nil, *interfaceColor = nil, *yesColor = nil, *
 {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     return screenRect.size.width;
-}
-
-//standard metrics
-+ (CGFloat)buttonRadiusWithModifier:(CGFloat)modifier
-{
-    return buttonRadius*modifier;
-}
-
-//colors
-+ (UIColor *)backgroundColor
-{
-    return backgroundColor;
-}
-
-+ (UIColor *)interfaceColor
-{
-    return interfaceColor;
-}
-
-+ (UIColor *)yesColor
-{
-    return yesColor;
-}
-
-+ (UIColor *)noColor
-{
-    return noColor;
-}
-
-+ (UIColor *)transparent
-{
-    return [UIColor clearColor];
 }
 
 //time
