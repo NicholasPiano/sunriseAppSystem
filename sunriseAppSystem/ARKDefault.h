@@ -48,13 +48,7 @@
 + (CGFloat)screenWidth;
 
 //standard metrics
-//+ (CGFloat)buttonRadius;
-//+ (CGFloat)buttonDiameter;
 + (CGFloat)buttonRadiusWithModifier:(CGFloat)modifier;
-//+ (CGSize)buttonSize;
-//+ (CGSize)clockButtonInteriorSize; //if the alarm label components were to fit inside a button comfortably, what size would they be?
-//+ (CGFloat)sliderSpacing;
-//+ (CGFloat)sliderSpacingWithIndex:(int)index;
 
 //colors
 + (UIColor *)backgroundColor;

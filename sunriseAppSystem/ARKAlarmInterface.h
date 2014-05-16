@@ -31,12 +31,13 @@
 @property (strong, nonatomic) ARKAlarm *alarm;
 
 #pragma mark - initialiser
+- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andStateList:(NSArray *)stateList;
 
 #pragma mark - instance methods
 
 #pragma mark - factory
 //everything needed to properly define a single interface element capable of modifying an alarm.
-+ (ARKAlarmInterface *)alarmInterfaceWithIdent:(NSString *)ident;
++ (ARKAlarmInterface *)alarmInterfaceWithIndex:(int)index andStateList:(NSArray *)stateList;
 + (ARKSlider *)sliderWithIdent:(NSString *)ident;
 + (ARKButton *)plusButtonWithIdent:(NSString *)ident;
 + (ARKButton *)minusButtonWithIdent:(NSString *)ident;
