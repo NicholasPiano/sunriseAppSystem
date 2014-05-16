@@ -38,6 +38,7 @@
 		89B222BA18E702B90042FF24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 89B222B818E702B90042FF24 /* InfoPlist.strings */; };
 		89B222BC18E702B90042FF24 /* sunriseAppSystemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B222BB18E702B90042FF24 /* sunriseAppSystemTests.m */; };
 		89DCDBDB19244AB0001614D7 /* ARKLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DCDBDA19244AB0001614D7 /* ARKLabel.m */; };
+		89DCDBDE192590BE001614D7 /* ARKF.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DCDBDD192590BE001614D7 /* ARKF.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,8 @@
 		89B222BB18E702B90042FF24 /* sunriseAppSystemTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = sunriseAppSystemTests.m; sourceTree = "<group>"; };
 		89DCDBD919244AB0001614D7 /* ARKLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKLabel.h; sourceTree = "<group>"; };
 		89DCDBDA19244AB0001614D7 /* ARKLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKLabel.m; sourceTree = "<group>"; };
+		89DCDBDC192590BE001614D7 /* ARKF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKF.h; sourceTree = "<group>"; };
+		89DCDBDD192590BE001614D7 /* ARKF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKF.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +152,8 @@
 				89AA602518EF9589002195FD /* ARKState.m */,
 				8906B4BC18FB5B6500D4EF77 /* ARKDefault.h */,
 				8906B4BD18FB5B6500D4EF77 /* ARKDefault.m */,
+				89DCDBDC192590BE001614D7 /* ARKF.h */,
+				89DCDBDD192590BE001614D7 /* ARKF.m */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -390,6 +395,7 @@
 				89AB47B3190805D500A0D5B7 /* ARKSlider.m in Sources */,
 				8912A1FA19146C4300BEB211 /* ARKLog.m in Sources */,
 				89AB47B6190805DF00A0D5B7 /* ARKButton.m in Sources */,
+				89DCDBDE192590BE001614D7 /* ARKF.m in Sources */,
 				89AB47C81908200500A0D5B7 /* ARKAlarmInterface.m in Sources */,
 				89AB47CF190824DC00A0D5B7 /* ARKGlyph.m in Sources */,
 				89105F381920FBB9001A115F /* ARKCompositeView.m in Sources */,

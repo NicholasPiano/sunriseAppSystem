@@ -26,7 +26,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.backgroundColor = [ARKDefault interfaceColor];
+        self.backgroundColor = [ARKF interfaceColor];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:State object:nil];
     }
     return self;
@@ -54,7 +54,7 @@
     return self;
 }
 
-- (id)initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
+- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andDefaultState:(ARKState *)argDefaultState
 {
     self = [self initWithCenter:argCenter andRadius:argRadius];
     if (self) {
@@ -62,7 +62,7 @@
         self.stateDictionary = [NSMutableDictionary dictionary];
         
         //states
-        for (NSString *stateId in stateList) {
+        for (NSString *stateId in [ARKF stateList]) {
             if ([stateId isEqualToString:HomeState]) {
                 ARKState *homeState = self.defaultState;
                 homeState.duration = 0.0;
@@ -79,7 +79,7 @@
     return self;
 }
 
-- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList
+- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState
 {
     self = [self initWithCenter:argCenter andSize:argSize];
     if (self) {
@@ -87,7 +87,57 @@
         self.stateDictionary = [NSMutableDictionary dictionary];
         
         //states
-        for (NSString *stateId in stateList) {
+        for (NSString *stateId in [ARKF stateList]) {
+            if ([stateId isEqualToString:HomeState]) {
+                ARKState *homeState = self.defaultState;
+                homeState.duration = 0.0;
+                homeState.delay = 0.0;
+                [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
+            } else {
+                [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
+            }
+        }
+        
+        //sync home state
+        [self syncHomeState];
+    }
+    return self;
+}
+
+- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius
+{
+    self = [self initWithCenter:argCenter andRadius:argRadius];
+    if (self) {
+        self.defaultState = [ARKState nullState];
+        self.stateDictionary = [NSMutableDictionary dictionary];
+        
+        //states
+        for (NSString *stateId in [ARKF stateList]) {
+            if ([stateId isEqualToString:HomeState]) {
+                ARKState *homeState = self.defaultState;
+                homeState.duration = 0.0;
+                homeState.delay = 0.0;
+                [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
+            } else {
+                [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
+            }
+        }
+        
+        //sync home state
+        [self syncHomeState];
+    }
+    return self;
+}
+
+- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
+{
+    self = [self initWithCenter:argCenter andSize:argSize];
+    if (self) {
+        self.defaultState = [ARKState nullState];
+        self.stateDictionary = [NSMutableDictionary dictionary];
+        
+        //states
+        for (NSString *stateId in [ARKF stateList]) {
             if ([stateId isEqualToString:HomeState]) {
                 ARKState *homeState = self.defaultState;
                 homeState.duration = 0.0;

@@ -40,7 +40,7 @@
 - (void)nextGlobalId:(NSString *)argNextGlobalId;
 
 #pragma mark - factory
-+ (ARKState *)defaultState;
++ (ARKState *)nullState;
 + (ARKState *)homeState;
 + (ARKState *)state:(ARKState *)state withNextStateId:(NSString *)nextStateId;
 + (ARKState *)stateFromState:(ARKState *)state withStateId:(NSString *)stateId andNextStateId:(NSString *)nextStateId;

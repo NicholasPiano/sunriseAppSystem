@@ -53,7 +53,7 @@
 }
 
 #pragma mark - factory
-+ (ARKState *)defaultState
++ (ARKState *)nullState
 {
     return [[self alloc] initWithStateId:nil andNextStateId:nil];
 }

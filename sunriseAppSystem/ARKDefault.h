@@ -15,16 +15,6 @@
 //default sender
 #define Self @"self"
 
-//standard metrics
-#define buttonRadius 12.0
-
-//animation
-#define animationDuration 0.2
-#define animationDelay 0.0
-
-//slider
-#define sliderTimeInterval 15.0 //minutes
-
 //local notifications
 #define State @"state"
 #define Sender @"sender"
@@ -46,22 +36,6 @@
 + (CGPoint)centerScreenHorizontalWithVertical:(CGFloat)vertical;
 + (CGFloat)screenHeight;
 + (CGFloat)screenWidth;
-
-//standard metrics
-//+ (CGFloat)buttonRadius;
-//+ (CGFloat)buttonDiameter;
-+ (CGFloat)buttonRadiusWithModifier:(CGFloat)modifier;
-//+ (CGSize)buttonSize;
-//+ (CGSize)clockButtonInteriorSize; //if the alarm label components were to fit inside a button comfortably, what size would they be?
-//+ (CGFloat)sliderSpacing;
-//+ (CGFloat)sliderSpacingWithIndex:(int)index;
-
-//colors
-+ (UIColor *)backgroundColor;
-+ (UIColor *)interfaceColor;
-+ (UIColor *)yesColor;
-+ (UIColor *)noColor;
-+ (UIColor *)transparent;
 
 //time
 + (int)currentDayNumber;

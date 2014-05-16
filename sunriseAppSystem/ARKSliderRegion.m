@@ -11,6 +11,11 @@
 @implementation ARKSliderRegion
 
 #pragma mark - properties
+
+//alarm properties
+@synthesize hour, minute;
+
+//states
 @synthesize enteredStateId, exitStateId, touchUpStateId, snapPoint;
 
 #pragma mark - initialiser

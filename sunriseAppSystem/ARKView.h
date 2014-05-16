@@ -31,8 +31,10 @@
 #pragma mark - initialisers
 - initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius;
 - initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
-- initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList;
-- initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList;
+- initViewWithStatesWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andDefaultState:(ARKState *)argDefaultState;
+- initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState;
+- initViewWithStatesWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius;
+- initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
 
 #pragma mark instance methods
 - (void)dealloc; //for removing observer

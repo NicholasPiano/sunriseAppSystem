@@ -14,6 +14,12 @@
 //like a typical ARKView, it has a position and size within its parent view, which will be a slider. As the touch is moved along the slider, the gesture recogniser will check whether the touch is inside one of the regions. Upon deciding, the current region will be set and acted upon. Regions themselves are invisible by default, but can be set with a color.
 
 #pragma mark - properties
+
+//alarm properties
+@property (nonatomic) NSUInteger hour;
+@property (nonatomic) NSUInteger minute;
+
+//states
 @property (strong, nonatomic) NSString *enteredStateId; //state id to be broadcast when entering the region.
 @property (strong, nonatomic) NSString *exitStateId;
 @property (strong, nonatomic) NSString *touchUpStateId;

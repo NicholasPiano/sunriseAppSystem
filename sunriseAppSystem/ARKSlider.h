@@ -32,7 +32,7 @@
 @property (strong, nonatomic) NSMutableArray *regionArray;
 
 #pragma mark - initialisers
--(id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList;
+-(id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
 
 #pragma mark - instance methods
 //commands and reactions
@@ -51,7 +51,7 @@
 - (void)addRegion:(ARKSliderRegion *)region withSnapPoint:(CGPoint)snapPoint;
 
 #pragma mark - factory
-+ (ARKSlider *)horizontalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList;
-+ (ARKSlider *)verticalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState andStateList:(NSArray *)stateList;
++ (ARKSlider *)horizontalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState;
++ (ARKSlider *)verticalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState;
 
 @end
