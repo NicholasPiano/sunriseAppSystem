@@ -45,5 +45,14 @@
 }
 
 #pragma mark - factory
++ (ARKButton *)buttonWithCenter:(CGPoint)center andRadius:(CGFloat)radius;
+{
+    return [[self alloc] initViewWithStatesWithCenter:center andRadius:radius];
+}
+
++ (ARKButton *)buttonWithCenter:(CGPoint)center andSize:(CGSize)size
+{
+    return [[self alloc] initViewWithStatesWithCenter:center andSize:size];
+}
 
 @end

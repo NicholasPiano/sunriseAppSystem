@@ -20,6 +20,8 @@
     //objects
     [self.view addSubview:[ARKAlarmInterface alarmInterfaceWithIndex:0 andDay:0 andHour:0 andMinute:0]];
     [self.view addSubview:[ARKAlarmInterface alarmInterfaceWithIndex:1 andDay:0 andHour:0 andMinute:0]];
+    [self.view addSubview:[ARKAlarmInterface alarmInterfaceWithIndex:2 andDay:0 andHour:0 andMinute:0]];
+    [self.view addSubview:[ARKAlarmInterface alarmInterfaceWithIndex:3 andDay:0 andHour:0 andMinute:0]];
 }
 
 - (void)didReceiveMemoryWarning

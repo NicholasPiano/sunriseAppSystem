@@ -25,5 +25,7 @@
 - (IBAction)testButtonTap:(UITapGestureRecognizer *)tapGestureRecognizer;
 
 #pragma mark - factory
++ (ARKButton *)buttonWithCenter:(CGPoint)center andRadius:(CGFloat)radius;
++ (ARKButton *)buttonWithCenter:(CGPoint)center andSize:(CGSize)size;
 
 @end

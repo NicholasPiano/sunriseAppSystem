@@ -40,11 +40,11 @@
     
     //initialise
     ARKAlarmInterface *alarmInterface = [[self alloc] initViewWithStatesWithCenter:[ARKF alarmInterfaceCenterWithIndex:index] andSize:[ARKF alarmInterfaceSize]];
-    alarmInterface.day = &(day);
-    alarmInterface.hour = &(hour);
-    alarmInterface.minute = &(minute);
+    alarmInterface.day = 0;
+    alarmInterface.hour = 0;
+    alarmInterface.minute = 0;
     
-    alarmInterface.backgroundColor = [ARKF interfaceColor];
+    alarmInterface.backgroundColor = [ARKF transparent];
     
     //build components
     alarmInterface.slider = [self sliderWithIdent:ident];
@@ -60,11 +60,65 @@
 
 + (ARKSlider *)sliderWithIdent:(NSString *)ident
 {
-    ARKSlider *slider = [[ARKSlider alloc] initViewWithStatesWithCenter:[ARKF alarmInterfaceSliderCenter] andSize:[ARKF alarmInterfaceSliderSize]];
+    ARKSlider *slider = [ARKSlider verticalSliderWithCenter:[ARKF alarmInterfaceSliderCenter] andSize:[ARKF alarmInterfaceSliderSize]];
+    slider.ident = [NSString stringWithFormat:@"%@-slider", ident];
     
-    slider.backgroundColor = [ARKF interfaceColor2];
+    slider.backgroundColor = [ARKF transparent];
+    
+    //button
+    [slider addThumb:[self sliderButtonWithIdent:ident]];
+    
+    //regions
+    int numberOfTimeRegions = 94;
+    CGFloat timeRegionHeight = ([ARKF alarmInterfaceSliderSize].height - 4*(buttonSpacing+buttonRadius))/(float)numberOfTimeRegions;
+//    ARKLog(@"%f", timeRegionHeight);
+    
+    //-top region
+    ARKSliderRegion *topRegion = [ARKSliderRegion sliderRegionWithCenter:CGPointMake([ARKF alarmInterfaceSliderSize].width/2.0, (buttonSpacing+buttonRadius)/2.0)
+                                                                 andSize:CGSizeMake([ARKF alarmInterfaceSliderSize].width, buttonRadius+buttonSpacing)
+                                                       andTouchUpStateId:[NSString stringWithFormat:@"%@-top", slider.ident]];
+    topRegion.hour = 23;
+    topRegion.minute = 45;
+    topRegion.backgroundColor = [ARKF interfaceColor2];
+    [slider addRegion:topRegion withSnapPoint:CGPointMake([ARKF alarmInterfaceSliderSize].width/2.0, buttonRadius+buttonSpacing-timeRegionHeight/2.0)];
+    
+    //-time regions
+    for (int i=0; i<numberOfTimeRegions; i++) {
+        CGFloat offset = buttonSpacing + buttonRadius;
+        CGPoint timeRegionCenter = CGPointMake([ARKF alarmInterfaceSliderSize].width/2.0, (i+0.5)*timeRegionHeight + offset);
+        CGSize timeRegionSize = CGSizeMake([ARKF alarmInterfaceSliderSize].width, timeRegionHeight);
+        ARKSliderRegion *timeRegion = [ARKSliderRegion sliderRegionWithCenter:timeRegionCenter andSize:timeRegionSize andTouchUpStateId:[NSString stringWithFormat:@"%@-%d", slider.ident, i]];
+        timeRegion.backgroundColor = [ARKF interfaceColor];
+        
+        //hours and minutes
+        
+        [slider addRegion:timeRegion];
+    }
+    
+    //-zero region
+    ARKSliderRegion *zeroRegion = [ARKSliderRegion sliderRegionWithCenter:CGPointMake([ARKF alarmInterfaceSliderSize].width/2.0, [ARKF alarmInterfaceSliderSize].height-(5.0/2.0)*(buttonRadius+buttonSpacing)) andSize:CGSizeMake([ARKF alarmInterfaceSliderSize].width, buttonSpacing+buttonRadius) andTouchUpStateId:[NSString stringWithFormat:@"%@-zero", slider.ident]];
+    zeroRegion.hour = 0;
+    zeroRegion.minute = 0;
+    [slider addRegion:zeroRegion withSnapPoint:CGPointMake([ARKF alarmInterfaceSliderSize].width/2.0, [ARKF alarmInterfaceSliderSize].height-3.0*(buttonRadius+buttonSpacing) + timeRegionHeight/2.0)];
+    
+    //-off region
+    ARKSliderRegion *offRegion = [ARKSliderRegion sliderRegionWithCenter:CGPointMake([ARKF alarmInterfaceSliderSize].width/2.0, [ARKF alarmInterfaceSliderSize].height-(buttonRadius+buttonSpacing)) andSize:CGSizeMake([ARKF alarmInterfaceSliderSize].width, 2*(buttonSpacing+buttonRadius)) andTouchUpStateId:[NSString stringWithFormat:@"%@-off", slider.ident]];
+    offRegion.backgroundColor = [ARKF interfaceColor3];
+    [slider addRegion:offRegion];
     
     return slider;
+}
+
++ (ARKButton *)sliderButtonWithIdent:(NSString *)ident
+{
+    ARKButton *sliderButton = [ARKButton buttonWithCenter:[ARKF alarmInterfaceSliderButtonCenter] andSize:[ARKF alarmInterfaceSliderButtonSize]];
+    sliderButton.ident = [NSString stringWithFormat:@"%@-thumb", ident];
+    sliderButton.backgroundColor = [ARKF transparent];
+    ARKView *subview = [[ARKView alloc] initWithCenter:CGPointMake([ARKF alarmInterfaceSliderButtonSize].width/2.0, [ARKF alarmInterfaceSliderButtonSize].width) andRadius:[ARKF alarmInterfaceSliderButtonSize].width/2.0];
+    subview.backgroundColor = [ARKF yesColor];
+    [sliderButton addSubview:subview];
+    
+    return sliderButton;
 }
 
 //+ (ARKButton *)plusButtonWithIdent:(NSString *)ident

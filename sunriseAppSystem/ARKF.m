@@ -100,7 +100,7 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 //alarm interface
 + (CGFloat)alarmInterfaceWidth
 {
-    return ([ARKDefault screenWidth] - 4*buttonSpacing - 4*buttonRadius)/5.0;
+    return ([ARKDefault screenWidth] - 4*buttonSpacing - 4*buttonRadius)/4.0;
 }
 
 + (CGFloat)alarmInterfaceHeight
@@ -126,6 +126,16 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 + (CGPoint)alarmInterfaceSliderCenter
 {
     return CGPointMake([self alarmInterfaceSliderSize].width/2.0, [self alarmInterfaceSliderSize].height/2.0+2*[self alarmInterfaceLabelSize].height);
+}
+
++ (CGSize)alarmInterfaceSliderButtonSize
+{
+    return CGSizeMake(2*buttonRadius, 4*buttonRadius);
+}
+
++ (CGPoint)alarmInterfaceSliderButtonCenter
+{
+    return CGPointMake([self alarmInterfaceSize].width/2.0, [ARKF alarmInterfaceSliderSize].height - 6*buttonRadius);
 }
 
 + (CGSize)alarmInterfaceLabelSize

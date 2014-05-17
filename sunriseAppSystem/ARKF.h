@@ -11,7 +11,7 @@
 //DEFINITIONS
 //standard metrics
 #define buttonRadius 15.0
-#define buttonSpacing 5.0
+#define buttonSpacing 15.0
 
 //animation
 #define animationDuration 0.2
@@ -74,6 +74,9 @@
 
 + (CGSize)alarmInterfaceSliderSize;
 + (CGPoint)alarmInterfaceSliderCenter;
+
++ (CGSize)alarmInterfaceSliderButtonSize;
++ (CGPoint)alarmInterfaceSliderButtonCenter;
 
 + (CGSize)alarmInterfaceLabelSize;
 + (CGPoint)alarmInterfaceHourLabelCenter;

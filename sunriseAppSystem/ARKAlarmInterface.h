@@ -16,9 +16,9 @@
 #pragma mark - properties
 
 //identifiers
-@property int *day;
-@property int *hour;
-@property int *minute;
+@property NSUInteger *day;
+@property NSUInteger *hour;
+@property NSUInteger *minute;
 
 //interface elements
 @property (strong, nonatomic) ARKSlider *slider;
@@ -39,6 +39,7 @@
 //everything needed to properly define a single interface element capable of modifying an alarm.
 + (ARKAlarmInterface *)alarmInterfaceWithIndex:(int)index andDay:(int)day andHour:(int)hour andMinute:(int)minute;
 + (ARKSlider *)sliderWithIdent:(NSString *)ident;
++ (ARKButton *)sliderButtonWithIdent:(NSString *)ident;
 + (ARKButton *)plusButtonWithIdent:(NSString *)ident;
 + (ARKButton *)minusButtonWithIdent:(NSString *)ident;
 + (ARKLabel *)hourLabelWithIdent:(NSString *)ident;
