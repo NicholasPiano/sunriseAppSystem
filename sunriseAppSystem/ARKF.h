@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ARKDefault.h"
 
 //DEFINITIONS
 //standard metrics
-#define buttonRadius 12.0
+#define buttonRadius 15.0
+#define buttonSpacing 5.0
 
 //animation
 #define animationDuration 0.2
@@ -31,7 +31,7 @@
 //library
 
 //alarm interface
-#define alarmInterfaceIdent @"alarm-interface-%d"
+#define alarmInterfaceIdent @"alarm-interface"
 
 @interface ARKF : NSObject
 
@@ -45,6 +45,8 @@
 //colors
 + (UIColor *)backgroundColor;
 + (UIColor *)interfaceColor;
++ (UIColor *)interfaceColor2;
++ (UIColor *)interfaceColor3;
 + (UIColor *)yesColor;
 + (UIColor *)noColor;
 + (UIColor *)transparent;
@@ -69,6 +71,13 @@
 + (CGFloat)alarmInterfaceHeight;
 + (CGSize)alarmInterfaceSize;
 + (CGPoint)alarmInterfaceCenterWithIndex:(int)index;
+
++ (CGSize)alarmInterfaceSliderSize;
++ (CGPoint)alarmInterfaceSliderCenter;
+
++ (CGSize)alarmInterfaceLabelSize;
++ (CGPoint)alarmInterfaceHourLabelCenter;
++ (CGPoint)alarmInterfaceMinuteLabelCenter;
 
 
 @end

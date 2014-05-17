@@ -18,6 +18,8 @@
     [self.view setBackgroundColor:[ARKF backgroundColor]];
     
     //objects
+    [self.view addSubview:[ARKAlarmInterface alarmInterfaceWithIndex:0 andDay:0 andHour:0 andMinute:0]];
+    [self.view addSubview:[ARKAlarmInterface alarmInterfaceWithIndex:1 andDay:0 andHour:0 andMinute:0]];
 }
 
 - (void)didReceiveMemoryWarning
