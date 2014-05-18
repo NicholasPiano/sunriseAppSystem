@@ -293,12 +293,18 @@
 //notification center
 - (void)receiveNotification:(NSNotification *)notification
 {
-    if ([notification.name isEqualToString:State] && self.stateDictionary != nil) {
-        NSDictionary *dictionary = [notification userInfo];
+    ARKLog(@"notification");
+    NSDictionary *dictionary = [notification userInfo];
+    if ([notification.name isEqualToString:State] && [self.stateDictionary count]!=0) {
         NSString *stateId = [dictionary objectForKey:StateId];
         NSString *sender = [dictionary objectForKey:Sender];
         
         [self syncStateWithId:stateId andSender:sender];
+    } else if ([notification.name isEqualToString:@"value"]) {
+        ARKLog(@"value");
+        int value = [[dictionary objectForKey:@"value"] integerValue];
+        NSString *type = [dictionary objectForKey:@"type"];
+        [self receiveValue:value withType:type];
     }
 }
 
@@ -316,6 +322,14 @@
 - (void)postNextStateId
 {
     [self postStateWithId:self.activeState.nextStateId andSender:[ARKDefault stateId:self.activeState.nextStateId withSender:self.ident]];
+}
+
+//value methods
+- (void)postValue:(int)value withType:(NSString *)type
+{
+    ARKLog(@"post value: %d", value);
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"value", [NSNumber numberWithInt:value], @"type", type, nil];
+    [self postNotification:[NSNotification notificationWithName:@"value" object:nil userInfo:dictionary]];
 }
 
 //user defaults

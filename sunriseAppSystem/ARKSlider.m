@@ -119,6 +119,8 @@
 //                    ARKLog(@"current region: %@, thumb: %f, region %f)", region.touchUpStateId, thumbCenter.y, region.center.y);
 //                    [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:self.currentRegion.exitStateId]];
                     self.currentRegion = region;
+                    [self postValue:self.currentRegion.hour withType:@"hour"];
+                    [self postValue:self.currentRegion.minute withType:@"minute"];
 //                    [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:region.enteredStateId]];
                 }
                 noRegion = NO;

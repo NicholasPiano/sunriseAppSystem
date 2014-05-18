@@ -51,8 +51,10 @@
     [alarmInterface addSubview:alarmInterface.slider];
 //    alarmInterface.plusButton = [self plusButtonWithIdent:ident];
 //    alarmInterface.minusButton = [self minusButtonWithIdent:ident];
-//    alarmInterface.hourLabel = [self hourLabelWithIdent:ident];
-//    alarmInterface.minuteLabel = [self minuteLabelWithIdent:ident];
+    alarmInterface.hourLabel = [self hourLabelWithIdent:ident];
+    [alarmInterface addSubview:alarmInterface.hourLabel];
+    alarmInterface.minuteLabel = [self minuteLabelWithIdent:ident];
+    [alarmInterface addSubview:alarmInterface.minuteLabel];
 //    alarmInterface.alarm = [self alarmWithIdent:ident andDay:day andHour:hour andMinute:minute];
     
     return alarmInterface;
@@ -83,6 +85,8 @@
     [slider addRegion:topRegion withSnapPoint:CGPointMake([ARKF alarmInterfaceSliderSize].width/2.0, buttonRadius+buttonSpacing-timeRegionHeight/2.0)];
     
     //-time regions
+    int hours = 23;
+    int minutes = 30;
     for (int i=0; i<numberOfTimeRegions; i++) {
         CGFloat offset = buttonSpacing + buttonRadius;
         CGPoint timeRegionCenter = CGPointMake([ARKF alarmInterfaceSliderSize].width/2.0, (i+0.5)*timeRegionHeight + offset);
@@ -91,6 +95,17 @@
         timeRegion.backgroundColor = [ARKF interfaceColor];
         
         //hours and minutes
+        //23 30
+        //23 15
+        //23 00
+        timeRegion.hour = hours;
+        timeRegion.minute = minutes;
+        
+        minutes = minutes - 15;
+        if (i%4==2) { //2 6 10 ...
+            hours--;
+            minutes = 0;
+        }
         
         [slider addRegion:timeRegion];
     }
@@ -131,15 +146,21 @@
 //    
 //}
 //
-//+ (ARKLabel *)hourLabelWithIdent:(NSString *)ident
-//{
-//    
-//}
-//
-//+ (ARKLabel *)minuteLabelWithIdent:(NSString *)ident
-//{
-//    
-//}
++ (ARKLabel *)hourLabelWithIdent:(NSString *)ident
+{
+    ARKLabel *hourLabel = [ARKLabel hourLabelWithCenter:CGPointMake([ARKF alarmInterfaceWidth]/2.0, buttonRadius) andSize:CGSizeMake(2*buttonRadius, 2*buttonRadius)];
+    hourLabel.ident = [NSString stringWithFormat:@"%@-label-hour", ident];
+    hourLabel.backgroundColor = [ARKF transparent];
+    return hourLabel;
+}
+
++ (ARKLabel *)minuteLabelWithIdent:(NSString *)ident
+{
+    ARKLabel *minuteLabel = [ARKLabel minuteLabelWithCenter:CGPointMake([ARKF alarmInterfaceWidth]/2.0, 3*buttonRadius) andSize:CGSizeMake(2*buttonRadius, 2*buttonRadius)];
+    minuteLabel.ident = [NSString stringWithFormat:@"%@-label-minute", ident];
+    minuteLabel.backgroundColor = [ARKF transparent];
+    return minuteLabel;
+}
 //
 //+ (ARKAlarm *)alarmWithIdent:(NSString *)ident
 //{
