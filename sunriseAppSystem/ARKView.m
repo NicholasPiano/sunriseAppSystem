@@ -207,7 +207,7 @@
         
         //set up animation
         [animationBlocks addObject:^(BOOL finished){
-            [UIView animateWithDuration:state.duration delay:state.delay options:UIViewAnimationOptionCurveLinear animations:^{
+            [UIView animateWithDuration:state.duration delay:state.delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 self.transform = state.transform;
                 self.alpha = state.alpha;
                 if (state.color != nil) {
@@ -219,7 +219,7 @@
     if (state.callbackState != nil) {
         //set up animation
         [animationBlocks addObject:^(BOOL finished){
-            [UIView animateWithDuration:state.callbackState.duration delay:state.callbackState.delay options:UIViewAnimationOptionCurveLinear animations:^{
+            [UIView animateWithDuration:state.callbackState.duration delay:state.callbackState.delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 self.transform = state.callbackState.transform;
                 self.alpha = state.callbackState.alpha;
                 if (state.callbackState.color != nil) {
@@ -293,8 +293,8 @@
 //notification center
 - (void)receiveNotification:(NSNotification *)notification
 {
-    if ([notification.name isEqualToString:State] && self.stateDictionary != nil) {
-        NSDictionary *dictionary = [notification userInfo];
+    NSDictionary *dictionary = [notification userInfo];
+    if ([notification.name isEqualToString:State] && [self.stateDictionary count]!=0) {
         NSString *stateId = [dictionary objectForKey:StateId];
         NSString *sender = [dictionary objectForKey:Sender];
         
@@ -310,12 +310,26 @@
 - (void)postStateWithId:(NSString *)stateId andSender:(NSString *)sender
 {
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:stateId, StateId, sender, Sender, nil];
+    if (stateId == nil) {
+        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:sender, Sender, nil];
+    }
     [self postNotification:[NSNotification notificationWithName:State object:nil userInfo:dictionary]]; //not using object. Requires cast. May use in the future.
 }
+
+//IBAN: GB63TSBS87700482122068
+//BIC: TSBSGB21118
 
 - (void)postNextStateId
 {
     [self postStateWithId:self.activeState.nextStateId andSender:[ARKDefault stateId:self.activeState.nextStateId withSender:self.ident]];
+}
+
+//value methods
+- (void)postValue:(int)value withType:(NSString *)type
+{
+    ARKLog(@"post value: %d", value);
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"value", [NSNumber numberWithInt:value], @"type", type, nil];
+    [self postNotification:[NSNotification notificationWithName:@"value" object:nil userInfo:dictionary]];
 }
 
 //user defaults

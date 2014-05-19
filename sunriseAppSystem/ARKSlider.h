@@ -12,17 +12,27 @@
 #import "ARKGlyph.h"
 #import "ARKButton.h"
 #import "ARKSliderRegion.h"
+#import "ARKLabel.h"
+#import "ARKAlarm.h"
 
 @interface ARKSlider : ARKView
 
 #pragma mark - properties
 //intrinsic
 @property BOOL isVertical;
+@property NSUInteger day;
+@property NSUInteger hour;
+@property NSUInteger minute;
+@property NSUInteger extraMinute; //can add five or ten minutes to an alarm
 
 //elements
 @property (strong, nonatomic) ARKRect *upperTrack;
 @property (strong, nonatomic) ARKRect *lowerTrack;
 @property (strong, nonatomic) ARKButton *thumb;
+@property (strong, nonatomic) ARKLabel *hourLabel;
+@property (strong, nonatomic) ARKLabel *minuteLabel;
+@property (strong, nonatomic) ARKButton *plusButton;
+@property (strong, nonatomic) ARKButton *minusButton;
 
 //tracking
 @property (nonatomic) CGFloat lastButtonTransform;
@@ -39,19 +49,33 @@
 - (IBAction)tapThumb:(UITapGestureRecognizer *)argTapGestureRecognizer;
 - (IBAction)panThumb:(UIPanGestureRecognizer *)argPanGestureRecognizer;
 
-//maybe other tap and drag gestures for other parts of the slider.
+- (IBAction)tapUp:(UITapGestureRecognizer *)argTapGestureRecognizer;
+- (IBAction)tapDown:(UITapGestureRecognizer *)argTapGestureRecognizer;
 
 //construct
 - (void)addUpperTrack:(ARKRect *)argUpperTrack;
 - (void)addLowerTrack:(ARKRect *)argLowerTrack;
 - (void)addThumb:(ARKButton *)argThumb;
+- (void)addHourLabel:(ARKLabel *)argHourLabel;
+- (void)addMinuteLabel:(ARKLabel *)argMinuteLabel;
+- (void)addPlusButton:(ARKButton *)argPlusButton;
+- (void)addMinusButton:(ARKButton *)argMinusButton;
 
 //regions
 - (void)addRegion:(ARKSliderRegion *)region;
 - (void)addRegion:(ARKSliderRegion *)region withSnapPoint:(CGPoint)snapPoint;
 
 #pragma mark - factory
-+ (ARKSlider *)horizontalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState;
-+ (ARKSlider *)verticalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState;
++ (ARKSlider *)horizontalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
++ (ARKSlider *)verticalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
++ (ARKSlider *)alarmSliderWithIndex:(int)index andDay:(NSUInteger)day;
+
+//alarm
++ (ARKButton *)sliderButtonWithIdent:(NSString *)ident;
++ (ARKButton *)plusButtonWithIdent:(NSString *)ident;
++ (ARKButton *)minusButtonWithIdent:(NSString *)ident;
++ (ARKLabel *)hourLabelWithIdent:(NSString *)ident;
++ (ARKLabel *)minuteLabelWithIdent:(NSString *)ident;
++ (ARKAlarm *)alarmWithIdent:(NSString *)ident andDay:(int)day andHour:(int)hour andMinute:(int)minute;
 
 @end

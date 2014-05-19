@@ -97,7 +97,11 @@ static NSArray *weekIdentArray = nil, *weekLabelArray = nil;
 
 + (NSString *)stateId:(NSString *)stateId withSender:(NSString *)sender
 {
-    return [NSString stringWithFormat:@"%@-%@", stateId, sender];
+    if (stateId == nil) {
+        return sender;
+    } else {
+        return [NSString stringWithFormat:@"%@-%@", stateId, sender];
+    }
 }
 
 + (BOOL)localNotificationExistsWithIdent:(NSString *)localNotificationIdent
@@ -172,6 +176,11 @@ static NSArray *weekIdentArray = nil, *weekLabelArray = nil;
 + (UIApplication *)app
 {
     return [UIApplication sharedApplication];
+}
+
++ (NSString *)timeStringWithInt:(int)integer
+{
+    return integer<10?[NSString stringWithFormat:@"0%d", integer]:[NSString stringWithFormat:@"%d", integer];
 }
 
 //vector methods

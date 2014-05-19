@@ -9,7 +9,7 @@
 #import "ARKF.h"
 
 //colors
-static UIColor *backgroundColor = nil, *interfaceColor = nil, *yesColor = nil, *noColor = nil;
+static UIColor *backgroundColor = nil, *interfaceColor = nil, *interfaceColor2 = nil, *interfaceColor3 = nil, *yesColor = nil, *noColor = nil;
 
 //states
 static NSArray *stateList = nil;
@@ -22,7 +22,9 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 {
     //colors
     backgroundColor = [[UIColor alloc] initWithRed:0.1725 green:0.5412 blue:0.9804 alpha:1];
-    interfaceColor = [[UIColor alloc] initWithRed:0.8314 green:0.8314 blue:0.8314 alpha:1];
+    interfaceColor = [[UIColor alloc] initWithRed:0.8314 green:0.8314 blue:0.8314 alpha:0.9]; //change after debug
+    interfaceColor2 = [[UIColor alloc] initWithRed:0.8314 green:0.8314 blue:0.8314 alpha:0.7];
+    interfaceColor3 = [[UIColor alloc] initWithRed:0.8314 green:0.8314 blue:0.8314 alpha:0.5];
     yesColor = [[UIColor alloc] initWithRed:(40.0f/255.0f) green:(180.0f/255.0f) blue:(30.0/255.0) alpha:1];
     noColor = [[UIColor alloc] initWithRed:(200.0f/255.0f) green:(35.0f/255.0f) blue:(35.0/255.0) alpha:1];
     
@@ -48,6 +50,16 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 }
 
 + (UIColor *)interfaceColor
+{
+    return interfaceColor;
+}
+
++ (UIColor *)interfaceColor2
+{
+    return interfaceColor;
+}
+
++ (UIColor *)interfaceColor3
 {
     return interfaceColor;
 }
@@ -86,24 +98,69 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 //library
 
 //alarm interface
-+ (CGFloat)alarmInterfaceWidth
++ (CGPoint)alarmSliderCenterWithIndex:(int)index
 {
-    return [ARKDefault screenWidth]/6.0;
+    return CGPointMake([self alarmSliderWidth]*index + 2*buttonRadius + 2*buttonSpacing, [ARKDefault screenHeight]/2.0+[self alarmSliderLabelSize].height);
 }
 
-+ (CGFloat)alarmInterfaceHeight
++ (CGFloat)alarmSliderHeight
 {
-    return [ARKDefault screenHeight];
+    return [ARKDefault screenHeight]-2*[self alarmSliderLabelSize].height;
 }
 
-+ (CGSize)alarmInterfaceSize
++ (CGFloat)alarmSliderWidth
 {
-    return CGSizeMake([self alarmInterfaceWidth], [self alarmInterfaceHeight]);
+    return ([ARKDefault screenWidth] - 4*buttonSpacing - 4*buttonRadius)/4.0;
 }
 
-+ (CGPoint)alarmInterfaceCenterWithIndex:(int)index
++ (CGSize)alarmSliderSize
 {
-    return [ARKDefault centerScreenVerticalWithHorizontal:[self alarmInterfaceWidth]*(2*index + 1)];
+    return CGSizeMake([self alarmSliderWidth], [self alarmSliderHeight]);
+}
+
++ (CGSize)alarmSliderButtonSize
+{
+    return CGSizeMake(2*buttonRadius, 4*buttonRadius);
+}
+
++ (CGPoint)alarmSliderButtonCenter
+{
+    return CGPointMake([self alarmSliderWidth]/2.0, [ARKF alarmSliderHeight] - 6*buttonRadius);
+}
+
++ (CGSize)alarmSliderLabelSize
+{
+    return CGSizeMake(2*buttonRadius, 2*buttonRadius);
+}
+
++ (CGPoint)alarmSliderHourLabelCenter
+{
+    return CGPointMake([self alarmSliderWidth]/2.0, -3*buttonRadius);
+}
+
++ (CGPoint)alarmSliderMinuteLabelCenter
+{
+    return CGPointMake([self alarmSliderWidth]/2.0, -buttonRadius);
+}
+
++ (CGPoint)alarmSliderPlusButtonCenter
+{
+    return CGPointMake([self alarmSliderWidth]/2.0, [self alarmSliderHeight]-3*buttonRadius);
+}
+
++ (CGSize)alarmSliderPlusButtonSize
+{
+    return CGSizeMake(2*buttonRadius, 2*buttonRadius);
+}
+
++ (CGPoint)alarmSliderMinusButtonCenter
+{
+    return CGPointMake([self alarmSliderWidth]/2.0, [self alarmSliderHeight]-buttonRadius);
+}
+
++ (CGSize)alarmSliderMinusButtonSize
+{
+    return CGSizeMake(2*buttonRadius, 2*buttonRadius);
 }
 
 @end

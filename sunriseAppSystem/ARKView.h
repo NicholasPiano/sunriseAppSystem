@@ -58,6 +58,9 @@
 - (void)postStateWithId:(NSString *)stateId andSender:(NSString *)sender;
 - (void)postNextStateId;
 
+//value methods
+- (void)postValue:(int)value withType:(NSString *)type;
+
 //user defaults
 - (void)pullDictionaryFromUserDefaults; //pulls on category not ident
 - (void)pullDictionaryFromUserDefaultsWithKey:(NSString *)dictionaryKey; //specific part of object defaults

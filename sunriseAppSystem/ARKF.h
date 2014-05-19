@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ARKDefault.h"
 
 //DEFINITIONS
 //standard metrics
-#define buttonRadius 12.0
+#define buttonRadius 15.0
+#define buttonSpacing 15.0
 
 //animation
 #define animationDuration 0.2
@@ -31,7 +31,7 @@
 //library
 
 //alarm interface
-#define alarmInterfaceIdent @"alarm-interface-%d"
+#define alarmInterfaceIdent @"alarm-interface"
 
 @interface ARKF : NSObject
 
@@ -45,6 +45,8 @@
 //colors
 + (UIColor *)backgroundColor;
 + (UIColor *)interfaceColor;
++ (UIColor *)interfaceColor2;
++ (UIColor *)interfaceColor3;
 + (UIColor *)yesColor;
 + (UIColor *)noColor;
 + (UIColor *)transparent;
@@ -65,10 +67,23 @@
 //library
 
 //alarm interface
-+ (CGFloat)alarmInterfaceWidth;
-+ (CGFloat)alarmInterfaceHeight;
-+ (CGSize)alarmInterfaceSize;
-+ (CGPoint)alarmInterfaceCenterWithIndex:(int)index;
++ (CGPoint)alarmSliderCenterWithIndex:(int)index;
++ (CGFloat)alarmSliderHeight;
++ (CGFloat)alarmSliderWidth;
++ (CGSize)alarmSliderSize;
++ (CGPoint)alarmSliderCenter;
 
++ (CGSize)alarmSliderButtonSize;
++ (CGPoint)alarmSliderButtonCenter;
+
++ (CGSize)alarmSliderLabelSize;
++ (CGPoint)alarmSliderHourLabelCenter;
++ (CGPoint)alarmSliderMinuteLabelCenter;
+
++ (CGPoint)alarmSliderPlusButtonCenter;
++ (CGSize)alarmSliderPlusButtonSize;
+
++ (CGPoint)alarmSliderMinusButtonCenter;
++ (CGSize)alarmSliderMinusButtonSize;
 
 @end

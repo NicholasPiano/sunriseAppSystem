@@ -24,7 +24,7 @@
     self = [super initWithCenter:argCenter andSize:argSize];
     if (self) {
         self.touchUpStateId = argTouchUpStateId;
-        self.backgroundColor = [ARKDefault transparent];
+        self.backgroundColor = [ARKF transparent];
         self.snapPoint = self.center;
     }
     return self;
