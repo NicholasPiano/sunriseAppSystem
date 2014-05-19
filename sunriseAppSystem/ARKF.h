@@ -67,20 +67,18 @@
 //library
 
 //alarm interface
-+ (CGFloat)alarmInterfaceWidth;
-+ (CGFloat)alarmInterfaceHeight;
-+ (CGSize)alarmInterfaceSize;
-+ (CGPoint)alarmInterfaceCenterWithIndex:(int)index;
++ (CGPoint)alarmSliderCenterWithIndex:(int)index;
++ (CGFloat)alarmSliderHeight;
++ (CGFloat)alarmSliderWidth;
++ (CGSize)alarmSliderSize;
++ (CGPoint)alarmSliderCenter;
 
-+ (CGSize)alarmInterfaceSliderSize;
-+ (CGPoint)alarmInterfaceSliderCenter;
++ (CGSize)alarmSliderButtonSize;
++ (CGPoint)alarmSliderButtonCenter;
 
-+ (CGSize)alarmInterfaceSliderButtonSize;
-+ (CGPoint)alarmInterfaceSliderButtonCenter;
-
-+ (CGSize)alarmInterfaceLabelSize;
-+ (CGPoint)alarmInterfaceHourLabelCenter;
-+ (CGPoint)alarmInterfaceMinuteLabelCenter;
++ (CGSize)alarmSliderLabelSize;
++ (CGPoint)alarmSliderHourLabelCenter;
++ (CGPoint)alarmSliderMinuteLabelCenter;
 
 
 @end

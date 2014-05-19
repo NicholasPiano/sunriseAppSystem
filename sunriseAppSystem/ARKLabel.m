@@ -30,20 +30,6 @@
 }
 
 #pragma mark - instance methods
-- (void)receiveNotification:(NSNotification *)notification
-{
-    [super receiveNotification:notification];
-    NSDictionary *dictionary = [notification userInfo];
-    if ([notification.name isEqualToString:@"value"]) {
-        NSString *argType = [dictionary objectForKey:@"type"];
-        int value = [[dictionary objectForKey:@"value"] integerValue];
-        ARKLog(@"receive value: %d for type: %@ this type: %@", value, argType, self.type);
-        if ([self.type isEqualToString:argType]) {
-            [self setText:[NSString stringWithFormat:@"%d", value]];
-        }
-    }
-}
-
 - (void)setText:(NSString *)text
 {
     [self.label setText:text];

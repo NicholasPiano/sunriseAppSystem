@@ -10,7 +10,6 @@
 #import "ARKView.h"
 #import "ARKButton.h"
 #import "ARKSlider.h"
-#import "ARKAlarmInterface.h"
 
 @interface ARKMainViewController : UIViewController
 

@@ -98,59 +98,49 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 //library
 
 //alarm interface
-+ (CGFloat)alarmInterfaceWidth
++ (CGPoint)alarmSliderCenterWithIndex:(int)index
+{
+    return CGPointMake([self alarmSliderWidth]*index + 2*buttonRadius + 2*buttonSpacing, [ARKDefault screenHeight]/2.0+[self alarmSliderLabelSize].height);
+}
+
++ (CGFloat)alarmSliderHeight
+{
+    return [ARKDefault screenHeight]-2*[self alarmSliderLabelSize].height;
+}
+
++ (CGFloat)alarmSliderWidth
 {
     return ([ARKDefault screenWidth] - 4*buttonSpacing - 4*buttonRadius)/4.0;
 }
 
-+ (CGFloat)alarmInterfaceHeight
++ (CGSize)alarmSliderSize
 {
-    return [ARKDefault screenHeight];
+    return CGSizeMake([self alarmSliderWidth], [self alarmSliderHeight]);
 }
 
-+ (CGSize)alarmInterfaceSize
-{
-    return CGSizeMake([self alarmInterfaceWidth], [self alarmInterfaceHeight]);
-}
-
-+ (CGPoint)alarmInterfaceCenterWithIndex:(int)index
-{
-    return [ARKDefault centerScreenVerticalWithHorizontal:[self alarmInterfaceWidth]*index + 2*buttonRadius + 2*buttonSpacing];
-}
-
-+ (CGSize)alarmInterfaceSliderSize
-{
-    return CGSizeMake([self alarmInterfaceWidth], [self alarmInterfaceHeight]-2*[self alarmInterfaceLabelSize].height);
-}
-
-+ (CGPoint)alarmInterfaceSliderCenter
-{
-    return CGPointMake([self alarmInterfaceSliderSize].width/2.0, [self alarmInterfaceSliderSize].height/2.0+2*[self alarmInterfaceLabelSize].height);
-}
-
-+ (CGSize)alarmInterfaceSliderButtonSize
++ (CGSize)alarmSliderButtonSize
 {
     return CGSizeMake(2*buttonRadius, 4*buttonRadius);
 }
 
-+ (CGPoint)alarmInterfaceSliderButtonCenter
++ (CGPoint)alarmSliderButtonCenter
 {
-    return CGPointMake([self alarmInterfaceSize].width/2.0, [ARKF alarmInterfaceSliderSize].height - 6*buttonRadius);
+    return CGPointMake([self alarmSliderWidth]/2.0, [ARKF alarmSliderHeight] - 6*buttonRadius);
 }
 
-+ (CGSize)alarmInterfaceLabelSize
++ (CGSize)alarmSliderLabelSize
 {
     return CGSizeMake(2*buttonRadius, 2*buttonRadius);
 }
 
-+ (CGPoint)alarmInterfaceHourLabelCenter
++ (CGPoint)alarmSliderHourLabelCenter
 {
-    return CGPointMake(buttonRadius, buttonRadius);
+    return CGPointMake(buttonRadius, -buttonRadius);
 }
 
-+ (CGPoint)alarmInterfaceMinuteLabelCenter
++ (CGPoint)alarmSliderMinuteLabelCenter
 {
-    return CGPointMake(buttonRadius, 3*buttonRadius);
+    return CGPointMake(buttonRadius, -3*buttonRadius);
 }
 
 @end
