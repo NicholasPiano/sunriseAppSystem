@@ -27,7 +27,7 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [ARKF interfaceColor];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:State object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:nil object:nil];
     }
     return self;
 }
@@ -293,18 +293,12 @@
 //notification center
 - (void)receiveNotification:(NSNotification *)notification
 {
-    ARKLog(@"notification");
     NSDictionary *dictionary = [notification userInfo];
     if ([notification.name isEqualToString:State] && [self.stateDictionary count]!=0) {
         NSString *stateId = [dictionary objectForKey:StateId];
         NSString *sender = [dictionary objectForKey:Sender];
         
         [self syncStateWithId:stateId andSender:sender];
-    } else if ([notification.name isEqualToString:@"value"]) {
-        ARKLog(@"value");
-        int value = [[dictionary objectForKey:@"value"] integerValue];
-        NSString *type = [dictionary objectForKey:@"type"];
-        [self receiveValue:value withType:type];
     }
 }
 
@@ -318,6 +312,9 @@
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:stateId, StateId, sender, Sender, nil];
     [self postNotification:[NSNotification notificationWithName:State object:nil userInfo:dictionary]]; //not using object. Requires cast. May use in the future.
 }
+
+//IBAN: GB63TSBS87700482122068
+//BIC: TSBSGB21118
 
 - (void)postNextStateId
 {

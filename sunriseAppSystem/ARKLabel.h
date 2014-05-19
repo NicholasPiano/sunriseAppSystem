@@ -18,7 +18,7 @@
 - (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andType:(NSString *)argType;
 
 #pragma mark - instance methods
-- (void)receiveValue:(int)value withType:(NSString *)argType;
+- (void)receiveNotification:(NSNotification *)notification;
 - (void)setText:(NSString *)text;
 
 #pragma mark - factory

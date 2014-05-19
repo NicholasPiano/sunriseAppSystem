@@ -60,7 +60,6 @@
 
 //value methods
 - (void)postValue:(int)value withType:(NSString *)type;
-- (void)receiveValue:(int)value withType:(NSString *)type;
 
 //user defaults
 - (void)pullDictionaryFromUserDefaults; //pulls on category not ident
