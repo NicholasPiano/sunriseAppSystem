@@ -18,8 +18,6 @@
     [self.view setBackgroundColor:[ARKF backgroundColor]];
     
     //objects
-    [self.view addSubview:[ARKSlider alarmSliderWithIndex:0 andDay:0]];
-    [self.view addSubview:[ARKSlider alarmSliderWithIndex:1 andDay:0]];
 }
 
 - (void)didReceiveMemoryWarning
