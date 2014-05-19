@@ -58,6 +58,11 @@
     return [[self alloc] initWithStateId:nil andNextStateId:nil];
 }
 
++ (ARKState *)nullStateWithStateId:(NSString *)stateId
+{
+    return [[self alloc] initWithStateId:stateId andNextStateId:nil];
+}
+
 + (ARKState *)homeState
 {
     ARKState *state = [[self alloc] initWithStateId:HomeState andNextStateId:nil];

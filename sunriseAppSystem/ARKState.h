@@ -41,6 +41,7 @@
 
 #pragma mark - factory
 + (ARKState *)nullState;
++ (ARKState *)nullStateWithStateId:(NSString *)stateId;
 + (ARKState *)homeState;
 + (ARKState *)state:(ARKState *)state withNextStateId:(NSString *)nextStateId;
 + (ARKState *)stateFromState:(ARKState *)state withStateId:(NSString *)stateId andNextStateId:(NSString *)nextStateId;

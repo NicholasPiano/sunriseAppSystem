@@ -65,8 +65,8 @@
         for (NSString *stateId in [ARKF stateList]) {
             if ([stateId isEqualToString:HomeState]) {
                 ARKState *homeState = self.defaultState;
-                homeState.duration = 0.0;
-                homeState.delay = 0.0;
+//                homeState.duration = 0.0;
+//                homeState.delay = 0.0;
                 [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
             } else {
                 [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
@@ -90,8 +90,8 @@
         for (NSString *stateId in [ARKF stateList]) {
             if ([stateId isEqualToString:HomeState]) {
                 ARKState *homeState = self.defaultState;
-                homeState.duration = 0.0;
-                homeState.delay = 0.0;
+//                homeState.duration = 0.0;
+//                homeState.delay = 0.0;
                 [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
             } else {
                 [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
@@ -115,8 +115,8 @@
         for (NSString *stateId in [ARKF stateList]) {
             if ([stateId isEqualToString:HomeState]) {
                 ARKState *homeState = self.defaultState;
-                homeState.duration = 0.0;
-                homeState.delay = 0.0;
+//                homeState.duration = 0.0;
+//                homeState.delay = 0.0;
                 [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
             } else {
                 [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
@@ -140,8 +140,8 @@
         for (NSString *stateId in [ARKF stateList]) {
             if ([stateId isEqualToString:HomeState]) {
                 ARKState *homeState = self.defaultState;
-                homeState.duration = 0.0;
-                homeState.delay = 0.0;
+//                homeState.duration = 0.0;
+//                homeState.delay = 0.0;
                 [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
             } else {
                 [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
@@ -204,29 +204,19 @@
     if (state != nil) {
         //reset active state
         self.activeState = state;
-        
+        while (state != nil) {
         //set up animation
-        [animationBlocks addObject:^(BOOL finished){
-            [UIView animateWithDuration:state.duration delay:state.delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                self.transform = state.transform;
-                self.alpha = state.alpha;
-                if (state.color != nil) {
-                    self.backgroundColor = state.color;
-                }
-            } completion: getNextAnimation()];
-        }];
-    }
-    if (state.callbackState != nil) {
-        //set up animation
-        [animationBlocks addObject:^(BOOL finished){
-            [UIView animateWithDuration:state.callbackState.duration delay:state.callbackState.delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                self.transform = state.callbackState.transform;
-                self.alpha = state.callbackState.alpha;
-                if (state.callbackState.color != nil) {
-                    self.backgroundColor = state.callbackState.color;
-                }
-            } completion: getNextAnimation()];
-        }];
+            [animationBlocks addObject:^(BOOL finished){
+                [UIView animateWithDuration:state.duration delay:state.delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                    self.transform = state.transform;
+                    self.alpha = state.alpha;
+                    if (state.color != nil) {
+                        self.backgroundColor = state.color;
+                    }
+                } completion: getNextAnimation()];
+            }];
+            state = state.callbackState; //supports chain of callback states
+        }
     }
     
     //begin

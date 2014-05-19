@@ -16,4 +16,21 @@
 #pragma mark - factory
 //put test object declarations here
 
+//home slider
++ (ARKView *)homeSlider;
++ (ARKView *)homeSliderButton;
+
+//alarm slider
++ (ARKView *)alarmSliderWithIndex:(int)index;
++ (ARKView *)alarmSliderButtonWithIdent:(NSString *)ident;
+
+//add button
++ (ARKButton *)addButton;
+
+//settings button
++ (ARKButton *)settingsButton;
+
+//summary button
++ (ARKButton *)summaryButton;
+
 @end

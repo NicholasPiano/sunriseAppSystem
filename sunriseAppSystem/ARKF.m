@@ -100,7 +100,7 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 //alarm interface
 + (CGPoint)alarmSliderCenterWithIndex:(int)index
 {
-    return CGPointMake([self alarmSliderWidth]*index + 2*buttonRadius + 2*buttonSpacing, [ARKDefault screenHeight]/2.0+[self alarmSliderLabelSize].height);
+    return CGPointMake([self alarmSliderWidth]*index + 2*buttonRadius + 4*buttonSpacing, [ARKDefault screenHeight]/2.0+[self alarmSliderLabelSize].height);
 }
 
 + (CGFloat)alarmSliderHeight
@@ -110,7 +110,7 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 
 + (CGFloat)alarmSliderWidth
 {
-    return ([ARKDefault screenWidth] - 4*buttonSpacing - 4*buttonRadius)/4.0;
+    return (2*buttonSpacing + 2*buttonRadius);
 }
 
 + (CGSize)alarmSliderSize

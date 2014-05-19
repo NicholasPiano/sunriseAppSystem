@@ -19,6 +19,7 @@
     self = [super initViewWithStatesWithCenter:argCenter andRadius:argRadius];
     if (self) {
         self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+        [self addGestureRecognizer:self.tapRecognizer];
     }
     return self;
 }
@@ -28,6 +29,7 @@
     self = [super initViewWithStatesWithCenter:argCenter andSize:argSize];
     if (self) {
         self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+        [self addGestureRecognizer:self.tapRecognizer];
     }
     return self;
 }
