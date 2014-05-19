@@ -9,11 +9,6 @@
 #import <Foundation/Foundation.h>
 
 //DEFINITIONS
-//states
-#define AddState @"add"
-#define SettingsState @"settings"
-#define SummaryState @"summary"
-
 //standard metrics
 #define buttonRadius 20.0
 #define buttonSpacing 15.0
