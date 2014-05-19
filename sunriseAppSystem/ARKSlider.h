@@ -54,6 +54,8 @@
 - (void)addUpperTrack:(ARKRect *)argUpperTrack;
 - (void)addLowerTrack:(ARKRect *)argLowerTrack;
 - (void)addThumb:(ARKButton *)argThumb;
+- (void)addHourLabel:(ARKLabel *)argHourLabel;
+- (void)addMinuteLabel:(ARKLabel *)argMinuteLabel;
 
 //regions
 - (void)addRegion:(ARKSliderRegion *)region;

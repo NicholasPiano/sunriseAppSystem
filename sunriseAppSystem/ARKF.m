@@ -135,12 +135,12 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 
 + (CGPoint)alarmSliderHourLabelCenter
 {
-    return CGPointMake(buttonRadius, -buttonRadius);
+    return CGPointMake([self alarmSliderWidth]/2.0, -3*buttonRadius);
 }
 
 + (CGPoint)alarmSliderMinuteLabelCenter
 {
-    return CGPointMake(buttonRadius, -3*buttonRadius);
+    return CGPointMake([self alarmSliderWidth]/2.0, -buttonRadius);
 }
 
 @end

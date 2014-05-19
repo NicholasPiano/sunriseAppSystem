@@ -56,6 +56,7 @@
 //convenience
 + (NSNumber *)f:(CGFloat)f;
 + (UIApplication *)app;
++ (NSString *)timeStringWithInt:(int)integer;
 
 //vector methods
 + (CGFloat)getDisplacementOfPointA:(CGPoint)pointA fromPointB:(CGPoint)pointB;

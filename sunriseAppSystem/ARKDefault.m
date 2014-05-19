@@ -174,6 +174,11 @@ static NSArray *weekIdentArray = nil, *weekLabelArray = nil;
     return [UIApplication sharedApplication];
 }
 
++ (NSString *)timeStringWithInt:(int)integer
+{
+    return integer<10?[NSString stringWithFormat:@"0%d", integer]:[NSString stringWithFormat:@"%d", integer];
+}
+
 //vector methods
 + (CGFloat)getDisplacementOfPointA:(CGPoint)pointA fromPointB:(CGPoint)pointB
 {

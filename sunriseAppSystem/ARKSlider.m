@@ -119,6 +119,13 @@
 //                    ARKLog(@"current region: %@, thumb: %f, region %f)", region.touchUpStateId, thumbCenter.y, region.center.y);
 //                    [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:self.currentRegion.exitStateId]];
                     self.currentRegion = region;
+                    if (self.currentRegion.hour != -1) {
+                        [self.hourLabel setText:[ARKDefault timeStringWithInt:self.currentRegion.hour]];
+                        [self.minuteLabel setText:[ARKDefault timeStringWithInt:self.currentRegion.minute]];
+                    } else {
+                        [self.hourLabel setText:@""];
+                        [self.minuteLabel setText:@""];
+                    }
 //                    [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:region.enteredStateId]];
                 }
                 noRegion = NO;
@@ -150,6 +157,18 @@
     self.thumb = argThumb;
     [self.thumb addGestureRecognizer:self.panThumbRecognizer];
     [self addSubview:self.thumb];
+}
+
+- (void)addHourLabel:(ARKLabel *)argHourLabel
+{
+    self.hourLabel = argHourLabel;
+    [self addSubview:self.hourLabel];
+}
+
+- (void)addMinuteLabel:(ARKLabel *)argMinuteLabel
+{
+    self.minuteLabel = argMinuteLabel;
+    [self addSubview:self.minuteLabel];
 }
 
 //regions
@@ -196,7 +215,8 @@
     [slider addThumb:[self sliderButtonWithIdent:slider.ident]];
     
     //labels
-    
+    [slider addHourLabel:[self hourLabelWithIdent:slider.ident]];
+    [slider addMinuteLabel:[self minuteLabelWithIdent:slider.ident]];
     
     //regions
     int numberOfTimeRegions = 94;
@@ -232,7 +252,7 @@
         minutes = minutes - 15;
         if (i%4==2) { //2 6 10 ...
             hours--;
-            minutes = 0;
+            minutes = 45;
         }
         
         [slider addRegion:timeRegion];
@@ -246,6 +266,7 @@
     
     //-off region
     ARKSliderRegion *offRegion = [ARKSliderRegion sliderRegionWithCenter:CGPointMake([ARKF alarmSliderWidth]/2.0, [ARKF alarmSliderHeight]-(buttonRadius+buttonSpacing)) andSize:CGSizeMake([ARKF alarmSliderWidth], 2*(buttonSpacing+buttonRadius)) andTouchUpStateId:[NSString stringWithFormat:@"%@-off", slider.ident]];
+    offRegion.hour = -1;
     offRegion.backgroundColor = [ARKF interfaceColor3];
     [slider addRegion:offRegion];
     
@@ -277,7 +298,7 @@
 //
 + (ARKLabel *)hourLabelWithIdent:(NSString *)ident
 {
-    ARKLabel *hourLabel = [ARKLabel hourLabelWithCenter:CGPointMake([ARKF alarmSliderWidth]/2.0, buttonRadius) andSize:CGSizeMake(2*buttonRadius, 2*buttonRadius)];
+    ARKLabel *hourLabel = [ARKLabel hourLabelWithCenter:[ARKF alarmSliderHourLabelCenter] andSize:CGSizeMake(2*buttonRadius, 2*buttonRadius)];
     hourLabel.ident = [NSString stringWithFormat:@"%@-label-hour", ident];
     hourLabel.backgroundColor = [ARKF transparent];
     return hourLabel;
@@ -285,7 +306,7 @@
 
 + (ARKLabel *)minuteLabelWithIdent:(NSString *)ident
 {
-    ARKLabel *minuteLabel = [ARKLabel minuteLabelWithCenter:CGPointMake([ARKF alarmSliderWidth]/2.0, 3*buttonRadius) andSize:CGSizeMake(2*buttonRadius, 2*buttonRadius)];
+    ARKLabel *minuteLabel = [ARKLabel minuteLabelWithCenter:[ARKF alarmSliderMinuteLabelCenter] andSize:CGSizeMake(2*buttonRadius, 2*buttonRadius)];
     minuteLabel.ident = [NSString stringWithFormat:@"%@-label-minute", ident];
     minuteLabel.backgroundColor = [ARKF transparent];
     return minuteLabel;
