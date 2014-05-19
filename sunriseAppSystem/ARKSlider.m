@@ -12,7 +12,7 @@
 
 #pragma mark - properties
 //intrinsic
-@synthesize isVertical;
+@synthesize isVertical, day, hour, minute, extraMinute;
 
 //elements
 @synthesize upperTrack, lowerTrack, thumb;
@@ -25,6 +25,9 @@
 {
     self = [super initViewWithStatesWithCenter:argCenter andSize:argSize];
     if (self) {
+        //intrinsic
+        self.extraMinute = 0;
+        
         //setup recognizers
         self.lastButtonTransform = 0.0;
         //in order of heirarchy: tapThumb, panThumb, panSlider
@@ -80,6 +83,7 @@
     if (argPanGestureRecognizer.state == UIGestureRecognizerStateBegan) {
     } else if (argPanGestureRecognizer.state == UIGestureRecognizerStateEnded || argPanGestureRecognizer.state == UIGestureRecognizerStateCancelled) {
         self.lastButtonTransform = self.thumb.transform.ty;
+        self.extraMinute = 0;
         
         //regions - maybe redundant given section in dragging state
         BOOL noRegion = YES;
@@ -87,7 +91,8 @@
         for (ARKSliderRegion *region in regionArray) {
             if (CGRectContainsPoint(region.frame, thumbCenter)) {
 //                ARKLog(@"region: %@ thumby: %f, regiony: %f, height: %f", region.touchUpStateId, thumbCenter.y, region.center.y, region.size.height);
-                [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:region.touchUpStateId]]; //bit of a hack with the name combining. Might need more formal way of doing this.
+//                [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:region.touchUpStateId]]; //bit of a hack with the name combining. Might need more formal way of doing this.
+                [self postStateWithId:nil andSender:region.touchUpStateId];
                 self.lastButtonTransform = region.snapPoint.y - thumb.center.y; //account for initial position
 //                ARKLog(@"last button transform: %f %f", self.lastButtonTransform, thumb.bounds.size.height);
                 self.currentRegion = region;
@@ -97,7 +102,8 @@
         
         if (noRegion && [self.regionArray count]!=0) {
 //            ARKLog(@"no region stopped but last region: %@", self.currentRegion);
-            [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:self.currentRegion.touchUpStateId]]; //sync last region if gone past edges
+//            [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:self.currentRegion.touchUpStateId]]; //sync last region if gone past edges
+            [self postStateWithId:nil andSender:self.currentRegion.touchUpStateId];
             self.lastButtonTransform = self.currentRegion.snapPoint.y - thumb.center.y; //account for initial position
 //            ARKLog(@"last button transform: %f", self.lastButtonTransform);
         }
@@ -122,6 +128,8 @@
                     if (self.currentRegion.hour != -1) {
                         [self.hourLabel setText:[ARKDefault timeStringWithInt:self.currentRegion.hour]];
                         [self.minuteLabel setText:[ARKDefault timeStringWithInt:self.currentRegion.minute]];
+                        self.hour = self.currentRegion.hour;
+                        self.minute = self.currentRegion.minute;
                     } else {
                         [self.hourLabel setText:@""];
                         [self.minuteLabel setText:@""];
@@ -137,6 +145,33 @@
             
         }
     }
+}
+
+- (void)tapUp:(UITapGestureRecognizer *)argTapGestureRecognizer
+{
+    //increment extra time and add to label
+    self.extraMinute = self.extraMinute==10?0:self.extraMinute+5;
+    self.minute = self.currentRegion.minute + self.extraMinute;
+    
+    //if at maximum extra time, then:
+    if (self.extraMinute == 0) { //after incrementing
+        int currentIndex = [regionArray indexOfObject:self.currentRegion];
+        int newIndex = currentIndex==0?0:currentIndex-1;
+        self.currentRegion = [regionArray objectAtIndex:newIndex];
+        self.lastButtonTransform = self.currentRegion.snapPoint.y - thumb.center.y;
+        self.hour = self.currentRegion.hour;
+        self.minute = self.currentRegion.minute;
+        [self postStateWithId:nil andSender:self.currentRegion.touchUpStateId];
+    }
+    
+    [self.minuteLabel setText:[ARKDefault timeStringWithInt:self.minute]];
+    [self.hourLabel setText:[ARKDefault timeStringWithInt:self.hour]];
+    //get index of current region in region array
+}
+
+- (void)tapDown:(UITapGestureRecognizer *)argTapGestureRecognizer
+{
+    
 }
 
 //construct
@@ -171,6 +206,20 @@
     [self addSubview:self.minuteLabel];
 }
 
+- (void)addPlusButton:(ARKButton *)argPlusButton
+{
+    self.plusButton = argPlusButton;
+    [self.plusButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUp:)]];
+    [self addSubview:self.plusButton];
+}
+
+- (void)addMinusButton:(ARKButton *)argMinusButton
+{
+    self.minusButton = argMinusButton;
+    [self.minusButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDown:)]];
+    [self addSubview:self.minusButton];
+}
+
 //regions
 - (void)addRegion:(ARKSliderRegion *)region
 {
@@ -187,7 +236,7 @@
     [self.regionArray addObject:region];
     
     //3. slider thumb state for region
-    ARKState *regionState = [ARKState stateWithId:[ARKDefault stateId:self.ident withSender:region.touchUpStateId] moveToPosition:snapPoint fromInitialPosition:thumb.center];
+    ARKState *regionState = [ARKState stateWithId:[ARKDefault stateId:nil withSender:region.touchUpStateId] moveToPosition:snapPoint fromInitialPosition:thumb.center];
     [self.thumb addState:regionState];
 }
 
@@ -211,8 +260,10 @@
     
     slider.backgroundColor = [ARKF transparent];
     
-    //button
+    //buttons
     [slider addThumb:[self sliderButtonWithIdent:slider.ident]];
+    [slider addPlusButton:[self plusButtonWithIdent:slider.ident]];
+    [slider addMinusButton:[self minusButtonWithIdent:slider.ident]];
     
     //labels
     [slider addHourLabel:[self hourLabelWithIdent:slider.ident]];
@@ -263,6 +314,7 @@
     zeroRegion.hour = 0;
     zeroRegion.minute = 0;
     [slider addRegion:zeroRegion withSnapPoint:CGPointMake([ARKF alarmSliderWidth]/2.0, [ARKF alarmSliderHeight]-3.0*(buttonRadius+buttonSpacing) + timeRegionHeight/2.0)];
+    slider.currentRegion = zeroRegion;
     
     //-off region
     ARKSliderRegion *offRegion = [ARKSliderRegion sliderRegionWithCenter:CGPointMake([ARKF alarmSliderWidth]/2.0, [ARKF alarmSliderHeight]-(buttonRadius+buttonSpacing)) andSize:CGSizeMake([ARKF alarmSliderWidth], 2*(buttonSpacing+buttonRadius)) andTouchUpStateId:[NSString stringWithFormat:@"%@-off", slider.ident]];
@@ -286,16 +338,20 @@
     return sliderButton;
 }
 
-//+ (ARKButton *)plusButtonWithIdent:(NSString *)ident
-//{
-//
-//}
-//
-//+ (ARKButton *)minusButtonWithIdent:(NSString *)ident
-//{
-//
-//}
-//
++ (ARKButton *)plusButtonWithIdent:(NSString *)ident
+{
+    ARKButton *plusButton = [ARKButton buttonWithCenter:[ARKF alarmSliderPlusButtonCenter] andSize:[ARKF alarmSliderPlusButtonSize]];
+    plusButton.backgroundColor = [ARKF yesColor];
+    return plusButton;
+}
+
++ (ARKButton *)minusButtonWithIdent:(NSString *)ident
+{
+    ARKButton *minusButton = [ARKButton buttonWithCenter:[ARKF alarmSliderMinusButtonCenter] andSize:[ARKF alarmSliderMinusButtonSize]];
+    minusButton.backgroundColor = [ARKF yesColor];
+    return minusButton;
+}
+
 + (ARKLabel *)hourLabelWithIdent:(NSString *)ident
 {
     ARKLabel *hourLabel = [ARKLabel hourLabelWithCenter:[ARKF alarmSliderHourLabelCenter] andSize:CGSizeMake(2*buttonRadius, 2*buttonRadius)];

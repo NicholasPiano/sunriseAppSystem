@@ -97,7 +97,11 @@ static NSArray *weekIdentArray = nil, *weekLabelArray = nil;
 
 + (NSString *)stateId:(NSString *)stateId withSender:(NSString *)sender
 {
-    return [NSString stringWithFormat:@"%@-%@", stateId, sender];
+    if (stateId == nil) {
+        return sender;
+    } else {
+        return [NSString stringWithFormat:@"%@-%@", stateId, sender];
+    }
 }
 
 + (BOOL)localNotificationExistsWithIdent:(NSString *)localNotificationIdent

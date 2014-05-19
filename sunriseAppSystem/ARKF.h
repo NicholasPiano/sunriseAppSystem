@@ -80,5 +80,10 @@
 + (CGPoint)alarmSliderHourLabelCenter;
 + (CGPoint)alarmSliderMinuteLabelCenter;
 
++ (CGPoint)alarmSliderPlusButtonCenter;
++ (CGSize)alarmSliderPlusButtonSize;
+
++ (CGPoint)alarmSliderMinusButtonCenter;
++ (CGSize)alarmSliderMinusButtonSize;
 
 @end

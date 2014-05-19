@@ -27,7 +27,7 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [ARKF interfaceColor];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:nil object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:State object:nil];
     }
     return self;
 }
@@ -207,7 +207,7 @@
         
         //set up animation
         [animationBlocks addObject:^(BOOL finished){
-            [UIView animateWithDuration:state.duration delay:state.delay options:UIViewAnimationOptionCurveLinear animations:^{
+            [UIView animateWithDuration:state.duration delay:state.delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 self.transform = state.transform;
                 self.alpha = state.alpha;
                 if (state.color != nil) {
@@ -219,7 +219,7 @@
     if (state.callbackState != nil) {
         //set up animation
         [animationBlocks addObject:^(BOOL finished){
-            [UIView animateWithDuration:state.callbackState.duration delay:state.callbackState.delay options:UIViewAnimationOptionCurveLinear animations:^{
+            [UIView animateWithDuration:state.callbackState.duration delay:state.callbackState.delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 self.transform = state.callbackState.transform;
                 self.alpha = state.callbackState.alpha;
                 if (state.callbackState.color != nil) {
@@ -310,6 +310,9 @@
 - (void)postStateWithId:(NSString *)stateId andSender:(NSString *)sender
 {
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:stateId, StateId, sender, Sender, nil];
+    if (stateId == nil) {
+        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:sender, Sender, nil];
+    }
     [self postNotification:[NSNotification notificationWithName:State object:nil userInfo:dictionary]]; //not using object. Requires cast. May use in the future.
 }
 

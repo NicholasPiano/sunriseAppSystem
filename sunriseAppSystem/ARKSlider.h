@@ -20,9 +20,10 @@
 #pragma mark - properties
 //intrinsic
 @property BOOL isVertical;
-@property NSUInteger *day;
-@property NSUInteger *hour;
-@property NSUInteger *minute;
+@property NSUInteger day;
+@property NSUInteger hour;
+@property NSUInteger minute;
+@property NSUInteger extraMinute; //can add five or ten minutes to an alarm
 
 //elements
 @property (strong, nonatomic) ARKRect *upperTrack;
@@ -48,7 +49,8 @@
 - (IBAction)tapThumb:(UITapGestureRecognizer *)argTapGestureRecognizer;
 - (IBAction)panThumb:(UIPanGestureRecognizer *)argPanGestureRecognizer;
 
-//maybe other tap and drag gestures for other parts of the slider.
+- (IBAction)tapUp:(UITapGestureRecognizer *)argTapGestureRecognizer;
+- (IBAction)tapDown:(UITapGestureRecognizer *)argTapGestureRecognizer;
 
 //construct
 - (void)addUpperTrack:(ARKRect *)argUpperTrack;
@@ -56,6 +58,8 @@
 - (void)addThumb:(ARKButton *)argThumb;
 - (void)addHourLabel:(ARKLabel *)argHourLabel;
 - (void)addMinuteLabel:(ARKLabel *)argMinuteLabel;
+- (void)addPlusButton:(ARKButton *)argPlusButton;
+- (void)addMinusButton:(ARKButton *)argMinusButton;
 
 //regions
 - (void)addRegion:(ARKSliderRegion *)region;

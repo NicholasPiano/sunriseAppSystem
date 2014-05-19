@@ -143,4 +143,24 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
     return CGPointMake([self alarmSliderWidth]/2.0, -buttonRadius);
 }
 
++ (CGPoint)alarmSliderPlusButtonCenter
+{
+    return CGPointMake([self alarmSliderWidth]/2.0, [self alarmSliderHeight]-3*buttonRadius);
+}
+
++ (CGSize)alarmSliderPlusButtonSize
+{
+    return CGSizeMake(2*buttonRadius, 2*buttonRadius);
+}
+
++ (CGPoint)alarmSliderMinusButtonCenter
+{
+    return CGPointMake([self alarmSliderWidth]/2.0, [self alarmSliderHeight]-buttonRadius);
+}
+
++ (CGSize)alarmSliderMinusButtonSize
+{
+    return CGSizeMake(2*buttonRadius, 2*buttonRadius);
+}
+
 @end
