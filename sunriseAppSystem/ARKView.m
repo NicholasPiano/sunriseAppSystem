@@ -54,7 +54,7 @@
     return self;
 }
 
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andDefaultState:(ARKState *)argDefaultState
+- (id)initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andDefaultState:(ARKState *)argDefaultState
 {
     self = [self initWithCenter:argCenter andRadius:argRadius];
     if (self) {
@@ -65,8 +65,6 @@
         for (NSString *stateId in [ARKF stateList]) {
             if ([stateId isEqualToString:HomeState]) {
                 ARKState *homeState = self.defaultState;
-//                homeState.duration = 0.0;
-//                homeState.delay = 0.0;
                 [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
             } else {
                 [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
@@ -79,61 +77,11 @@
     return self;
 }
 
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState
+- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState
 {
     self = [self initWithCenter:argCenter andSize:argSize];
     if (self) {
         self.defaultState = argDefaultState;
-        self.stateDictionary = [NSMutableDictionary dictionary];
-        
-        //states
-        for (NSString *stateId in [ARKF stateList]) {
-            if ([stateId isEqualToString:HomeState]) {
-                ARKState *homeState = self.defaultState;
-//                homeState.duration = 0.0;
-//                homeState.delay = 0.0;
-                [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
-            } else {
-                [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
-            }
-        }
-        
-        //sync home state
-        [self syncHomeState];
-    }
-    return self;
-}
-
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius
-{
-    self = [self initWithCenter:argCenter andRadius:argRadius];
-    if (self) {
-        self.defaultState = [ARKState nullState];
-        self.stateDictionary = [NSMutableDictionary dictionary];
-        
-        //states
-        for (NSString *stateId in [ARKF stateList]) {
-            if ([stateId isEqualToString:HomeState]) {
-                ARKState *homeState = self.defaultState;
-//                homeState.duration = 0.0;
-//                homeState.delay = 0.0;
-                [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
-            } else {
-                [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
-            }
-        }
-        
-        //sync home state
-        [self syncHomeState];
-    }
-    return self;
-}
-
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
-{
-    self = [self initWithCenter:argCenter andSize:argSize];
-    if (self) {
-        self.defaultState = [ARKState nullState];
         self.stateDictionary = [NSMutableDictionary dictionary];
         
         //states
