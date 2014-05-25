@@ -18,7 +18,7 @@
 @synthesize ident, category;
 
 //state
-@synthesize activeState, defaultState, stateDictionary;
+@synthesize activeState, stateDictionary;
 
 #pragma mark - initialisers
 - (id)initWithFrame:(CGRect)frame
@@ -50,54 +50,6 @@
     if (self) {
         self.radius = sqrtf(argSize.width*argSize.width + argSize.height*argSize.height); //circle that fits shape
         self.size = argSize;
-    }
-    return self;
-}
-
-- (id)initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andDefaultState:(ARKState *)argDefaultState
-{
-    self = [self initWithCenter:argCenter andRadius:argRadius];
-    if (self) {
-        self.defaultState = argDefaultState;
-        self.stateDictionary = [NSMutableDictionary dictionary];
-        
-        //states
-        for (NSString *stateId in [ARKF stateList]) {
-            if ([stateId isEqualToString:HomeState]) {
-                ARKState *homeState = self.defaultState;
-                [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
-            } else {
-                [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
-            }
-        }
-        
-        //sync home state
-        [self syncHomeState];
-    }
-    return self;
-}
-
-- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState
-{
-    self = [self initWithCenter:argCenter andSize:argSize];
-    if (self) {
-        self.defaultState = argDefaultState;
-        self.stateDictionary = [NSMutableDictionary dictionary];
-        
-        //states
-        for (NSString *stateId in [ARKF stateList]) {
-            if ([stateId isEqualToString:HomeState]) {
-                ARKState *homeState = self.defaultState;
-//                homeState.duration = 0.0;
-//                homeState.delay = 0.0;
-                [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
-            } else {
-                [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
-            }
-        }
-        
-        //sync home state
-        [self syncHomeState];
     }
     return self;
 }
@@ -192,6 +144,20 @@
     
     //1. if state dictionary is nil, make it.
     [self.stateDictionary setObject:state forKey:state.stateId];
+}
+
+- (void)addStateIdentList:(NSArray *)stateIdentList withDefaultState:(ARKState *)defaultState
+{
+    for (NSString *stateId in stateIdentList) {
+        if ([stateId isEqualToString:HomeState]) {
+            ARKState *homeState = defaultState;
+            homeState.duration = 0.0;
+            homeState.delay = 0.0;
+            [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
+        } else {
+            [self addState:[ARKState stateFromState:defaultState withStateId:stateId andNextStateId:nil]];
+        }
+    }
 }
 
 - (ARKState *)stateWithId:(NSString *)stateId

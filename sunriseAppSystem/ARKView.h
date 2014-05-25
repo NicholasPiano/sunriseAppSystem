@@ -22,7 +22,6 @@
 
 //state
 @property (strong, nonatomic) ARKState *activeState;
-@property (strong, nonatomic) ARKState *defaultState;
 @property (strong, nonatomic) NSMutableDictionary *stateDictionary;
 
 //user defaults
@@ -31,8 +30,6 @@
 #pragma mark - initialisers
 - initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius;
 - initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
-- initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andDefaultState:(ARKState *)argDefaultState;
-- initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState;
 
 #pragma mark instance methods
 - (void)dealloc; //for removing observer
@@ -43,6 +40,7 @@
 - (void)syncCurrentState;
 - (void)syncHomeState;
 - (void)addState:(ARKState *)state;
+- (void)addStateIdentList:(NSArray *)stateIdentList withDefaultState:(ARKState *)defaultState;
 - (ARKState *)stateWithId:(NSString *)stateId;
 - (void)stateWithId:(NSString *)stateId goesTo:(NSString *)nextStateId;
 
