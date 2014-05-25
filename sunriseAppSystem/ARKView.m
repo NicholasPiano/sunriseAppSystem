@@ -170,30 +170,6 @@
     [self addState:[ARKState state:[self stateWithId:stateId] withNextStateId:nextStateId]];
 }
 
-//more general animate methods for state change to use
-- (void)animateTransform:(CGAffineTransform)argTransform andAlpha:(CGFloat)argAlpha andColor:(UIColor *)argColor withDuration:(CGFloat)duration andDelay:(CGFloat)delay
-{
-    //set up animation
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:duration];
-    [UIView setAnimationDelay:delay];
-    
-    self.transform = argTransform;
-    self.alpha = argAlpha;
-    if (argColor != nil) {
-        self.backgroundColor = argColor;
-    }
-    
-    [UIView commitAnimations];
-}
-
-- (void)transformHorizontal:(CGFloat)horizontal andVertical:(CGFloat)vertical andAlpha:(CGFloat)argAlpha withDuration:(CGFloat)duration andDelay:(CGFloat)delay
-{
-    CGAffineTransform argTransform = CGAffineTransformMakeTranslation(horizontal, vertical);
-    [self animateTransform:argTransform andAlpha:argAlpha andColor:nil withDuration:duration andDelay:delay];
-}
-
 //notification center
 - (void)receiveNotification:(NSNotification *)notification
 {
