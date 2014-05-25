@@ -62,6 +62,7 @@
 }
 
 //state methods
+//-syncing
 - (void)syncStateWithId:(NSString *)stateId andSender:(NSString *)sender
 {
     //view object has a number of states. Some have global ids and the sender "self". Others have a specific sender. When receiving a state message with a global id and a sender. This method checks in the stateDictionary for a state with the same sender. The global id is checked. If it finds no sender or the global id is wrong, it will look for the global id in the dictionary. If it finds neither, it will go to the default state.
@@ -137,7 +138,7 @@
 {
     [self syncStateWithId:HomeState andSender:nil];
 }
-
+//-adding
 - (void)addState:(ARKState *)state
 {
     //this method searches the current stateDictionary for a state with the matching global id and sender in a manner similar to -syncStateWithGlobalId. If the state exists, it will replace it; if not, it will add it to the dictionary.
