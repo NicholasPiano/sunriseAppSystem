@@ -50,7 +50,8 @@
     
     //what does the main slider need to be defined?
     //all of the above +
-    //1. specific methods for special snap points. 
+    //1. specific methods for special snap points.
+    //2. button
     
     return [[ARKSlider alloc] init];
 }

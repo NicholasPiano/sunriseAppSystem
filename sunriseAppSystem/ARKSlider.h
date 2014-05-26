@@ -19,15 +19,12 @@
 
 #pragma mark - properties
 //intrinsic
-@property BOOL isVertical;
 @property NSUInteger day;
 @property NSUInteger hour;
 @property NSUInteger minute;
 @property NSUInteger extraMinute; //can add five or ten minutes to an alarm
 
 //elements
-@property (strong, nonatomic) ARKRect *upperTrack;
-@property (strong, nonatomic) ARKRect *lowerTrack;
 @property (strong, nonatomic) ARKButton *thumb;
 @property (strong, nonatomic) ARKLabel *hourLabel;
 @property (strong, nonatomic) ARKLabel *minuteLabel;
@@ -42,7 +39,7 @@
 @property (strong, nonatomic) NSMutableArray *regionArray;
 
 #pragma mark - initialisers
--(id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
+-(id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
 
 #pragma mark - instance methods
 //commands and reactions
@@ -53,8 +50,6 @@
 - (IBAction)tapDown:(UITapGestureRecognizer *)argTapGestureRecognizer;
 
 //construct
-- (void)addUpperTrack:(ARKRect *)argUpperTrack;
-- (void)addLowerTrack:(ARKRect *)argLowerTrack;
 - (void)addThumb:(ARKButton *)argThumb;
 - (void)addHourLabel:(ARKLabel *)argHourLabel;
 - (void)addMinuteLabel:(ARKLabel *)argMinuteLabel;
@@ -64,18 +59,5 @@
 //regions
 - (void)addRegion:(ARKSliderRegion *)region;
 - (void)addRegion:(ARKSliderRegion *)region withSnapPoint:(CGPoint)snapPoint;
-
-#pragma mark - factory
-+ (ARKSlider *)horizontalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
-+ (ARKSlider *)verticalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
-+ (ARKSlider *)alarmSliderWithIndex:(int)index andDay:(NSUInteger)day;
-
-//alarm
-+ (ARKButton *)sliderButtonWithIdent:(NSString *)ident;
-+ (ARKButton *)plusButtonWithIdent:(NSString *)ident;
-+ (ARKButton *)minusButtonWithIdent:(NSString *)ident;
-+ (ARKLabel *)hourLabelWithIdent:(NSString *)ident;
-+ (ARKLabel *)minuteLabelWithIdent:(NSString *)ident;
-+ (ARKAlarm *)alarmWithIdent:(NSString *)ident andDay:(int)day andHour:(int)hour andMinute:(int)minute;
 
 @end
