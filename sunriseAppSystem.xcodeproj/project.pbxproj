@@ -36,6 +36,7 @@
 		89B222B218E702B90042FF24 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B2229618E702B80042FF24 /* CoreData.framework */; };
 		89B222BA18E702B90042FF24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 89B222B818E702B90042FF24 /* InfoPlist.strings */; };
 		89B222BC18E702B90042FF24 /* sunriseAppSystemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B222BB18E702B90042FF24 /* sunriseAppSystemTests.m */; };
+		89C08541193267140065F763 /* ARKMainSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C08540193267140065F763 /* ARKMainSlider.m */; };
 		89DCDBDB19244AB0001614D7 /* ARKLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DCDBDA19244AB0001614D7 /* ARKLabel.m */; };
 		89DCDBDE192590BE001614D7 /* ARKF.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DCDBDD192590BE001614D7 /* ARKF.m */; };
 /* End PBXBuildFile section */
@@ -97,6 +98,8 @@
 		89B222B718E702B90042FF24 /* sunriseAppSystemTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "sunriseAppSystemTests-Info.plist"; sourceTree = "<group>"; };
 		89B222B918E702B90042FF24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		89B222BB18E702B90042FF24 /* sunriseAppSystemTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = sunriseAppSystemTests.m; sourceTree = "<group>"; };
+		89C0853F193267140065F763 /* ARKMainSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKMainSlider.h; sourceTree = "<group>"; };
+		89C08540193267140065F763 /* ARKMainSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKMainSlider.m; sourceTree = "<group>"; };
 		89DCDBD919244AB0001614D7 /* ARKLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKLabel.h; sourceTree = "<group>"; };
 		89DCDBDA19244AB0001614D7 /* ARKLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKLabel.m; sourceTree = "<group>"; };
 		89DCDBDC192590BE001614D7 /* ARKF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKF.h; sourceTree = "<group>"; };
@@ -134,6 +137,8 @@
 			children = (
 				89AB47B1190805D500A0D5B7 /* ARKSlider.h */,
 				89AB47B2190805D500A0D5B7 /* ARKSlider.m */,
+				89C0853F193267140065F763 /* ARKMainSlider.h */,
+				89C08540193267140065F763 /* ARKMainSlider.m */,
 				89A56E1B19230A4D00242563 /* ARKSliderRegion.h */,
 				89A56E1C19230A4D00242563 /* ARKSliderRegion.m */,
 			);
@@ -393,6 +398,7 @@
 				89DCDBDE192590BE001614D7 /* ARKF.m in Sources */,
 				89AB47CF190824DC00A0D5B7 /* ARKGlyph.m in Sources */,
 				89105F381920FBB9001A115F /* ARKCompositeView.m in Sources */,
+				89C08541193267140065F763 /* ARKMainSlider.m in Sources */,
 				89AA602618EF9589002195FD /* ARKState.m in Sources */,
 				89DCDBDB19244AB0001614D7 /* ARKLabel.m in Sources */,
 				89B2229F18E702B90042FF24 /* main.m in Sources */,

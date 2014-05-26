@@ -10,10 +10,32 @@
 #import "ARKView.h"
 #import "ARKButton.h"
 #import "ARKSlider.h"
+#import "ARKLibrary.h"
 
 @interface ARKMainViewController : UIViewController
 
 #pragma mark - factory
-//put test object declarations here
+//main slider
++ (ARKSlider *)mainSlider;
++ (ARKButton *)mainSliderButton;
+
+//add button
++ (ARKButton *)addButton;
+
+//settings button
++ (ARKButton *)settingsButton;
+
+//summary button
++ (ARKButton *)summaryButton;
+
+//summary library
++ (ARKLibrary *)summaryLibrary;
+
+//full library
++ (ARKLibrary *)fullLibrary;
+
+//settings library
++ (ARKLibrary *)settingsLibrary;
+
 
 @end
