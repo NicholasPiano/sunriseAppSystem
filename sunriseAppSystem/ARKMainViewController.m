@@ -18,6 +18,7 @@
     [self.view setBackgroundColor:[ARKF backgroundColor]];
     
     //objects
+    [self.view addSubview:[ARKMainViewController mainSlider]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,6 +43,8 @@
     //4. states specific to the object
     //5. next state id's associated with those states
     
+    ARKSlider *mainSlider = [[ARKSlider alloc] initWithCenter:[ARKDefault centerScreen] andSize:CGSizeMake(4*buttonRadius, 16*buttonRadius)];
+    
     //what do sliders need to be defined?
     //all of the above +
     //1. regions with snap points and next states
@@ -53,7 +56,7 @@
     //1. specific methods for special snap points.
     //2. button
     
-    return [[ARKSlider alloc] init];
+    return mainSlider;
 }
 
 + (ARKButton *)mainSliderButton

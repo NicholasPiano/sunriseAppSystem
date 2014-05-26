@@ -16,8 +16,8 @@
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
 
 #pragma mark - initialiser
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius;
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
+- (id)initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius;
+- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
 
 #pragma mark - instance methods
 //custom methods
