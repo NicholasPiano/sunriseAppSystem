@@ -147,6 +147,20 @@
     [self.stateDictionary setObject:state forKey:state.stateId];
 }
 
+- (void)addStateIdentList:(NSArray *)stateIdentList
+{
+    for (NSString *stateId in stateIdentList) {
+        if ([stateId isEqualToString:HomeState]) {
+            ARKState *homeState = [ARKState nullState];
+            homeState.duration = 0.0;
+            homeState.delay = 0.0;
+            [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
+        } else {
+            [self addState:[ARKState stateFromState:[ARKState nullState] withStateId:stateId andNextStateId:nil]];
+        }
+    }
+}
+
 - (void)addStateIdentList:(NSArray *)stateIdentList withDefaultState:(ARKState *)defaultState
 {
     for (NSString *stateId in stateIdentList) {

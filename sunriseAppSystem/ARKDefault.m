@@ -183,6 +183,11 @@ static NSArray *weekIdentArray = nil, *weekLabelArray = nil;
     return integer<10?[NSString stringWithFormat:@"0%d", integer]:[NSString stringWithFormat:@"%d", integer];
 }
 
++ (NSString *)string:(NSString *)string1 hyphenString:(NSString *)string2
+{
+    return [NSString stringWithFormat:@"%@-%@", string1, string2];
+}
+
 //vector methods
 + (CGFloat)getDisplacementOfPointA:(CGPoint)pointA fromPointB:(CGPoint)pointB
 {

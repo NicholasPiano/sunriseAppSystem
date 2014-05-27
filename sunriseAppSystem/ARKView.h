@@ -42,6 +42,7 @@
 - (void)syncHomeState;
 //-adding
 - (void)addState:(ARKState *)state;
+- (void)addStateIdentList:(NSArray *)stateIdentList;
 - (void)addStateIdentList:(NSArray *)stateIdentList withDefaultState:(ARKState *)defaultState;
 - (ARKState *)stateWithId:(NSString *)stateId;
 - (void)stateWithId:(NSString *)stateId goesTo:(NSString *)nextStateId;

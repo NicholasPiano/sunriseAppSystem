@@ -12,7 +12,7 @@
 static UIColor *backgroundColor = nil, *interfaceColor = nil, *interfaceColor2 = nil, *interfaceColor3 = nil, *yesColor = nil, *noColor = nil;
 
 //states
-static NSArray *stateList = nil;
+static NSArray *mainStateList = nil;
 static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 
 @implementation ARKF
@@ -33,7 +33,7 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
     addState = @"add";
     settingsState = @"settings";
     
-    stateList = [NSArray arrayWithObjects:HomeState, summaryState, addState, settingsState, nil];
+    mainStateList = [NSArray arrayWithObjects:MVCHome, MVCSummary, MVCAdd, MVCSettings, nil];
 }
 
 #pragma mark fetch methods
@@ -80,87 +80,95 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 }
 
 //states
-+ (NSArray *)stateList
++ (NSArray *)mainViewControllerStateList
 {
-    return stateList;
+    return mainStateList;
 }
 
-//slider
-
-//slider region
-
-//button
-
-//composite view
-
-//label
-
-//library
-
-//alarm interface
-+ (CGPoint)alarmSliderCenterWithIndex:(int)index
+//main slider
++ (CGPoint)mainSliderCenter
 {
-    return CGPointMake([self alarmSliderWidth]*index + 2*buttonRadius + 4*buttonSpacing, [ARKDefault screenHeight]/2.0+[self alarmSliderLabelSize].height);
+    return [ARKDefault centerScreen];
 }
 
-+ (CGFloat)alarmSliderHeight
++ (CGFloat)mainSliderHeight
 {
-    return [ARKDefault screenHeight]-2*[self alarmSliderLabelSize].height;
+    return [ARKDefault screenHeight];
 }
 
-+ (CGFloat)alarmSliderWidth
++ (CGFloat)mainSliderWidth
 {
-    return (2*buttonSpacing + 2*buttonRadius);
+    return 4*buttonRadius + buttonSpacing;
 }
 
-+ (CGSize)alarmSliderSize
++ (CGSize)mainSliderSize
 {
-    return CGSizeMake([self alarmSliderWidth], [self alarmSliderHeight]);
+    return CGSizeMake([self mainSliderWidth], [self mainSliderHeight]);
 }
 
-+ (CGSize)alarmSliderButtonSize
++ (UIColor *)mainSliderBackgroundColor
 {
-    return CGSizeMake(2*buttonRadius, 4*buttonRadius);
+    return [self interfaceColor]; //shall become carefully crafted color or just invisible
 }
 
-+ (CGPoint)alarmSliderButtonCenter
++ (CGPoint)mainSliderThumbCenter
 {
-    return CGPointMake([self alarmSliderWidth]/2.0, [ARKF alarmSliderHeight] - 6*buttonRadius);
+    return CGPointMake([self mainSliderWidth]/2.0, [self mainSliderHeight]/2.0);
 }
 
-+ (CGSize)alarmSliderLabelSize
++ (CGFloat)mainSliderThumbHeight
 {
-    return CGSizeMake(2*buttonRadius, 2*buttonRadius);
+    return 2*[self mainSliderWidth];
 }
 
-+ (CGPoint)alarmSliderHourLabelCenter
++ (CGFloat)mainSliderThumbWidth
 {
-    return CGPointMake([self alarmSliderWidth]/2.0, -3*buttonRadius);
+    return [self mainSliderWidth];
 }
 
-+ (CGPoint)alarmSliderMinuteLabelCenter
++ (CGSize)mainSliderThumbSize
 {
-    return CGPointMake([self alarmSliderWidth]/2.0, -buttonRadius);
+    return CGSizeMake([self mainSliderThumbWidth], [self mainSliderThumbHeight]);
 }
 
-+ (CGPoint)alarmSliderPlusButtonCenter
++ (UIColor *)mainSliderThumbColor
 {
-    return CGPointMake([self alarmSliderWidth]/2.0, [self alarmSliderHeight]-3*buttonRadius);
+    return [self yesColor]; //another masterfully styled color
 }
 
-+ (CGSize)alarmSliderPlusButtonSize
++ (CGFloat)mainSliderTopRegionHeight
 {
-    return CGSizeMake(2*buttonRadius, 2*buttonRadius);
+    return [];
 }
 
-+ (CGPoint)alarmSliderMinusButtonCenter
++ (CGFloat)mainSliderTimeRegionHeight
 {
-    return CGPointMake([self alarmSliderWidth]/2.0, [self alarmSliderHeight]-buttonRadius);
+    
 }
 
-+ (CGSize)alarmSliderMinusButtonSize
++ (CGFloat)mainSliderZeroRegionHeight
 {
-    return CGSizeMake(2*buttonRadius, 2*buttonRadius);
+    
+}
+
++ (CGFloat)mainSliderOffRegionHeight
+{
+    
+}
+
++ (CGPoint)mainSliderTopRegionSnapPoint
+{
+    
+}
+
++ (CGPoint)mainSliderZeroRegionSnapPoint
+{
+    
+}
+
++ (CGPoint)mainSliderOffRegionSnapPoint
+{
+    
 }
 
 @end

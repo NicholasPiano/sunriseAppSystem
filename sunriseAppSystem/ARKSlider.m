@@ -11,6 +11,9 @@
 @implementation ARKSlider
 
 #pragma mark - properties
+//setup
+@synthesize lastRegionAdded;
+
 //intrinsic
 @synthesize day, hour, minute, extraMinute;
 

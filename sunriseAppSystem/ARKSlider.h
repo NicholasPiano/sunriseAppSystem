@@ -18,6 +18,9 @@
 @interface ARKSlider : ARKView
 
 #pragma mark - properties
+//setup
+@property (strong, nonatomic) ARKSliderRegion *lastRegionAdded;
+
 //intrinsic
 @property NSUInteger day;
 @property NSUInteger hour;
@@ -58,6 +61,8 @@
 
 //regions
 - (void)addRegion:(ARKSliderRegion *)region;
-- (void)addRegion:(ARKSliderRegion *)region withSnapPoint:(CGPoint)snapPoint;
+- (void)addRegionWithHeight:(CGFloat)regionHeight andHour:(NSUInteger)regionHour andMinute:(NSUInteger)regionMinute andSnapPoint:(CGPoint)snapPoint andIdent:(NSString *)regionIdent;
+- (void)addTimeRegionsWithTotalHeight:(CGFloat)totalTimeRegionHeight;
+- (void)regionWithIdent:(NSString *)regionIdent onTouchInGoesTo:(NSString *)touchInStateId onTouchUpGoesTo:(NSString *)touchUpStateId;
 
 @end

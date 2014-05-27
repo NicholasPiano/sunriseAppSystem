@@ -17,21 +17,26 @@
 #define animationDuration 0.2
 #define animationDelay 0.0
 
+//states
+//-mainViewController
+#define MVCHome @"mvc-home"
+#define MVCSummary @"mvc-summary"
+#define MVCAdd @"mvc-add"
+#define MVCSettings @"mvc-settings"
+
 //slider
 #define sliderTimeInterval 15.0 //minutes
 
-//slider region
+//main slider
+#define MainSliderIdent @"main-slider"
 
-//button
-
-//composite view
-
-//label
-
-//library
+//regions
+#define TopRegionIdent @"top-region"
+#define ZeroRegionIdent @"zero-region"
+#define OffRegionIdent @"off-region"
 
 //alarm interface
-#define alarmInterfaceIdent @"alarm-interface"
+#define AlarmInterfaceIdent @"alarm-interface"
 
 @interface ARKF : NSObject
 
@@ -52,38 +57,31 @@
 + (UIColor *)transparent;
 
 //states
-+ (NSArray *)stateList;
++ (NSArray *)mainViewControllerStateList;
 
-//slider
+//main slider
++ (CGPoint)mainSliderCenter;
++ (CGFloat)mainSliderHeight;
++ (CGFloat)mainSliderWidth;
++ (CGSize)mainSliderSize;
 
-//slider region
++ (UIColor *)mainSliderBackgroundColor;
 
-//button
++ (CGPoint)mainSliderThumbCenter;
++ (CGFloat)mainSliderThumbHeight;
++ (CGFloat)mainSliderThumbWidth;
++ (CGSize)mainSliderThumbSize;
 
-//composite view
++ (UIColor *)mainSliderThumbColor;
 
-//label
++ (CGFloat)mainSliderTopRegionHeight;
++ (CGFloat)mainSliderTimeRegionHeight;
++ (CGFloat)mainSliderZeroRegionHeight;
++ (CGFloat)mainSliderOffRegionHeight;
 
-//library
++ (CGPoint)mainSliderTopRegionSnapPoint;
++ (CGPoint)mainSliderZeroRegionSnapPoint;
++ (CGPoint)mainSliderOffRegionSnapPoint;
 
-//alarm interface
-+ (CGPoint)alarmSliderCenterWithIndex:(int)index;
-+ (CGFloat)alarmSliderHeight;
-+ (CGFloat)alarmSliderWidth;
-+ (CGSize)alarmSliderSize;
-+ (CGPoint)alarmSliderCenter;
-
-+ (CGSize)alarmSliderButtonSize;
-+ (CGPoint)alarmSliderButtonCenter;
-
-+ (CGSize)alarmSliderLabelSize;
-+ (CGPoint)alarmSliderHourLabelCenter;
-+ (CGPoint)alarmSliderMinuteLabelCenter;
-
-+ (CGPoint)alarmSliderPlusButtonCenter;
-+ (CGSize)alarmSliderPlusButtonSize;
-
-+ (CGPoint)alarmSliderMinusButtonCenter;
-+ (CGSize)alarmSliderMinusButtonSize;
 
 @end
