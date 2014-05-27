@@ -260,7 +260,13 @@
 
 - (void)regionWithIdent:(NSString *)regionIdent onTouchInGoesTo:(NSString *)touchInStateId onTouchUpGoesTo:(NSString *)touchUpStateId
 {
-    
+    for (ARKSliderRegion *region in regionArray) {
+        if ([region.ident isEqualToString:regionIdent]) {
+            region.touchInStateId = touchInStateId;
+            region.touchUpStateId = touchUpStateId;
+            break;
+        }
+    }
 }
 
 @end
