@@ -26,6 +26,7 @@
 
 //slider
 #define sliderTimeInterval 15.0 //minutes
+#define numberOfTimeRegions 94 //number of divisions from 2345 to 0000 in 15 minutes
 
 //main slider
 #define MainSliderIdent @"main-slider"
@@ -76,12 +77,11 @@
 
 + (CGFloat)mainSliderTopRegionHeight;
 + (CGFloat)mainSliderTimeRegionHeight;
++ (CGFloat)mainSliderTimeRegionIndividualHeight;
 + (CGFloat)mainSliderZeroRegionHeight;
 + (CGFloat)mainSliderOffRegionHeight;
 
 + (CGPoint)mainSliderTopRegionSnapPoint;
 + (CGPoint)mainSliderZeroRegionSnapPoint;
-+ (CGPoint)mainSliderOffRegionSnapPoint;
-
 
 @end

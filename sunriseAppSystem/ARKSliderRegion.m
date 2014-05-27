@@ -16,14 +16,13 @@
 @synthesize hour, minute;
 
 //states
-@synthesize enteredStateId, exitStateId, touchUpStateId, snapPoint;
+@synthesize touchInStateId, touchOutStateId, touchUpStateId, snapPoint;
 
 #pragma mark - initialiser
-- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andTouchUpStateId:(NSString *)argTouchUpStateId
+- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
 {
     self = [super initWithCenter:argCenter andSize:argSize];
     if (self) {
-        self.touchUpStateId = argTouchUpStateId;
         self.backgroundColor = [ARKF transparent];
         self.snapPoint = self.center;
     }
@@ -33,9 +32,9 @@
 #pragma mark - instance methods
 
 #pragma mark - factory
-+ (ARKSliderRegion *)sliderRegionWithCenter:(CGPoint)center andSize:(CGSize)size andTouchUpStateId:(NSString *)touchUpStateId
++ (ARKSliderRegion *)sliderRegionWithCenter:(CGPoint)center andSize:(CGSize)size
 {
-    return [[self alloc] initWithCenter:center andSize:size andTouchUpStateId:touchUpStateId];
+    return [[self alloc] initWithCenter:center andSize:size];
 }
 
 @end

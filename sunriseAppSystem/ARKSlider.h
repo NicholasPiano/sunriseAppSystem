@@ -61,6 +61,7 @@
 
 //regions
 - (void)addRegion:(ARKSliderRegion *)region;
+- (void)addRegionWithHeight:(CGFloat)regionHeight andHour:(NSUInteger)regionHour andMinute:(NSUInteger)regionMinute andIdent:(NSString *)regionIdent;
 - (void)addRegionWithHeight:(CGFloat)regionHeight andHour:(NSUInteger)regionHour andMinute:(NSUInteger)regionMinute andSnapPoint:(CGPoint)snapPoint andIdent:(NSString *)regionIdent;
 - (void)addTimeRegionsWithTotalHeight:(CGFloat)totalTimeRegionHeight;
 - (void)regionWithIdent:(NSString *)regionIdent onTouchInGoesTo:(NSString *)touchInStateId onTouchUpGoesTo:(NSString *)touchUpStateId;

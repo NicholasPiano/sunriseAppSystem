@@ -28,6 +28,9 @@
 {
     self = [super initWithCenter:argCenter andSize:argSize];
     if (self) {
+        //setup
+        self.lastRegionAdded = nil;
+        
         //intrinsic
         self.extraMinute = 0;
         
@@ -201,21 +204,63 @@
 //regions
 - (void)addRegion:(ARKSliderRegion *)region
 {
-    [self addRegion:region withSnapPoint:region.center];
-}
-
-- (void)addRegion:(ARKSliderRegion *)region withSnapPoint:(CGPoint)snapPoint
-{
     //1. add region at the bottom of the subviews list to ensure it doesn't swallow touches.
-    region.snapPoint = snapPoint;
     [self insertSubview:region atIndex:0]; //all back of the bus
+    self.lastRegionAdded = region;
     
     //2. Add to array of regions
     [self.regionArray addObject:region];
     
     //3. slider thumb state for region
-    ARKState *regionState = [ARKState stateWithId:[ARKDefault stateId:nil withSender:region.touchUpStateId] moveToPosition:snapPoint fromInitialPosition:thumb.center];
+    ARKState *regionState = [ARKState stateWithId:[ARKDefault stateId:nil withSender:region.touchUpStateId] moveToPosition:region.snapPoint fromInitialPosition:thumb.center];
     [self.thumb addState:regionState];
+}
+
+- (void)addRegionWithHeight:(CGFloat)regionHeight andHour:(NSUInteger)regionHour andMinute:(NSUInteger)regionMinute andSnapPoint:(CGPoint)snapPoint andIdent:(NSString *)regionIdent
+{
+    CGFloat y = regionHeight/2.0;
+    if (self.lastRegionAdded != nil) {
+        y += lastRegionAdded.size.height/2.0 + lastRegionAdded.center.y;
+    }
+    
+    CGPoint sliderRegionCenter = CGPointMake(self.size.width/2.0, y);
+    CGSize sliderRegionSize = CGSizeMake(self.size.width, regionHeight);
+    
+    ARKSliderRegion *sliderRegion = [[ARKSliderRegion alloc] initWithCenter:sliderRegionCenter andSize:sliderRegionSize];
+    sliderRegion.hour = regionHour;
+    sliderRegion.minute = regionMinute;
+    sliderRegion.snapPoint = snapPoint;
+    sliderRegion.ident = regionIdent;
+    
+    [self addRegion:sliderRegion];
+}
+
+- (void)addRegionWithHeight:(CGFloat)regionHeight andHour:(NSUInteger)regionHour andMinute:(NSUInteger)regionMinute andIdent:(NSString *)regionIdent
+{
+    CGFloat y = regionHeight/2.0;
+    if (self.lastRegionAdded != nil) {
+        y += lastRegionAdded.size.height/2.0 + lastRegionAdded.center.y;
+    }
+    
+    CGPoint sliderRegionCenter = CGPointMake(self.size.width/2.0, y);
+    CGSize sliderRegionSize = CGSizeMake(self.size.width, regionHeight);
+    
+    ARKSliderRegion *sliderRegion = [[ARKSliderRegion alloc] initWithCenter:sliderRegionCenter andSize:sliderRegionSize];
+    sliderRegion.hour = regionHour;
+    sliderRegion.minute = regionMinute;
+    sliderRegion.ident = regionIdent;
+    
+    [self addRegion:sliderRegion];
+}
+
+- (void)addTimeRegionsWithTotalHeight:(CGFloat)totalTimeRegionHeight
+{
+    
+}
+
+- (void)regionWithIdent:(NSString *)regionIdent onTouchInGoesTo:(NSString *)touchInStateId onTouchUpGoesTo:(NSString *)touchUpStateId
+{
+    
 }
 
 @end

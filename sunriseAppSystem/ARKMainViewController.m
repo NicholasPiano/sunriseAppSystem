@@ -69,7 +69,7 @@
     [mainSlider addRegionWithHeight:[ARKF mainSliderZeroRegionHeight] andHour:0 andMinute:0 andSnapPoint:[ARKF mainSliderZeroRegionSnapPoint] andIdent:ZeroRegionIdent];
     
     //-off region
-    [mainSlider addRegionWithHeight:[ARKF mainSliderOffRegionHeight] andHour:-1 andMinute:-1 andSnapPoint:[ARKF mainSliderOffRegionSnapPoint] andIdent:OffRegionIdent];
+    [mainSlider addRegionWithHeight:[ARKF mainSliderOffRegionHeight] andHour:-1 andMinute:-1 andIdent:OffRegionIdent];
     
     //2. a button
     [mainSlider addThumb:[ARKMainViewController mainSliderButton]];
