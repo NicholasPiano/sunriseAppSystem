@@ -12,13 +12,19 @@
 
 #pragma mark properties
 @property (strong, nonatomic) NSMutableDictionary *dictionary;
-@property (strong, nonatomic) NSMutableArray *array;
+@property (strong, nonatomic) NSMutableArray *keyArray;
+@property (strong, nonatomic) NSMutableArray *objectArray;
 
 #pragma mark initialiser
 - (id)init;
 
 #pragma mark instance methods
-
+- (void)setObject:(id)object forKey:(NSString *)key;
+- (NSUInteger)count;
+- (id)objectAtIndex:(NSUInteger)index;
+- (id)objectForKey:(NSString *)key;
+- (NSUInteger)indexOfKey:(NSString *)key;
+- (NSUInteger)indexOfObject:(id)object;
 
 #pragma mark factory
 + (ARKOrderedDictionary *)dictionary;

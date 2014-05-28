@@ -92,7 +92,7 @@
         //regions - maybe redundant given section in dragging state
         BOOL noRegion = YES;
         CGPoint thumbCenter = CGPointMake(thumb.bounds.size.width/2.0, thumb.transform.ty + thumb.center.y);
-        for (ARKSliderRegion *region in [regionDictionary allValues]) {
+        for (ARKSliderRegion *region in self.regionDictionary.objectArray) {
             if (CGRectContainsPoint(region.frame, thumbCenter)) {
                 [self postStateWithId:nil andSender:region.touchUpStateId];
                 self.lastButtonTransform = region.snapPoint.y - thumb.center.y; //account for initial position
@@ -117,7 +117,7 @@
         BOOL noRegion = YES;
         CGPoint thumbCenter = CGPointMake(thumb.bounds.size.width/2.0, thumb.transform.ty + thumb.center.y);
 
-        for (ARKSliderRegion *region in [self.regionDictionary allValues]) {
+        for (ARKSliderRegion *region in self.regionDictionary.objectArray) {
             if (CGRectContainsPoint(region.frame, thumbCenter)) {
                 if (self.currentRegion.touchUpStateId != region.touchUpStateId) {
                     self.currentRegion = region;
@@ -177,7 +177,6 @@
 - (void)addThumb:(ARKButton *)argThumb
 {
     self.thumb = argThumb;
-    [self syncRegions]; //regions must be declared before thumb
     [self.thumb addGestureRecognizer:self.panThumbRecognizer];
     [self addSubview:self.thumb];
 }
@@ -212,13 +211,15 @@
 - (void)addRegion:(ARKSliderRegion *)region
 {
     [self.regionDictionary setObject:region forKey:region.ident];
+    self.lastRegionAdded = region;
 }
 
 - (void)regionWithIdent:(NSString *)regionIdent hasSnapPoint:(CGPoint)snapPoint
 {
-    ARKSliderRegion *region = [self.regionDictionary objectForKey:regionIdent];
+    NSString *realRegionIdent = [ARKDefault string:self.ident hyphenString:regionIdent];
+    ARKSliderRegion *region = [self.regionDictionary objectForKey:realRegionIdent];
     region.snapPoint = snapPoint;
-    [self.regionDictionary setObject:region forKey:regionIdent];
+    [self.regionDictionary setObject:region forKey:realRegionIdent];
 }
 
 - (void)addRegionWithIdent:(NSString *)regionIdent andHeight:(CGFloat)regionHeight andHours:(int)hours andMinutes:(int)minutes
@@ -262,7 +263,7 @@
 
 - (void)syncRegions
 {
-    for (ARKSliderRegion *region in [self.regionDictionary allValues]) {
+    for (ARKSliderRegion *region in self.regionDictionary.objectArray) {
         //1. add region at the bottom of the subviews list to ensure it doesn't swallow touches.
         if (self.lastRegionCounter == 0) {
             self.lastRegionCounter = 1;

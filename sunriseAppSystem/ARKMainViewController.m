@@ -82,6 +82,8 @@
     //1. specific methods for special snap points. - might have to look at later.
     //2. button
     
+    [mainSlider syncRegions]; //regions must be declared before thumb
+    
     return mainSlider;
 }
 
