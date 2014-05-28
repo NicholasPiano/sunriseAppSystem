@@ -12,7 +12,7 @@
 
 #pragma mark - properties
 //setup
-@synthesize lastRegionAdded;
+@synthesize lastRegionAdded, lastRegionCounter;
 
 //intrinsic
 @synthesize day, hour, minute, extraMinute;
@@ -21,7 +21,7 @@
 @synthesize thumb, hourLabel, minuteLabel, plusButton, minusButton;
 
 //tracking
-@synthesize lastButtonTransform, tapThumbRecognizer, panThumbRecognizer, regionArray;
+@synthesize lastButtonTransform, tapThumbRecognizer, panThumbRecognizer, regionDictionary;
 
 #pragma mark - initialisers
 - (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
@@ -30,6 +30,7 @@
     if (self) {
         //setup
         self.lastRegionAdded = nil;
+        self.lastRegionCounter = 0;
         
         //intrinsic
         self.extraMinute = 0;
@@ -44,7 +45,7 @@
         [self.tapThumbRecognizer requireGestureRecognizerToFail:self.panThumbRecognizer];
         
         //regions
-        self.regionArray = [NSMutableArray array];
+        self.regionDictionary = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -100,7 +101,7 @@
             }
         }
         
-        if (noRegion && [self.regionArray count]!=0) {
+        if (noRegion && [self.regionDictionary count]!=0) {
             [self postStateWithId:nil andSender:self.currentRegion.touchUpStateId];
             self.lastButtonTransform = self.currentRegion.snapPoint.y - thumb.center.y; //account for initial position
         }
@@ -115,7 +116,7 @@
         BOOL noRegion = YES;
         CGPoint thumbCenter = CGPointMake(thumb.bounds.size.width/2.0, thumb.transform.ty + thumb.center.y);
 
-        for (ARKSliderRegion *region in regionArray) {
+        for (ARKSliderRegion *region in [self.regionDictionary allValues]) {
             if (CGRectContainsPoint(region.frame, thumbCenter)) {
                 if (self.currentRegion.touchUpStateId != region.touchUpStateId) {
                     self.currentRegion = region;
@@ -171,6 +172,7 @@
 - (void)addThumb:(ARKButton *)argThumb
 {
     self.thumb = argThumb;
+    [self syncRegions]; //regions must be declared before thumb
     [self.thumb addGestureRecognizer:self.panThumbRecognizer];
     [self addSubview:self.thumb];
 }
@@ -204,19 +206,17 @@
 //regions
 - (void)addRegion:(ARKSliderRegion *)region
 {
-    //1. add region at the bottom of the subviews list to ensure it doesn't swallow touches.
-    [self insertSubview:region atIndex:0]; //all back of the bus
-    self.lastRegionAdded = region;
-    
-    //2. Add to array of regions
-    [self.regionArray addObject:region];
-    
-    //3. slider thumb state for region
-    ARKState *regionState = [ARKState stateWithId:[ARKDefault stateId:nil withSender:region.touchUpStateId] moveToPosition:region.snapPoint fromInitialPosition:thumb.center];
-    [self.thumb addState:regionState];
+    [self.regionDictionary setObject:region forKey:region.ident];
 }
 
-- (void)addRegionWithHeight:(CGFloat)regionHeight andHour:(NSUInteger)regionHour andMinute:(NSUInteger)regionMinute andSnapPoint:(CGPoint)snapPoint andIdent:(NSString *)regionIdent
+- (void)regionWithIdent:(NSString *)regionIdent hasSnapPoint:(CGPoint)snapPoint
+{
+    ARKSliderRegion *region = [self.regionDictionary objectForKey:regionIdent];
+    region.snapPoint = snapPoint;
+    [self.regionDictionary setObject:region forKey:regionIdent];
+}
+
+- (void)addRegionWithIdent:(NSString *)regionIdent andHeight:(CGFloat)regionHeight andHours:(int)hours andMinutes:(int)minutes
 {
     CGFloat y = regionHeight/2.0;
     if (self.lastRegionAdded != nil) {
@@ -227,45 +227,49 @@
     CGSize sliderRegionSize = CGSizeMake(self.size.width, regionHeight);
     
     ARKSliderRegion *sliderRegion = [[ARKSliderRegion alloc] initWithCenter:sliderRegionCenter andSize:sliderRegionSize];
-    sliderRegion.hour = regionHour;
-    sliderRegion.minute = regionMinute;
-    sliderRegion.snapPoint = snapPoint;
-    sliderRegion.ident = regionIdent;
+    sliderRegion.hour = hours;
+    sliderRegion.minute = minutes;
+    sliderRegion.ident = [ARKDefault string:self.ident hyphenString:regionIdent];
+    
+    //touch up and in
+    sliderRegion.touchInStateId = [ARKDefault string:sliderRegion.ident hyphenString:TouchInIdent];
+    sliderRegion.touchUpStateId = [ARKDefault string:sliderRegion.ident hyphenString:TouchUpIdent];
     
     [self addRegion:sliderRegion];
 }
 
-- (void)addRegionWithHeight:(CGFloat)regionHeight andHour:(NSUInteger)regionHour andMinute:(NSUInteger)regionMinute andIdent:(NSString *)regionIdent
+- (void)addTimeRegionsWithHeight:(CGFloat)timeRegionHeight
 {
-    CGFloat y = regionHeight/2.0;
-    if (self.lastRegionAdded != nil) {
-        y += lastRegionAdded.size.height/2.0 + lastRegionAdded.center.y;
-    }
-    
-    CGPoint sliderRegionCenter = CGPointMake(self.size.width/2.0, y);
-    CGSize sliderRegionSize = CGSizeMake(self.size.width, regionHeight);
-    
-    ARKSliderRegion *sliderRegion = [[ARKSliderRegion alloc] initWithCenter:sliderRegionCenter andSize:sliderRegionSize];
-    sliderRegion.hour = regionHour;
-    sliderRegion.minute = regionMinute;
-    sliderRegion.ident = regionIdent;
-    
-    [self addRegion:sliderRegion];
-}
-
-- (void)addTimeRegionsWithTotalHeight:(CGFloat)totalTimeRegionHeight
-{
-    
-}
-
-- (void)regionWithIdent:(NSString *)regionIdent onTouchInGoesTo:(NSString *)touchInStateId onTouchUpGoesTo:(NSString *)touchUpStateId
-{
-    for (ARKSliderRegion *region in regionArray) {
-        if ([region.ident isEqualToString:regionIdent]) {
-            region.touchInStateId = touchInStateId;
-            region.touchUpStateId = touchUpStateId;
-            break;
+    int hours = 23;
+    int minutes = 30;
+    for (int i=0; i<numberOfTimeRegions; i++) {
+        NSString *regionIdent = [NSString stringWithFormat:@"%@-%@-%d-%d", self.ident, TimeRegionIdent, hour, minute];
+        [self addRegionWithIdent:regionIdent andHeight:timeRegionHeight andHours:hours andMinutes:minutes];
+        
+        //reset minutes and hours
+        minutes = minutes - 15;
+        if (i%4==2) { //2 6 10 ...
+            hours--;
+            minutes = 45;
         }
+    }
+}
+
+- (void)syncRegions
+{
+    for (ARKSliderRegion *region in [self.regionDictionary allValues]) {
+        //1. add region at the bottom of the subviews list to ensure it doesn't swallow touches.
+        if (self.lastRegionCounter == 0) {
+            self.lastRegionCounter = 1;
+        } else {
+            region.backgroundColor = [ARKF yesColor];
+            self.lastRegionCounter = 0;
+        }
+        [self insertSubview:region atIndex:0]; //all back of the bus
+        
+        //3. slider thumb state for region
+        ARKState *regionState = [ARKState stateWithId:region.touchUpStateId moveToPosition:region.snapPoint fromInitialPosition:self.thumb.center];
+        [self.thumb addState:regionState];
     }
 }
 

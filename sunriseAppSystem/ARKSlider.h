@@ -20,6 +20,7 @@
 #pragma mark - properties
 //setup
 @property (strong, nonatomic) ARKSliderRegion *lastRegionAdded;
+@property int lastRegionCounter;
 
 //intrinsic
 @property NSUInteger day;
@@ -39,7 +40,7 @@
 @property (strong, nonatomic) ARKSliderRegion *currentRegion;
 @property (strong, nonatomic) UITapGestureRecognizer *tapThumbRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *panThumbRecognizer;
-@property (strong, nonatomic) NSMutableArray *regionArray;
+@property (strong, nonatomic) NSMutableDictionary *regionDictionary; //store by ident
 
 #pragma mark - initialisers
 -(id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
@@ -61,9 +62,9 @@
 
 //regions
 - (void)addRegion:(ARKSliderRegion *)region;
-- (void)addRegionWithHeight:(CGFloat)regionHeight andHour:(NSUInteger)regionHour andMinute:(NSUInteger)regionMinute andIdent:(NSString *)regionIdent;
-- (void)addRegionWithHeight:(CGFloat)regionHeight andHour:(NSUInteger)regionHour andMinute:(NSUInteger)regionMinute andSnapPoint:(CGPoint)snapPoint andIdent:(NSString *)regionIdent;
-- (void)addTimeRegionsWithTotalHeight:(CGFloat)totalTimeRegionHeight;
-- (void)regionWithIdent:(NSString *)regionIdent onTouchInGoesTo:(NSString *)touchInStateId onTouchUpGoesTo:(NSString *)touchUpStateId;
+- (void)regionWithIdent:(NSString *)regionIdent hasSnapPoint:(CGPoint)snapPoint;
+- (void)addRegionWithIdent:(NSString *)regionIdent andHeight:(CGFloat)regionHeight andHours:(int)hours andMinutes:(int)minutes;
+- (void)addTimeRegionsWithHeight:(CGFloat)timeRegionHeight;
+- (void)syncRegions;
 
 @end

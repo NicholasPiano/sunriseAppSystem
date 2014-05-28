@@ -33,8 +33,11 @@
 
 //regions
 #define TopRegionIdent @"top-region"
+#define TimeRegionIdent @"time-region"
 #define ZeroRegionIdent @"zero-region"
 #define OffRegionIdent @"off-region"
+#define TouchUpIdent @"touch-up"
+#define TouchInIdent @"touch-in"
 
 //alarm interface
 #define AlarmInterfaceIdent @"alarm-interface"

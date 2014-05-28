@@ -54,22 +54,24 @@
     [mainSlider addState:[ARKState stateWithId:@"some-random-id-of-another-object" moveDown:0]]; //if there are any
     
     //5. next state id's associated with those states
-    [mainSlider stateWithId:@"some-random-id-of-another-object" goesTo:@"some-other-id"];
+//    [mainSlider stateWithId:@"some-random-id-of-another-object" goesTo:@"some-other-id"];
     
     //what do sliders need to be defined?
     //all of the above +
     //1. regions with snap points and next states
     //-top region
-    [mainSlider addRegionWithHeight:[ARKF mainSliderTopRegionHeight] andHour:23 andMinute:45 andSnapPoint:[ARKF mainSliderTopRegionSnapPoint] andIdent:TopRegionIdent];
+    [mainSlider addRegionWithIdent:TopRegionIdent andHeight:[ARKF mainSliderTopRegionHeight] andHours:23 andMinutes:45];
+    [mainSlider regionWithIdent:TopRegionIdent hasSnapPoint:[ARKF mainSliderTopRegionSnapPoint]];
     
     //-time regions
-    [mainSlider addTimeRegionsWithTotalHeight:[ARKF mainSliderTimeRegionHeight]];
+    [mainSlider addTimeRegionsWithHeight:[ARKF mainSliderTimeRegionIndividualHeight]];
     
     //-zero region
-    [mainSlider addRegionWithHeight:[ARKF mainSliderZeroRegionHeight] andHour:0 andMinute:0 andSnapPoint:[ARKF mainSliderZeroRegionSnapPoint] andIdent:ZeroRegionIdent];
+    [mainSlider addRegionWithIdent:ZeroRegionIdent andHeight:[ARKF mainSliderZeroRegionHeight] andHours:0 andMinutes:0];
+    [mainSlider regionWithIdent:ZeroRegionIdent hasSnapPoint:[ARKF mainSliderZeroRegionSnapPoint]];
     
     //-off region
-    [mainSlider addRegionWithHeight:[ARKF mainSliderOffRegionHeight] andHour:-1 andMinute:-1 andIdent:OffRegionIdent];
+    [mainSlider addRegionWithIdent:OffRegionIdent andHeight:[ARKF mainSliderOffRegionHeight] andHours:-1 andMinutes:-1];
     
     //2. a button
     [mainSlider addThumb:[ARKMainViewController mainSliderButton]];
@@ -87,7 +89,7 @@
 {
     ARKButton *mainSliderThumb = [ARKButton buttonWithCenter:[ARKF mainSliderThumbCenter] andSize:[ARKF mainSliderThumbSize]];
     mainSliderThumb.backgroundColor = [ARKF transparent];
-    ARKView *mainSliderThumbView = [[ARKView alloc] initWithCenter:CGPointMake([ARKF mainSliderThumbWidth]/2.0, [ARKF mainSliderThumbHeight]/2.0) andSize:CGSizeMake([ARKF mainSliderThumbWidth], [ARKF mainSliderThumbWidth])];
+    ARKView *mainSliderThumbView = [[ARKView alloc] initWithCenter:CGPointMake([ARKF mainSliderThumbWidth]/2.0, [ARKF mainSliderThumbHeight]/2.0) andSize:CGSizeMake(buttonRadius*2, buttonRadius*2)];
     mainSliderThumbView.backgroundColor = [ARKF mainSliderThumbColor];
     [mainSliderThumb addSubview:mainSliderThumbView];
     return mainSliderThumb;
