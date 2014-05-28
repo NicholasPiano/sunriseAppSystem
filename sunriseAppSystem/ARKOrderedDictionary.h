@@ -10,4 +10,17 @@
 
 @interface ARKOrderedDictionary : NSObject
 
+#pragma mark properties
+@property (strong, nonatomic) NSMutableDictionary *dictionary;
+@property (strong, nonatomic) NSMutableArray *array;
+
+#pragma mark initialiser
+- (id)init;
+
+#pragma mark instance methods
+
+
+#pragma mark factory
++ (ARKOrderedDictionary *)dictionary;
+
 @end
