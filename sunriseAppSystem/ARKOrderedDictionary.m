@@ -45,6 +45,11 @@
     return [self.keyArray objectAtIndex:index];
 }
 
+- (NSUInteger)indexOfKey:(NSString *)key
+{
+    return [self.keyArray indexOfObject:key];
+}
+
 #pragma mark factory
 + (ARKOrderedDictionary *)dictionary
 {

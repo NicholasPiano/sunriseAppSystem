@@ -21,7 +21,7 @@
 @synthesize thumb, hourLabel, minuteLabel, plusButton, minusButton;
 
 //tracking
-@synthesize lastButtonTransform, tapThumbRecognizer, panThumbRecognizer, regionDictionary;
+@synthesize lastButtonTransform, currentRegion, currentRegionIdent, tapThumbRecognizer, panThumbRecognizer, regionDictionary;
 
 #pragma mark - initialisers
 - (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
@@ -45,7 +45,7 @@
         [self.tapThumbRecognizer requireGestureRecognizerToFail:self.panThumbRecognizer];
         
         //regions
-        self.regionDictionary = [NSMutableDictionary dictionary];
+        self.regionDictionary = [ARKOrderedDictionary dictionary];
     }
     return self;
 }
@@ -92,11 +92,12 @@
         //regions - maybe redundant given section in dragging state
         BOOL noRegion = YES;
         CGPoint thumbCenter = CGPointMake(thumb.bounds.size.width/2.0, thumb.transform.ty + thumb.center.y);
-        for (ARKSliderRegion *region in regionArray) {
+        for (ARKSliderRegion *region in [regionDictionary allValues]) {
             if (CGRectContainsPoint(region.frame, thumbCenter)) {
                 [self postStateWithId:nil andSender:region.touchUpStateId];
                 self.lastButtonTransform = region.snapPoint.y - thumb.center.y; //account for initial position
                 self.currentRegion = region;
+                self.currentRegionIdent = region.ident;
                 noRegion = NO;
             }
         }
@@ -120,6 +121,7 @@
             if (CGRectContainsPoint(region.frame, thumbCenter)) {
                 if (self.currentRegion.touchUpStateId != region.touchUpStateId) {
                     self.currentRegion = region;
+                    self.currentRegionIdent = region.ident;
                     if (self.currentRegion.hour != -1) {
                         [self.hourLabel setText:[ARKDefault timeStringWithInt:self.currentRegion.hour]];
                         [self.minuteLabel setText:[ARKDefault timeStringWithInt:self.currentRegion.minute]];
@@ -149,9 +151,12 @@
     
     //if at maximum extra time, then:
     if (self.extraMinute == 0) { //after incrementing
-        int currentIndex = [regionArray indexOfObject:self.currentRegion];
+        //increment
+        int currentIndex = [regionDictionary indexOfKey:self.currentRegionIdent];
         int newIndex = currentIndex==0?0:currentIndex-1;
-        self.currentRegion = [regionArray objectAtIndex:newIndex];
+        self.currentRegion = [regionDictionary objectAtIndex:newIndex];
+        
+        //
         self.lastButtonTransform = self.currentRegion.snapPoint.y - thumb.center.y;
         self.hour = self.currentRegion.hour;
         self.minute = self.currentRegion.minute;

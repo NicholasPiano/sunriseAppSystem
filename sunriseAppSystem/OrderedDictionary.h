@@ -21,8 +21,6 @@
 //     distribution.
 //
 
-#import <Cocoa/Cocoa.h>
-
 @interface OrderedDictionary : NSMutableDictionary
 {
 	NSMutableDictionary *dictionary;

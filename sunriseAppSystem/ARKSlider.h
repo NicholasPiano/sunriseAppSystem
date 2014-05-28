@@ -38,9 +38,10 @@
 //tracking
 @property (nonatomic) CGFloat lastButtonTransform;
 @property (strong, nonatomic) ARKSliderRegion *currentRegion;
+@property (strong, nonatomic) NSString *currentRegionIdent;
 @property (strong, nonatomic) UITapGestureRecognizer *tapThumbRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *panThumbRecognizer;
-@property (strong, nonatomic) NSMutableDictionary *regionDictionary; //store by ident
+@property (strong, nonatomic) ARKOrderedDictionary *regionDictionary; //store by ident
 
 #pragma mark - initialisers
 -(id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;

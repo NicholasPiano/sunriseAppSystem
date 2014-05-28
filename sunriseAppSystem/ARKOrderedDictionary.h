@@ -21,6 +21,7 @@
 - (void)insertObject:(id)object forKey:(id<NSCopying>)key atIndex:(NSUInteger)index;
 - (id)objectAtIndex:(NSUInteger)index;
 - (NSString *)keyAtIndex:(NSUInteger)index;
+- (NSUInteger)indexOfKey:(NSString *)key;
 
 #pragma mark factory
 + (ARKOrderedDictionary *)dictionary;
