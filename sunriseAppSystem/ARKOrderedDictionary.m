@@ -20,6 +20,7 @@
     if (self) {
         self.dictionary = [NSMutableDictionary dictionary];
         self.keyArray = [NSMutableArray array];
+        self.objectArray = [NSMutableArray array];
     }
     return self;
 }
@@ -28,8 +29,14 @@
 - (void)setObject:(id)object forKey:(NSString *)key
 {
     [self.dictionary setObject:object forKey:key];
-    [self.keyArray addObject:key];
-    [self.objectArray addObject:object];
+    if ([self.keyArray containsObject:key]) {
+        NSUInteger index = [self.keyArray indexOfObject:key];
+        [self.keyArray insertObject:key atIndex:index]; //replace key and object if they exist
+        [self.objectArray insertObject:object atIndex:index];
+    } else {
+        [self.keyArray addObject:key];
+        [self.objectArray addObject:object];
+    }
 }
 
 - (NSUInteger)count

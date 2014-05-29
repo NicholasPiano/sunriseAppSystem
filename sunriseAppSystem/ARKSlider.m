@@ -211,6 +211,7 @@
 - (void)addRegion:(ARKSliderRegion *)region
 {
     [self.regionDictionary setObject:region forKey:region.ident];
+//    ARKLog(@"%@", self.regionDictionary.keyArray);
     self.lastRegionAdded = region;
 }
 
@@ -249,7 +250,7 @@
     int hours = 23;
     int minutes = 30;
     for (int i=0; i<numberOfTimeRegions; i++) {
-        NSString *regionIdent = [NSString stringWithFormat:@"%@-%@-%d-%d", self.ident, TimeRegionIdent, hour, minute];
+        NSString *regionIdent = [NSString stringWithFormat:@"%@-%d-%d", TimeRegionIdent, hours, minutes];
         [self addRegionWithIdent:regionIdent andHeight:timeRegionHeight andHours:hours andMinutes:minutes];
         
         //reset minutes and hours
