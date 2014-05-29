@@ -17,7 +17,7 @@
 #pragma mark - factory
 //main slider
 + (ARKSlider *)mainSlider;
-+ (ARKButton *)mainSliderButton;
++ (ARKButton *)mainSliderThumb;
 
 //add button
 + (ARKButton *)addButton;

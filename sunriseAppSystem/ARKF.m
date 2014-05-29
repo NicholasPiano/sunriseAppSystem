@@ -96,6 +96,11 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
     return [ARKDefault screenHeight];
 }
 
++ (CGFloat)mainSliderAreaHeight
+{
+    return [self mainSliderHeight]-[self mainSliderLabelRegionHeight];
+}
+
 + (CGFloat)mainSliderWidth
 {
     return 4*buttonRadius + buttonSpacing;
@@ -136,6 +141,11 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
     return [self yesColor]; //another masterfully styled color
 }
 
++ (CGFloat)mainSliderLabelRegionHeight
+{
+    return 3*buttonSpacing+4*buttonRadius;
+}
+
 + (CGFloat)mainSliderTopRegionHeight
 {
     return buttonRadius+buttonSpacing;
@@ -143,7 +153,7 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 
 + (CGFloat)mainSliderTimeRegionHeight
 {
-    return [ARKF mainSliderHeight] - 4*(buttonSpacing+buttonRadius);
+    return [ARKF mainSliderAreaHeight] - 4*(buttonSpacing+buttonRadius);
 }
 
 + (CGFloat)mainSliderTimeRegionIndividualHeight
@@ -163,7 +173,7 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 
 + (CGPoint)mainSliderTopRegionSnapPoint
 {
-    return CGPointMake([self mainSliderWidth]/2.0, buttonRadius+buttonSpacing-[self mainSliderTimeRegionIndividualHeight]/2.0);
+    return CGPointMake([self mainSliderWidth]/2.0, [self mainSliderLabelRegionHeight] + buttonRadius+buttonSpacing-[self mainSliderTimeRegionIndividualHeight]/2.0);
 }
 
 + (CGPoint)mainSliderZeroRegionSnapPoint

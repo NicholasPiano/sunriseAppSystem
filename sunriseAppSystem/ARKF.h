@@ -66,6 +66,7 @@
 //main slider
 + (CGPoint)mainSliderCenter;
 + (CGFloat)mainSliderHeight;
++ (CGFloat)mainSliderAreaHeight; //minus space for labels
 + (CGFloat)mainSliderWidth;
 + (CGSize)mainSliderSize;
 
@@ -78,6 +79,7 @@
 
 + (UIColor *)mainSliderThumbColor;
 
++ (CGFloat)mainSliderLabelRegionHeight;
 + (CGFloat)mainSliderTopRegionHeight;
 + (CGFloat)mainSliderTimeRegionHeight;
 + (CGFloat)mainSliderTimeRegionIndividualHeight;

@@ -59,6 +59,9 @@
     //what do sliders need to be defined?
     //all of the above +
     //1. regions with snap points and next states
+    //-label region
+    [mainSlider addRegionWithIdent:nil andHeight:[ARKF mainSliderLabelRegionHeight] andHours:-1 andMinutes:-1];
+    
     //-top region
     [mainSlider addRegionWithIdent:TopRegionIdent andHeight:[ARKF mainSliderTopRegionHeight] andHours:23 andMinutes:45];
     [mainSlider regionWithIdent:TopRegionIdent hasSnapPoint:[ARKF mainSliderTopRegionSnapPoint]];
@@ -74,7 +77,7 @@
     [mainSlider addRegionWithIdent:OffRegionIdent andHeight:[ARKF mainSliderOffRegionHeight] andHours:-1 andMinutes:-1];
     
     //2. a button
-    [mainSlider addThumb:[ARKMainViewController mainSliderButton]];
+    [mainSlider addThumb:[ARKMainViewController mainSliderThumb]];
     //3. enough gesture recognizers with their own methods so that nothing gets confused, but everything is satisfied.
     
     //what does the main slider need to be defined?
@@ -87,7 +90,7 @@
     return mainSlider;
 }
 
-+ (ARKButton *)mainSliderButton
++ (ARKButton *)mainSliderThumb
 {
     ARKButton *mainSliderThumb = [ARKButton buttonWithCenter:[ARKF mainSliderThumbCenter] andSize:[ARKF mainSliderThumbSize]];
     mainSliderThumb.backgroundColor = [ARKF transparent];

@@ -28,6 +28,7 @@
         // Initialization code
         self.backgroundColor = [ARKF interfaceColor];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:State object:nil];
+        self.stateDictionary = [NSMutableDictionary dictionary];
     }
     return self;
 }
