@@ -33,7 +33,7 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
     addState = @"add";
     settingsState = @"settings";
     
-    mainStateList = [NSArray arrayWithObjects:MVCHome, MVCSummary, MVCAdd, MVCSettings, nil];
+    mainStateList = [NSArray arrayWithObjects:HomeState, MVCSummary, MVCAdd, MVCSettings, nil];
 }
 
 #pragma mark fetch methods
@@ -179,6 +179,11 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 + (CGPoint)mainSliderZeroRegionSnapPoint
 {
     return CGPointMake([ARKF mainSliderWidth]/2.0, [ARKF mainSliderHeight]-3.0*(buttonRadius+buttonSpacing) + [self mainSliderTimeRegionIndividualHeight]/2.0);
+}
+
++ (CGPoint)mainSliderOffRegionSnapPoint
+{
+    return CGPointMake([ARKF mainSliderWidth]/2.0, [ARKF mainSliderHeight]-buttonRadius-1.5*buttonSpacing);
 }
 
 + (CGPoint)mainSliderHourLabelCenter

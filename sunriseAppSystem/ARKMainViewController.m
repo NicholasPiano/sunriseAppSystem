@@ -78,6 +78,7 @@
     
     //-off region
     [mainSlider addRegionWithIdent:OffRegionIdent andHeight:[ARKF mainSliderOffRegionHeight] andHours:0 andMinutes:0];
+    [mainSlider regionWithIdent:OffRegionIdent hasSnapPoint:[ARKF mainSliderOffRegionSnapPoint]];
     
     //2. a button
     [mainSlider addThumb:[ARKMainViewController mainSliderThumb]];
@@ -149,8 +150,12 @@
     addButton.backgroundColor = [ARKF addButtonBackgroundColor];
     
     //states
+    [addButton addState:[ARKState stateWithId:HomeState moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:addButton.center.y] fromInitialPosition:addButton.center]];
+    [addButton stateWithId:MVCHome goesTo:MVCAdd];
     
     //plus symbol (when graphic class is done)
+    
+    [addButton syncHomeState];
     
     return addButton;
 }
@@ -162,6 +167,9 @@
     settingsButton.backgroundColor = [ARKF settingsButtonBackgroundColor];
     
     //states
+    [settingsButton addState:[ARKState stateWithId:HomeState moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:settingsButton.center.y] fromInitialPosition:settingsButton.center]];
+    
+    [settingsButton syncHomeState];
     
     return settingsButton;
 }
@@ -171,6 +179,11 @@
 {
     ARKButton *summaryButton = [ARKButton buttonWithCenter:[ARKF summaryButtonCenter] andRadius:buttonRadius];
     summaryButton.backgroundColor = [ARKF summaryButtonBackgroundColor];
+    
+    //states
+    [summaryButton addState:[ARKState stateWithId:HomeState moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:summaryButton.center.y] fromInitialPosition:summaryButton.center]];
+    
+    [summaryButton syncHomeState];
     
     return summaryButton;
 }

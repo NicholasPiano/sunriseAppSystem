@@ -90,6 +90,7 @@
 
 + (CGPoint)mainSliderTopRegionSnapPoint;
 + (CGPoint)mainSliderZeroRegionSnapPoint;
++ (CGPoint)mainSliderOffRegionSnapPoint;
 
 + (CGPoint)mainSliderHourLabelCenter;
 + (CGSize)mainSliderHourLabelSize;
