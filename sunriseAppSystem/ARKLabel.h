@@ -20,6 +20,8 @@
 #pragma mark - instance methods
 - (void)receiveNotification:(NSNotification *)notification;
 - (void)setText:(NSString *)text;
+- (void)setTextColor:(UIColor *)color;
+- (void)setFontSize:(NSUInteger)fontSize;
 
 #pragma mark - factory
 + (ARKLabel *)hourLabelWithCenter:(CGPoint)center andSize:(CGSize)size;

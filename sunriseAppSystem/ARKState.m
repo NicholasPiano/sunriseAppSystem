@@ -88,6 +88,13 @@
     return newState;
 }
 
++ (ARKState *)stateWithId:(NSString *)stateId goesToAlpha:(CGFloat)alpha
+{
+    ARKState *state = [[ARKState alloc] initWithStateId:stateId andNextStateId:nil];
+    state.alpha = alpha;
+    return state;
+}
+
 + (ARKState *)stateWithId:(NSString *)stateId moveDown:(CGFloat)down andRight:(CGFloat)right
 {
     ARKState *state = [[ARKState alloc] initWithStateId:stateId andNextStateId:nil];

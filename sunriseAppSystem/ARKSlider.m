@@ -120,6 +120,7 @@
         for (ARKSliderRegion *region in self.regionDictionary.objectArray) {
             if (CGRectContainsPoint(region.frame, thumbCenter) && region.ident != nil) {
                 if (self.currentRegion.touchUpStateId != region.touchUpStateId) {
+                    [self postStateWithId:nil andSender:region.touchInStateId];
                     self.currentRegion = region;
                     self.currentRegionIdent = region.ident;
                     if (self.currentRegion.hour != -1) {

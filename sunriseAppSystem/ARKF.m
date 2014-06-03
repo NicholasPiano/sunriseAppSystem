@@ -113,7 +113,7 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 
 + (UIColor *)mainSliderBackgroundColor
 {
-    return [self interfaceColor]; //shall become carefully crafted color or just invisible
+    return [self transparent]; //shall become carefully crafted color or just invisible
 }
 
 + (CGPoint)mainSliderThumbCenter
@@ -136,9 +136,9 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
     return CGSizeMake([self mainSliderThumbWidth], [self mainSliderThumbHeight]);
 }
 
-+ (UIColor *)mainSliderThumbColor
++ (UIColor *)mainSliderThumbBackgroundColor
 {
-    return [self yesColor]; //another masterfully styled color
+    return [self interfaceColor]; //another masterfully styled color
 }
 
 + (CGFloat)mainSliderLabelRegionHeight
@@ -179,6 +179,59 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 + (CGPoint)mainSliderZeroRegionSnapPoint
 {
     return CGPointMake([ARKF mainSliderWidth]/2.0, [ARKF mainSliderHeight]-3.0*(buttonRadius+buttonSpacing) + [self mainSliderTimeRegionIndividualHeight]/2.0);
+}
+
++ (CGPoint)mainSliderHourLabelCenter
+{
+    return CGPointMake([ARKF mainSliderWidth]/2.0, buttonSpacing+buttonRadius);
+}
+
++ (CGSize)mainSliderHourLabelSize
+{
+    return CGSizeMake(4*buttonRadius, 4*buttonRadius);
+}
+
++ (CGPoint)mainSliderMinuteLabelCenter
+{
+    return CGPointMake([ARKF mainSliderWidth]/2.0, 2*buttonSpacing+3*buttonRadius);
+}
+
++ (CGSize)mainSliderMinuteLabelSize
+{
+    return CGSizeMake(4*buttonRadius, 4*buttonRadius);
+}
+
+//add button
++ (CGPoint)addButtonCenter
+{
+    return CGPointMake(buttonRadius+buttonSpacing, [ARKDefault screenHeight]-5*buttonRadius - 3*buttonSpacing);
+}
+
++ (UIColor *)addButtonBackgroundColor
+{
+    return [ARKF interfaceColor];
+}
+
+//settings button
++ (CGPoint)settingsButtonCenter
+{
+    return CGPointMake(buttonRadius+buttonSpacing, [ARKDefault screenHeight]-3*buttonRadius - 2*buttonSpacing);
+}
+
++ (UIColor *)settingsButtonBackgroundColor
+{
+    return [ARKF interfaceColor];
+}
+
+//summary button
++ (CGPoint)summaryButtonCenter
+{
+    return CGPointMake(buttonRadius+buttonSpacing, [ARKDefault screenHeight]-buttonRadius-buttonSpacing);
+}
+
++ (UIColor *)summaryButtonBackgroundColor
+{
+    return [ARKF interfaceColor];
 }
 
 @end

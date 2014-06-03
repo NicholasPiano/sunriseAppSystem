@@ -44,6 +44,7 @@
 + (ARKState *)homeState;
 + (ARKState *)state:(ARKState *)state withNextStateId:(NSString *)nextStateId;
 + (ARKState *)stateFromState:(ARKState *)state withStateId:(NSString *)stateId andNextStateId:(NSString *)nextStateId;
++ (ARKState *)stateWithId:(NSString *)stateId goesToAlpha:(CGFloat)alpha;
 + (ARKState *)stateWithId:(NSString *)stateId moveDown:(CGFloat)down andRight:(CGFloat)right;
 + (ARKState *)stateWithId:(NSString *)stateId moveDown:(CGFloat)down;
 + (ARKState *)stateWithId:(NSString *)stateId moveRight:(CGFloat)right;

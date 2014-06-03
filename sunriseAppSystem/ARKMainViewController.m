@@ -19,6 +19,9 @@
     
     //objects
     [self.view addSubview:[ARKMainViewController mainSlider]];
+    [self.view addSubview:[ARKMainViewController addButton]];
+    [self.view addSubview:[ARKMainViewController settingsButton]];
+    [self.view addSubview:[ARKMainViewController summaryButton]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,7 +57,7 @@
     [mainSlider addState:[ARKState stateWithId:@"some-random-id-of-another-object" moveDown:0]]; //if there are any
     
     //5. next state id's associated with those states
-//    [mainSlider stateWithId:@"some-random-id-of-another-object" goesTo:@"some-other-id"];
+    [mainSlider stateWithId:@"some-random-id-of-another-object" goesTo:@"some-other-id"];
     
     //what do sliders need to be defined?
     //all of the above +
@@ -74,7 +77,7 @@
     [mainSlider regionWithIdent:ZeroRegionIdent hasSnapPoint:[ARKF mainSliderZeroRegionSnapPoint]];
     
     //-off region
-    [mainSlider addRegionWithIdent:OffRegionIdent andHeight:[ARKF mainSliderOffRegionHeight] andHours:-1 andMinutes:-1];
+    [mainSlider addRegionWithIdent:OffRegionIdent andHeight:[ARKF mainSliderOffRegionHeight] andHours:0 andMinutes:0];
     
     //2. a button
     [mainSlider addThumb:[ARKMainViewController mainSliderThumb]];
@@ -84,6 +87,11 @@
     //all of the above +
     //1. specific methods for special snap points. - might have to look at later.
     //2. button
+    //3. hour label
+    [mainSlider addHourLabel:[ARKMainViewController mainSliderHourLabel]];
+    
+    //4. minute label
+    [mainSlider addMinuteLabel:[ARKMainViewController mainSliderMinuteLabel]];
     
     [mainSlider syncRegions]; //regions must be declared before thumb
     
@@ -94,28 +102,77 @@
 {
     ARKButton *mainSliderThumb = [ARKButton buttonWithCenter:[ARKF mainSliderThumbCenter] andSize:[ARKF mainSliderThumbSize]];
     mainSliderThumb.backgroundColor = [ARKF transparent];
-    ARKView *mainSliderThumbView = [[ARKView alloc] initWithCenter:CGPointMake([ARKF mainSliderThumbWidth]/2.0, [ARKF mainSliderThumbHeight]/2.0) andSize:CGSizeMake(buttonRadius*2, buttonRadius*2)];
-    mainSliderThumbView.backgroundColor = [ARKF mainSliderThumbColor];
+    ARKView *mainSliderThumbView = [[ARKView alloc] initWithCenter:CGPointMake([ARKF mainSliderThumbWidth]/2.0, [ARKF mainSliderThumbHeight]/2.0) andSize:CGSizeMake(buttonRadius*2+buttonSpacing, buttonRadius*2+buttonSpacing)];
+    mainSliderThumbView.backgroundColor = [ARKF mainSliderThumbBackgroundColor];
     [mainSliderThumb addSubview:mainSliderThumbView];
     return mainSliderThumb;
+}
+
++ (ARKLabel *)mainSliderHourLabel
+{
+    ARKLabel *mainSliderHourLabel = [[ARKLabel alloc] initWithCenter:[ARKF mainSliderHourLabelCenter] andSize:[ARKF mainSliderHourLabelSize] andType:HourType];
+    mainSliderHourLabel.backgroundColor = [ARKF transparent];
+    [mainSliderHourLabel setTextColor:[ARKF interfaceColor]];
+    [mainSliderHourLabel setFontSize:30];
+    
+    //states
+    [mainSliderHourLabel addState:[ARKState stateWithId:HomeState goesToAlpha:0.0]];
+    [mainSliderHourLabel addState:[ARKState stateWithId:[ARKDefault string:MainSliderIdent hyphenString:OffRegionIdent hyphenString:TouchInIdent] goesToAlpha:0.0]];
+    [mainSliderHourLabel addState:[ARKState stateWithId:[ARKDefault string:MainSliderIdent hyphenString:ZeroRegionIdent hyphenString:TouchInIdent] goesToAlpha:1.0]];
+    
+    [mainSliderHourLabel syncHomeState];
+    
+    return mainSliderHourLabel;
+}
+
++ (ARKLabel *)mainSliderMinuteLabel
+{
+    ARKLabel *mainSliderMinuteLabel = [[ARKLabel alloc] initWithCenter:[ARKF mainSliderMinuteLabelCenter] andSize:[ARKF mainSliderMinuteLabelSize] andType:MinuteType];
+    mainSliderMinuteLabel.backgroundColor = [ARKF transparent];
+    [mainSliderMinuteLabel setTextColor:[ARKF interfaceColor]];
+    [mainSliderMinuteLabel setFontSize:30];
+    
+    //states
+    [mainSliderMinuteLabel addState:[ARKState stateWithId:HomeState goesToAlpha:0.0]];
+    [mainSliderMinuteLabel addState:[ARKState stateWithId:[ARKDefault string:MainSliderIdent hyphenString:OffRegionIdent hyphenString:TouchInIdent] goesToAlpha:0.0]];
+    [mainSliderMinuteLabel addState:[ARKState stateWithId:[ARKDefault string:MainSliderIdent hyphenString:ZeroRegionIdent hyphenString:TouchInIdent] goesToAlpha:1.0]];
+    
+    [mainSliderMinuteLabel syncHomeState];
+    
+    return mainSliderMinuteLabel;
 }
 
 //add button
 + (ARKButton *)addButton
 {
-    return [[ARKButton alloc] init];
+    ARKButton *addButton = [ARKButton buttonWithCenter:[ARKF addButtonCenter] andRadius:buttonRadius];
+    addButton.backgroundColor = [ARKF addButtonBackgroundColor];
+    
+    //states
+    
+    //plus symbol (when graphic class is done)
+    
+    return addButton;
 }
 
 //settings button
 + (ARKButton *)settingsButton
 {
-    return [[ARKButton alloc] init];
+    ARKButton *settingsButton = [ARKButton buttonWithCenter:[ARKF settingsButtonCenter] andRadius:buttonRadius];
+    settingsButton.backgroundColor = [ARKF settingsButtonBackgroundColor];
+    
+    //states
+    
+    return settingsButton;
 }
 
 //summary button
 + (ARKButton *)summaryButton
 {
-    return [[ARKButton alloc] init];
+    ARKButton *summaryButton = [ARKButton buttonWithCenter:[ARKF summaryButtonCenter] andRadius:buttonRadius];
+    summaryButton.backgroundColor = [ARKF summaryButtonBackgroundColor];
+    
+    return summaryButton;
 }
 
 //summary library

@@ -58,6 +58,7 @@
 + (UIApplication *)app;
 + (NSString *)timeStringWithInt:(int)integer;
 + (NSString *)string:(NSString *)string1 hyphenString:(NSString *)string2;
++ (NSString *)string:(NSString *)string1 hyphenString:(NSString *)string2 hyphenString:(NSString *)string3;
 
 //vector methods
 + (CGFloat)getDisplacementOfPointA:(CGPoint)pointA fromPointB:(CGPoint)pointB;

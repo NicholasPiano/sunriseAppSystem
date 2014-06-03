@@ -35,6 +35,16 @@
     [self.label setText:text];
 }
 
+- (void)setTextColor:(UIColor *)color
+{
+    [self.label setTextColor:color];
+}
+
+- (void)setFontSize:(NSUInteger)fontSize
+{
+    [self.label setFont:[UIFont systemFontOfSize:fontSize]];
+}
+
 #pragma mark - factory
 + (ARKLabel *)hourLabelWithCenter:(CGPoint)center andSize:(CGSize)size
 {

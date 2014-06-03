@@ -27,6 +27,8 @@
 //slider
 #define sliderTimeInterval 15.0 //minutes
 #define numberOfTimeRegions 94 //number of divisions from 2345 to 0000 in 15 minutes
+#define HourType @"hour"
+#define MinuteType @"minute"
 
 //main slider
 #define MainSliderIdent @"main-slider"
@@ -77,7 +79,7 @@
 + (CGFloat)mainSliderThumbWidth;
 + (CGSize)mainSliderThumbSize;
 
-+ (UIColor *)mainSliderThumbColor;
++ (UIColor *)mainSliderThumbBackgroundColor;
 
 + (CGFloat)mainSliderLabelRegionHeight;
 + (CGFloat)mainSliderTopRegionHeight;
@@ -88,5 +90,25 @@
 
 + (CGPoint)mainSliderTopRegionSnapPoint;
 + (CGPoint)mainSliderZeroRegionSnapPoint;
+
++ (CGPoint)mainSliderHourLabelCenter;
++ (CGSize)mainSliderHourLabelSize;
++ (CGPoint)mainSliderMinuteLabelCenter;
++ (CGSize)mainSliderMinuteLabelSize;
+
+//add button
++ (CGPoint)addButtonCenter;
+
++ (UIColor *)addButtonBackgroundColor;
+
+//settings button
++ (CGPoint)settingsButtonCenter;
+
++ (UIColor *)settingsButtonBackgroundColor;
+
+//summary button
++ (CGPoint)summaryButtonCenter;
+
++ (UIColor *)summaryButtonBackgroundColor;
 
 @end

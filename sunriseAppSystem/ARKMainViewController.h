@@ -18,6 +18,8 @@
 //main slider
 + (ARKSlider *)mainSlider;
 + (ARKButton *)mainSliderThumb;
++ (ARKLabel *)mainSliderHourLabel;
++ (ARKLabel *)mainSliderMinuteLabel;
 
 //add button
 + (ARKButton *)addButton;
