@@ -284,4 +284,19 @@
     }
 }
 
+//states
+- (void)syncState:(ARKState *)state
+{
+    [super syncState:state];
+    
+    //main slider
+    if ([self.ident isEqualToString:MainSliderIdent]) {
+        if ([state.stateId  isEqualToString:MVCMain]) {
+            self.panThumbRecognizer.enabled = NO;
+        } else {
+            self.panThumbRecognizer.enabled = YES;
+        }
+    }
+}
+
 @end

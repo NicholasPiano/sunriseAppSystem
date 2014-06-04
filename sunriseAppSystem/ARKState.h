@@ -40,14 +40,23 @@
 - (void)nextGlobalId:(NSString *)argNextGlobalId;
 
 #pragma mark - factory
-+ (ARKState *)nullState;
-+ (ARKState *)homeState;
+//refactor
 + (ARKState *)state:(ARKState *)state withNextStateId:(NSString *)nextStateId;
 + (ARKState *)stateFromState:(ARKState *)state withStateId:(NSString *)stateId andNextStateId:(NSString *)nextStateId;
+
+//no state id
++ (ARKState *)nullState;
++ (ARKState *)homeState;
+
+//state id
++ (ARKState *)nullStateWithId:(NSString *)stateId;
 + (ARKState *)stateWithId:(NSString *)stateId goesToAlpha:(CGFloat)alpha;
 + (ARKState *)stateWithId:(NSString *)stateId moveDown:(CGFloat)down andRight:(CGFloat)right;
 + (ARKState *)stateWithId:(NSString *)stateId moveDown:(CGFloat)down;
 + (ARKState *)stateWithId:(NSString *)stateId moveRight:(CGFloat)right;
++ (ARKState *)stateWithId:(NSString *)stateId moveInvisibleDown:(CGFloat)down andRight:(CGFloat)right;
++ (ARKState *)stateWithId:(NSString *)stateId moveInvisibleDown:(CGFloat)down;
++ (ARKState *)stateWithId:(NSString *)stateId moveInvisibleRight:(CGFloat)right;
 + (ARKState *)stateWithId:(NSString *)stateId moveToPosition:(CGPoint)position fromInitialPosition:(CGPoint)initalPosition;
 + (ARKState *)stateWithId:(NSString *)stateId moveToInvisiblePosition:(CGPoint)position fromInitialPosition:(CGPoint)initalPosition;
 + (ARKState *)stateWithId:(NSString *)stateId rotatedStateWithAngle:(CGFloat)angle;

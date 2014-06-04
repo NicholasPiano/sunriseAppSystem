@@ -45,7 +45,12 @@
 - (void)addStateIdentList:(NSArray *)stateIdentList;
 - (void)addStateIdentList:(NSArray *)stateIdentList withDefaultState:(ARKState *)defaultState;
 - (ARKState *)stateWithId:(NSString *)stateId;
+//--customisation
 - (void)stateWithId:(NSString *)stateId goesTo:(NSString *)nextStateId;
+- (void)stateWithId:(NSString *)stateId 
+- (void)stateWithId:(NSString *)stateId
+- (void)stateWithId:(NSString *)stateId
+- (void)stateWithId:(NSString *)stateId
 
 //notification center
 - (void)receiveNotification:(NSNotification *)notification;

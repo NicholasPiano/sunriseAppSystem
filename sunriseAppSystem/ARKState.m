@@ -53,19 +53,7 @@
 }
 
 #pragma mark - factory
-+ (ARKState *)nullState
-{
-    return [[self alloc] initWithStateId:nil andNextStateId:nil];
-}
-
-+ (ARKState *)homeState
-{
-    ARKState *state = [[self alloc] initWithStateId:HomeState andNextStateId:nil];
-    state.duration = 0.0;
-    state.delay = 0.0;
-    return state;
-}
-
+//refactor
 + (ARKState *)state:(ARKState *)state withNextStateId:(NSString *)nextStateId
 {
     state.nextStateId = nextStateId;
@@ -86,6 +74,27 @@
     newState.delay = state.delay;
     
     return newState;
+}
+
+//no state id
++ (ARKState *)nullState
+{
+    return [[self alloc] initWithStateId:nil andNextStateId:nil];
+}
+
++ (ARKState *)homeState
+{
+    ARKState *state = [[self alloc] initWithStateId:HomeState andNextStateId:nil];
+    state.duration = 0.0;
+    state.delay = 0.0;
+    return state;
+}
+
+//state id
++ (ARKState *)nullStateWithId:(NSString *)stateId
+{
+    ARKState *state = [[ARKState alloc] initWithStateId:stateId andNextStateId:nil];
+    return state;
 }
 
 + (ARKState *)stateWithId:(NSString *)stateId goesToAlpha:(CGFloat)alpha
@@ -116,10 +125,42 @@
     return state;
 }
 
++ (ARKState *)stateWithId:(NSString *)stateId moveInvisibleDown:(CGFloat)down andRight:(CGFloat)right
+{
+    ARKState *state = [[ARKState alloc] initWithStateId:stateId andNextStateId:nil];
+    state.transform = CGAffineTransformMakeTranslation(right, down);
+    state.alpha = 0.0;
+    return state;
+}
+
++ (ARKState *)stateWithId:(NSString *)stateId moveInvisibleDown:(CGFloat)down
+{
+    ARKState *state = [[ARKState alloc] initWithStateId:stateId andNextStateId:nil];
+    state.transform = CGAffineTransformMakeTranslation(0, down);
+    state.alpha = 0.0;
+    return state;
+}
+
++ (ARKState *)stateWithId:(NSString *)stateId moveInvisibleRight:(CGFloat)right
+{
+    ARKState *state = [[ARKState alloc] initWithStateId:stateId andNextStateId:nil];
+    state.transform = CGAffineTransformMakeTranslation(right, 0);
+    state.alpha = 0.0;
+    return state;
+}
+
 + (ARKState *)stateWithId:(NSString *)stateId moveToPosition:(CGPoint)position fromInitialPosition:(CGPoint)initalPosition
 {
     ARKState *state = [[ARKState alloc] initWithStateId:stateId andNextStateId:nil];
     state.transform = CGAffineTransformMakeTranslation(position.x-initalPosition.x, position.y-initalPosition.y);
+    return state;
+}
+
++ (ARKState *)stateWithId:(NSString *)stateId moveToInvisiblePosition:(CGPoint)position fromInitialPosition:(CGPoint)initalPosition
+{
+    ARKState *state = [[ARKState alloc] initWithStateId:stateId andNextStateId:nil];
+    state.transform = CGAffineTransformMakeTranslation(position.x-initalPosition.x, position.y-initalPosition.y);
+    state.alpha = 0.0;
     return state;
 }
 

@@ -13,7 +13,6 @@ static UIColor *backgroundColor = nil, *interfaceColor = nil, *interfaceColor2 =
 
 //states
 static NSArray *mainStateList = nil;
-static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 
 @implementation ARKF
 
@@ -29,11 +28,8 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
     noColor = [[UIColor alloc] initWithRed:(200.0f/255.0f) green:(35.0f/255.0f) blue:(35.0/255.0) alpha:1];
     
     //states
-    summaryState = @"summary";
-    addState = @"add";
-    settingsState = @"settings";
     
-    mainStateList = [NSArray arrayWithObjects:HomeState, MVCSummary, MVCAdd, MVCSettings, nil];
+    mainStateList = [NSArray arrayWithObjects:HomeState, MVCMain, MVCFull, MVCSummary, MVCAdd, MVCSettings, nil];
 }
 
 #pragma mark fetch methods
@@ -206,26 +202,37 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
     return CGSizeMake(4*buttonRadius, 4*buttonRadius);
 }
 
+//home button
++ (CGPoint)homeButtonCenter
+{
+    return CGPointMake(buttonRadius+buttonSpacing, [ARKDefault screenHeight]-7*buttonRadius-4*buttonSpacing);
+}
+
++ (UIColor *)homeButtonBackgroundColor
+{
+    return [self interfaceColor];
+}
+
 //add button
 + (CGPoint)addButtonCenter
 {
-    return CGPointMake(buttonRadius+buttonSpacing, [ARKDefault screenHeight]-5*buttonRadius - 3*buttonSpacing);
+    return CGPointMake(buttonRadius+buttonSpacing, [ARKDefault screenHeight]-5*buttonRadius-3*buttonSpacing);
 }
 
 + (UIColor *)addButtonBackgroundColor
 {
-    return [ARKF interfaceColor];
+    return [self interfaceColor];
 }
 
 //settings button
 + (CGPoint)settingsButtonCenter
 {
-    return CGPointMake(buttonRadius+buttonSpacing, [ARKDefault screenHeight]-3*buttonRadius - 2*buttonSpacing);
+    return CGPointMake(buttonRadius+buttonSpacing, [ARKDefault screenHeight]-3*buttonRadius-2*buttonSpacing);
 }
 
 + (UIColor *)settingsButtonBackgroundColor
 {
-    return [ARKF interfaceColor];
+    return [self interfaceColor];
 }
 
 //summary button
@@ -236,7 +243,40 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 
 + (UIColor *)summaryButtonBackgroundColor
 {
-    return [ARKF interfaceColor];
+    return [self interfaceColor];
+}
+
+//full library
++ (CGPoint)fullLibraryCenter
+{
+    return [ARKDefault centerScreenVerticalWithHorizontal:[ARKDefault screenWidth]/2.0+0.5*buttonSpacing+buttonRadius];
+}
+
++ (CGSize)fullLibrarySize
+{
+    return CGSizeMake([ARKDefault screenWidth]-3*buttonSpacing-2*buttonRadius, [ARKDefault screenHeight]-2*buttonSpacing);
+}
+
+//settings library
++ (CGPoint)settingsLibraryCenter
+{
+    return [ARKDefault centerScreenHorizontalWithVertical:[ARKDefault screenHeight]/2.0+0.5*buttonSpacing+buttonRadius];
+}
+
++ (CGSize)settingsLibrarySize
+{
+    return CGSizeMake([ARKDefault screenWidth]-2*buttonSpacing, [ARKDefault screenHeight]-3*buttonSpacing-2*buttonRadius);
+}
+
+//summary library
++ (CGPoint)summaryLibraryCenter
+{
+    return [ARKDefault centerScreenHorizontalWithVertical:[ARKDefault screenHeight]-2*buttonRadius-buttonSpacing];
+}
+
++ (CGSize)summaryLibrarySize
+{
+    return CGSizeMake([ARKDefault screenWidth]-2*buttonSpacing, 2*buttonRadius+2*buttonSpacing);
 }
 
 @end

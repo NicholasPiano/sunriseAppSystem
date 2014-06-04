@@ -21,23 +21,31 @@
 + (ARKLabel *)mainSliderHourLabel;
 + (ARKLabel *)mainSliderMinuteLabel;
 
+//home button
++ (ARKButton *)homeButton;
++ (ARKButton *)homeButtonSettings;
+
 //add button
 + (ARKButton *)addButton;
++ (ARKButton *)addButtonSettings;
 
 //settings button
 + (ARKButton *)settingsButton;
++ (ARKButton *)settingsButtonSettings;
 
 //summary button
 + (ARKButton *)summaryButton;
 
-//summary library
-+ (ARKLibrary *)summaryLibrary;
-
 //full library
-+ (ARKLibrary *)fullLibrary;
+//+ (ARKLibrary *)fullLibrary;
++ (ARKView *)fullLibrary;
 
 //settings library
-+ (ARKLibrary *)settingsLibrary;
+//+ (ARKLibrary *)settingsLibrary;
++ (ARKView *)settingsLibrary;
 
+//summary library
+//+ (ARKLibrary *)summaryLibrary;
++ (ARKView *)summaryLibrary;
 
 @end

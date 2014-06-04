@@ -68,4 +68,7 @@
 - (void)addTimeRegionsWithHeight:(CGFloat)timeRegionHeight;
 - (void)syncRegions;
 
+//states
+- (void)syncState:(ARKState *)state;
+
 @end

@@ -137,7 +137,11 @@
 
 - (void)syncHomeState
 {
-    [self syncStateWithId:HomeState andSender:nil];
+    //make this modify the duration and delay before syncing.
+    ARKState *homeState = [self stateWithId:HomeState];
+    homeState.duration = 0.0;
+    homeState.delay = 0.0;
+    [self syncState:homeState];
 }
 //-adding
 - (void)addState:(ARKState *)state
@@ -151,28 +155,14 @@
 - (void)addStateIdentList:(NSArray *)stateIdentList
 {
     for (NSString *stateId in stateIdentList) {
-        if ([stateId isEqualToString:HomeState]) {
-            ARKState *homeState = [ARKState nullState];
-            homeState.duration = 0.0;
-            homeState.delay = 0.0;
-            [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
-        } else {
-            [self addState:[ARKState stateFromState:[ARKState nullState] withStateId:stateId andNextStateId:nil]];
-        }
+        [self addState:[ARKState stateFromState:[ARKState nullState] withStateId:stateId andNextStateId:nil]];
     }
 }
 
 - (void)addStateIdentList:(NSArray *)stateIdentList withDefaultState:(ARKState *)defaultState
 {
     for (NSString *stateId in stateIdentList) {
-        if ([stateId isEqualToString:HomeState]) {
-            ARKState *homeState = defaultState;
-            homeState.duration = 0.0;
-            homeState.delay = 0.0;
-            [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
-        } else {
-            [self addState:[ARKState stateFromState:defaultState withStateId:stateId andNextStateId:nil]];
-        }
+        [self addState:[ARKState stateFromState:defaultState withStateId:stateId andNextStateId:nil]];
     }
 }
 

@@ -19,9 +19,12 @@
     
     //objects
     [self.view addSubview:[ARKMainViewController mainSlider]];
+    [self.view addSubview:[ARKMainViewController homeButton]];
     [self.view addSubview:[ARKMainViewController addButton]];
     [self.view addSubview:[ARKMainViewController settingsButton]];
     [self.view addSubview:[ARKMainViewController summaryButton]];
+    
+    [self.view addSubview:[ARKMainViewController fullLibrary]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,16 +51,18 @@
     
     //3. states defined by the viewcontroller
     [mainSlider addStateIdentList:[ARKF mainViewControllerStateList]];
-    [mainSlider addState:[ARKState stateWithId:MVCSummary moveRight:-[ARKDefault screenWidth]]];
-    [mainSlider addState:[ARKState stateWithId:MVCAdd moveRight:-2*[ARKDefault screenWidth]]];
+    [mainSlider addState:[ARKState stateWithId:HomeState goesToAlpha:1.0]];
+    [mainSlider addState:[ARKState stateWithId:MVCFull moveInvisibleRight:-[ARKDefault screenWidth]]];
+    [mainSlider addState:[ARKState stateWithId:MVCAdd moveInvisibleRight:-[ARKDefault screenWidth]]];
     [mainSlider addState:[ARKState stateWithId:MVCSettings moveDown:-[ARKDefault screenHeight]]];
+    [mainSlider addState:[ARKState stateWithId:MVCSummary moveRight:-[ARKDefault screenWidth]]];
     //etc... if there are more default states, add them here
     
     //4. states specific to the object
-    [mainSlider addState:[ARKState stateWithId:@"some-random-id-of-another-object" moveDown:0]]; //if there are any
+
     
     //5. next state id's associated with those states
-    [mainSlider stateWithId:@"some-random-id-of-another-object" goesTo:@"some-other-id"];
+
     
     //what do sliders need to be defined?
     //all of the above +
@@ -96,6 +101,8 @@
     
     [mainSlider syncRegions]; //regions must be declared before thumb
     
+//    ARKLog(@"%@", mainSlider.stateDictionary);
+    
     return mainSlider;
 }
 
@@ -117,7 +124,10 @@
     [mainSliderHourLabel setFontSize:30];
     
     //states
+    [mainSliderHourLabel addStateIdentList:[ARKF mainViewControllerStateList]];
+    [mainSliderHourLabel addState:[ARKState stateWithId:MVCMain goesToAlpha:0.0]];
     [mainSliderHourLabel addState:[ARKState stateWithId:HomeState goesToAlpha:0.0]];
+    [mainSliderHourLabel addState:[ARKState stateWithId:MVCAdd goesToAlpha:0.0]];
     [mainSliderHourLabel addState:[ARKState stateWithId:[ARKDefault string:MainSliderIdent hyphenString:OffRegionIdent hyphenString:TouchInIdent] goesToAlpha:0.0]];
     [mainSliderHourLabel addState:[ARKState stateWithId:[ARKDefault string:MainSliderIdent hyphenString:ZeroRegionIdent hyphenString:TouchInIdent] goesToAlpha:1.0]];
     
@@ -134,13 +144,38 @@
     [mainSliderMinuteLabel setFontSize:30];
     
     //states
+    [mainSliderMinuteLabel addStateIdentList:[ARKF mainViewControllerStateList]];
+    [mainSliderMinuteLabel addState:[ARKState stateWithId:MVCMain goesToAlpha:0.0]];
     [mainSliderMinuteLabel addState:[ARKState stateWithId:HomeState goesToAlpha:0.0]];
+    [mainSliderMinuteLabel addState:[ARKState stateWithId:MVCAdd goesToAlpha:0.0]];
     [mainSliderMinuteLabel addState:[ARKState stateWithId:[ARKDefault string:MainSliderIdent hyphenString:OffRegionIdent hyphenString:TouchInIdent] goesToAlpha:0.0]];
     [mainSliderMinuteLabel addState:[ARKState stateWithId:[ARKDefault string:MainSliderIdent hyphenString:ZeroRegionIdent hyphenString:TouchInIdent] goesToAlpha:1.0]];
     
     [mainSliderMinuteLabel syncHomeState];
     
     return mainSliderMinuteLabel;
+}
+
+//home button
++ (ARKButton *)homeButton
+{
+    ARKButton *homeButton = [ARKButton buttonWithCenter:[ARKF homeButtonCenter] andRadius:buttonRadius];
+    homeButton.backgroundColor = [ARKF homeButtonBackgroundColor];
+    
+    //states
+    [homeButton addStateIdentList:[ARKF mainViewControllerStateList]];
+    [homeButton addState:[ARKState stateWithId:HomeState moveToInvisiblePosition:CGPointMake(-buttonRadius-buttonSpacing, homeButton.center.y) fromInitialPosition:homeButton.center]];
+    [homeButton addState:[ARKState stateWithId:MVCMain moveToInvisiblePosition:CGPointMake(-buttonRadius-buttonSpacing, homeButton.center.y) fromInitialPosition:homeButton.center]];
+    [homeButton stateWithId:MVCMain goesTo:MVCMain];
+    [homeButton stateWithId:MVCAdd goesTo:MVCMain];
+    [homeButton stateWithId:MVCSettings goesTo:MVCMain];
+    [homeButton stateWithId:MVCSummary goesTo:MVCMain];
+    
+    //add home glyph
+    
+    [homeButton syncHomeState];
+    
+    return homeButton;
 }
 
 //add button
@@ -150,8 +185,13 @@
     addButton.backgroundColor = [ARKF addButtonBackgroundColor];
     
     //states
+    [addButton addStateIdentList:[ARKF mainViewControllerStateList]];
     [addButton addState:[ARKState stateWithId:HomeState moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:addButton.center.y] fromInitialPosition:addButton.center]];
-    [addButton stateWithId:MVCHome goesTo:MVCAdd];
+    [addButton addState:[ARKState stateWithId:MVCMain moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:addButton.center.y] fromInitialPosition:addButton.center]];
+    [addButton stateWithId:HomeState goesTo:MVCAdd];
+    [addButton stateWithId:MVCMain goesTo:MVCAdd];
+    [addButton stateWithId:MVCSettings goesTo:MVCAdd];
+    [addButton stateWithId:MVCSummary goesTo:MVCAdd];
     
     //plus symbol (when graphic class is done)
     
@@ -167,7 +207,13 @@
     settingsButton.backgroundColor = [ARKF settingsButtonBackgroundColor];
     
     //states
+    [settingsButton addStateIdentList:[ARKF mainViewControllerStateList]];
     [settingsButton addState:[ARKState stateWithId:HomeState moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:settingsButton.center.y] fromInitialPosition:settingsButton.center]];
+    [settingsButton addState:[ARKState stateWithId:MVCMain moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:settingsButton.center.y] fromInitialPosition:settingsButton.center]];
+    [settingsButton stateWithId:HomeState goesTo:MVCSettings];
+    [settingsButton stateWithId:MVCMain goesTo:MVCSettings];
+    [settingsButton stateWithId:MVCAdd goesTo:MVCSettings];
+    [settingsButton stateWithId:MVCSummary goesTo:MVCSettings];
     
     [settingsButton syncHomeState];
     
@@ -181,29 +227,61 @@
     summaryButton.backgroundColor = [ARKF summaryButtonBackgroundColor];
     
     //states
+    [summaryButton addStateIdentList:[ARKF mainViewControllerStateList]];
     [summaryButton addState:[ARKState stateWithId:HomeState moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:summaryButton.center.y] fromInitialPosition:summaryButton.center]];
+    [summaryButton addState:[ARKState stateWithId:MVCMain moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:summaryButton.center.y] fromInitialPosition:summaryButton.center]];
+    [summaryButton stateWithId:HomeState goesTo:MVCSummary];
+    [summaryButton stateWithId:MVCMain goesTo:MVCSummary];
+    [summaryButton stateWithId:MVCAdd goesTo:MVCSummary];
+    [summaryButton stateWithId:MVCSettings goesTo:MVCSummary];
     
     [summaryButton syncHomeState];
     
     return summaryButton;
 }
 
-//summary library
-+ (ARKLibrary *)summaryLibrary
-{
-    return [[ARKLibrary alloc] init];
-}
-
 //full library
-+ (ARKLibrary *)fullLibrary
+//+ (ARKLibrary *)fullLibrary
++ (ARKView *)fullLibrary
 {
-    return [[ARKLibrary alloc] init];
+    ARKView *fullLibrary = [[ARKView alloc] initWithCenter:[ARKF fullLibraryCenter] andSize:[ARKF fullLibrarySize]];
+    fullLibrary.backgroundColor = [ARKF interfaceColor];
+    
+    //states
+    [fullLibrary addStateIdentList:[ARKF mainViewControllerStateList] withDefaultState:[ARKState stateWithId:@"" moveInvisibleDown:[ARKDefault screenHeight]]];
+    [fullLibrary addState:[ARKState nullStateWithId:MVCSettings]];
+    
+    [fullLibrary syncHomeState];
+    
+    return fullLibrary;
 }
 
 //settings library
-+ (ARKLibrary *)settingsLibrary
+//+ (ARKLibrary *)settingsLibrary
++ (ARKView *)settingsLibrary
 {
-    return [[ARKLibrary alloc] init];
+    ARKView *settingsLibrary = [[ARKView alloc] initWithCenter:[ARKF settingsLibraryCenter] andSize:[ARKF settingsLibrarySize]];
+    settingsLibrary.backgroundColor = [ARKF interfaceColor];
+    
+    //states
+    
+    [settingsLibrary syncHomeState];
+    
+    return settingsLibrary;
+}
+
+//summary library
+//+ (ARKLibrary *)summaryLibrary
++ (ARKView *)summaryLibrary
+{
+    ARKView *summaryLibrary = [[ARKView alloc] initWithCenter:[ARKF summaryLibraryCenter] andSize:[ARKF summaryLibrarySize]];
+    summaryLibrary.backgroundColor = [ARKF interfaceColor];
+    
+    //states
+    
+    [summaryLibrary syncHomeState];
+    
+    return summaryLibrary;
 }
 
 @end

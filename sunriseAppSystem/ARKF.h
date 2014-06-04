@@ -19,7 +19,8 @@
 
 //states
 //-mainViewController
-#define MVCHome @"mvc-home"
+#define MVCMain @"mvc-main"
+#define MVCFull @"mvc-full"
 #define MVCSummary @"mvc-summary"
 #define MVCAdd @"mvc-add"
 #define MVCSettings @"mvc-settings"
@@ -97,6 +98,11 @@
 + (CGPoint)mainSliderMinuteLabelCenter;
 + (CGSize)mainSliderMinuteLabelSize;
 
+//home button
++ (CGPoint)homeButtonCenter;
+
++ (UIColor *)homeButtonBackgroundColor;
+
 //add button
 + (CGPoint)addButtonCenter;
 
@@ -111,5 +117,17 @@
 + (CGPoint)summaryButtonCenter;
 
 + (UIColor *)summaryButtonBackgroundColor;
+
+//full library
++ (CGPoint)fullLibraryCenter;
++ (CGSize)fullLibrarySize;
+
+//settings library
++ (CGPoint)settingsLibraryCenter;
++ (CGSize)settingsLibrarySize;
+
+//summary library
++ (CGPoint)summaryLibraryCenter;
++ (CGSize)summaryLibrarySize;
 
 @end
