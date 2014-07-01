@@ -23,18 +23,21 @@
 
 //home button
 + (ARKButton *)homeButton;
-+ (ARKButton *)homeButtonSettings;
 
 //add button
 + (ARKButton *)addButton;
-+ (ARKButton *)addButtonSettings;
 
 //settings button
 + (ARKButton *)settingsButton;
-+ (ARKButton *)settingsButtonSettings;
 
 //summary button
 + (ARKButton *)summaryButton;
+
+//yes button
++ (ARKButton *)yesButton;
+
+//no button
++ (ARKButton *)noButton;
 
 //full library
 //+ (ARKLibrary *)fullLibrary;

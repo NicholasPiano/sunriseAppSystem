@@ -16,8 +16,8 @@
 #pragma mark - properties
 
 //alarm properties
-@property (nonatomic) NSUInteger hour;
-@property (nonatomic) NSUInteger minute;
+@property int hour;
+@property int minute;
 
 //states
 @property (strong, nonatomic) NSString *touchInStateId; //state id to be broadcast when entering the region.

@@ -23,10 +23,10 @@
 @property int lastRegionCounter;
 
 //intrinsic
-@property NSUInteger day;
-@property NSUInteger hour;
-@property NSUInteger minute;
-@property NSUInteger extraMinute; //can add five or ten minutes to an alarm
+@property int day;
+@property int hour;
+@property int minute;
+@property int extraMinute; //can add five or ten minutes to an alarm
 
 //elements
 @property (strong, nonatomic) ARKButton *thumb;

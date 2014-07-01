@@ -146,10 +146,13 @@
 //-adding
 - (void)addState:(ARKState *)state
 {
-    //this method searches the current stateDictionary for a state with the matching global id and sender in a manner similar to -syncStateWithGlobalId. If the state exists, it will replace it; if not, it will add it to the dictionary.
-    
-    //1. if state dictionary is nil, make it.
     [self.stateDictionary setObject:state forKey:state.stateId];
+}
+
+- (void)addState:(ARKState *)state withStateId:(NSString *)stateId
+{
+    state.stateId = stateId;
+    [self.stateDictionary setObject:state forKey:stateId];
 }
 
 - (void)addStateIdentList:(NSArray *)stateIdentList
@@ -171,9 +174,51 @@
     return [self.stateDictionary objectForKey:stateId];
 }
 
+//-customisation
 - (void)stateWithId:(NSString *)stateId goesTo:(NSString *)nextStateId
 {
     [self addState:[ARKState state:[self stateWithId:stateId] withNextStateId:nextStateId]];
+}
+- (void)stateWithId:(NSString *)stateId movesToPosition:(CGPoint)position
+{
+    ARKState *state = [self stateWithId:stateId];
+    state.transform = CGAffineTransformMakeTranslation(position.x-self.center.x, position.y-self.center.y);
+    [self addState:state];
+}
+
+- (void)stateWithId:(NSString *)stateId movesDownBy:(CGFloat)down andRightBy:(CGFloat)right
+{
+    ARKState *state = [self stateWithId:stateId];
+    state.transform = CGAffineTransformMakeTranslation(right, down);
+    [self addState:state];
+}
+
+- (void)stateWithId:(NSString *)stateId movesDownBy:(CGFloat)down
+{
+    ARKState *state = [self stateWithId:stateId];
+    state.transform = CGAffineTransformMakeTranslation(state.transform.tx, down);
+    [self addState:state];
+}
+
+- (void)stateWithId:(NSString *)stateId movesRightBy:(CGFloat)right
+{
+    ARKState *state = [self stateWithId:stateId];
+    state.transform = CGAffineTransformMakeTranslation(right, state.transform.ty);
+    [self addState:state];
+}
+
+- (void)stateWithId:(NSString *)stateId goesToAlpha:(CGFloat)alpha
+{
+    ARKState *state = [self stateWithId:stateId];
+    state.alpha = alpha;
+    [self addState:state];
+}
+
+- (void)stateWithId:(NSString *)stateId hasCallback:(ARKState *)callback
+{
+    ARKState *state = [self stateWithId:stateId];
+    state.callbackState = callback;
+    [self addState:state];
 }
 
 //notification center
@@ -195,31 +240,20 @@
 
 - (void)postStateWithId:(NSString *)stateId andSender:(NSString *)sender
 {
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:stateId, StateId, sender, Sender, nil];
     if (stateId == nil) {
-        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:sender, Sender, nil];
+        stateId = activeState.stateId;
     }
+    NSString *stateSender = [ARKDefault string:stateId hyphenString:sender];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:stateId, StateId, stateSender, Sender, nil];
     [self postNotification:[NSNotification notificationWithName:State object:nil userInfo:dictionary]]; //not using object. Requires cast. May use in the future.
 }
 
-//IBAN: GB63TSBS87700482122068
-//BIC: TSBSGB21118
-
 - (void)postNextStateId
 {
-    [self postStateWithId:self.activeState.nextStateId andSender:[ARKDefault stateId:self.activeState.nextStateId withSender:self.ident]];
-}
-
-//value methods
-- (void)postValue:(int)value withType:(NSString *)type
-{
-    ARKLog(@"post value: %d", value);
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"value", [NSNumber numberWithInt:value], @"type", type, nil];
-    [self postNotification:[NSNotification notificationWithName:@"value" object:nil userInfo:dictionary]];
+    [self postStateWithId:self.activeState.nextStateId andSender:self.ident];
 }
 
 //user defaults
-
 - (void)pullDictionaryFromUserDefaults
 {
     [self pullDictionaryFromUserDefaultsWithKey:self.category];

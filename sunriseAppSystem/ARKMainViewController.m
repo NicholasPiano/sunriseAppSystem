@@ -17,20 +17,23 @@
     //background
     [self.view setBackgroundColor:[ARKF backgroundColor]];
     
-    //objects
+    //interfaces
     [self.view addSubview:[ARKMainViewController mainSlider]];
-    [self.view addSubview:[ARKMainViewController homeButton]];
+    
+    //standalone controls
+//    [self.view addSubview:[ARKMainViewController homeButton]];
     [self.view addSubview:[ARKMainViewController addButton]];
     [self.view addSubview:[ARKMainViewController settingsButton]];
     [self.view addSubview:[ARKMainViewController summaryButton]];
     
-    [self.view addSubview:[ARKMainViewController fullLibrary]];
+//    [self.view addSubview:[ARKMainViewController fullLibrary]];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    ARKLog(@"memory warning: main view controller");
 }
 
 - (BOOL)prefersStatusBarHidden { //what it says
@@ -51,11 +54,7 @@
     
     //3. states defined by the viewcontroller
     [mainSlider addStateIdentList:[ARKF mainViewControllerStateList]];
-    [mainSlider addState:[ARKState stateWithId:HomeState goesToAlpha:1.0]];
-    [mainSlider addState:[ARKState stateWithId:MVCFull moveInvisibleRight:-[ARKDefault screenWidth]]];
-    [mainSlider addState:[ARKState stateWithId:MVCAdd moveInvisibleRight:-[ARKDefault screenWidth]]];
-    [mainSlider addState:[ARKState stateWithId:MVCSettings moveDown:-[ARKDefault screenHeight]]];
-    [mainSlider addState:[ARKState stateWithId:MVCSummary moveRight:-[ARKDefault screenWidth]]];
+    [mainSlider addState:[ARKState goToAlpha:1.0] withStateId:HomeState];
     //etc... if there are more default states, add them here
     
     //4. states specific to the object
@@ -125,11 +124,10 @@
     
     //states
     [mainSliderHourLabel addStateIdentList:[ARKF mainViewControllerStateList]];
-    [mainSliderHourLabel addState:[ARKState stateWithId:MVCMain goesToAlpha:0.0]];
-    [mainSliderHourLabel addState:[ARKState stateWithId:HomeState goesToAlpha:0.0]];
-    [mainSliderHourLabel addState:[ARKState stateWithId:MVCAdd goesToAlpha:0.0]];
-    [mainSliderHourLabel addState:[ARKState stateWithId:[ARKDefault string:MainSliderIdent hyphenString:OffRegionIdent hyphenString:TouchInIdent] goesToAlpha:0.0]];
-    [mainSliderHourLabel addState:[ARKState stateWithId:[ARKDefault string:MainSliderIdent hyphenString:ZeroRegionIdent hyphenString:TouchInIdent] goesToAlpha:1.0]];
+    [mainSliderHourLabel addState:[ARKState goToAlpha:0.0] withStateId:HomeState];
+    [mainSliderHourLabel addState:[ARKState goToAlpha:1.0] withStateId:MVCAdd];
+    [mainSliderHourLabel addState:[ARKState goToAlpha:0.0] withStateId:[ARKDefault string:MainSliderIdent hyphenString:OffRegionIdent hyphenString:TouchInIdent]];
+    [mainSliderHourLabel addState:[ARKState goToAlpha:1.0] withStateId:[ARKDefault string:MainSliderIdent hyphenString:ZeroRegionIdent hyphenString:TouchInIdent]];
     
     [mainSliderHourLabel syncHomeState];
     
@@ -145,11 +143,10 @@
     
     //states
     [mainSliderMinuteLabel addStateIdentList:[ARKF mainViewControllerStateList]];
-    [mainSliderMinuteLabel addState:[ARKState stateWithId:MVCMain goesToAlpha:0.0]];
-    [mainSliderMinuteLabel addState:[ARKState stateWithId:HomeState goesToAlpha:0.0]];
-    [mainSliderMinuteLabel addState:[ARKState stateWithId:MVCAdd goesToAlpha:0.0]];
-    [mainSliderMinuteLabel addState:[ARKState stateWithId:[ARKDefault string:MainSliderIdent hyphenString:OffRegionIdent hyphenString:TouchInIdent] goesToAlpha:0.0]];
-    [mainSliderMinuteLabel addState:[ARKState stateWithId:[ARKDefault string:MainSliderIdent hyphenString:ZeroRegionIdent hyphenString:TouchInIdent] goesToAlpha:1.0]];
+    [mainSliderMinuteLabel addState:[ARKState goToAlpha:0.0] withStateId:HomeState];
+    [mainSliderMinuteLabel addState:[ARKState goToAlpha:1.0] withStateId:MVCAdd];
+    [mainSliderMinuteLabel addState:[ARKState goToAlpha:0.0] withStateId:[ARKDefault string:MainSliderIdent hyphenString:OffRegionIdent hyphenString:TouchInIdent]];
+    [mainSliderMinuteLabel addState:[ARKState goToAlpha:1.0] withStateId:[ARKDefault string:MainSliderIdent hyphenString:ZeroRegionIdent hyphenString:TouchInIdent]];
     
     [mainSliderMinuteLabel syncHomeState];
     
@@ -164,12 +161,6 @@
     
     //states
     [homeButton addStateIdentList:[ARKF mainViewControllerStateList]];
-    [homeButton addState:[ARKState stateWithId:HomeState moveToInvisiblePosition:CGPointMake(-buttonRadius-buttonSpacing, homeButton.center.y) fromInitialPosition:homeButton.center]];
-    [homeButton addState:[ARKState stateWithId:MVCMain moveToInvisiblePosition:CGPointMake(-buttonRadius-buttonSpacing, homeButton.center.y) fromInitialPosition:homeButton.center]];
-    [homeButton stateWithId:MVCMain goesTo:MVCMain];
-    [homeButton stateWithId:MVCAdd goesTo:MVCMain];
-    [homeButton stateWithId:MVCSettings goesTo:MVCMain];
-    [homeButton stateWithId:MVCSummary goesTo:MVCMain];
     
     //add home glyph
     
@@ -186,12 +177,8 @@
     
     //states
     [addButton addStateIdentList:[ARKF mainViewControllerStateList]];
-    [addButton addState:[ARKState stateWithId:HomeState moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:addButton.center.y] fromInitialPosition:addButton.center]];
-    [addButton addState:[ARKState stateWithId:MVCMain moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:addButton.center.y] fromInitialPosition:addButton.center]];
+    [addButton stateWithId:HomeState movesToPosition:[ARKDefault centerScreenHorizontalWithVertical:addButton.center.y]];
     [addButton stateWithId:HomeState goesTo:MVCAdd];
-    [addButton stateWithId:MVCMain goesTo:MVCAdd];
-    [addButton stateWithId:MVCSettings goesTo:MVCAdd];
-    [addButton stateWithId:MVCSummary goesTo:MVCAdd];
     
     //plus symbol (when graphic class is done)
     
@@ -208,12 +195,7 @@
     
     //states
     [settingsButton addStateIdentList:[ARKF mainViewControllerStateList]];
-    [settingsButton addState:[ARKState stateWithId:HomeState moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:settingsButton.center.y] fromInitialPosition:settingsButton.center]];
-    [settingsButton addState:[ARKState stateWithId:MVCMain moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:settingsButton.center.y] fromInitialPosition:settingsButton.center]];
-    [settingsButton stateWithId:HomeState goesTo:MVCSettings];
-    [settingsButton stateWithId:MVCMain goesTo:MVCSettings];
-    [settingsButton stateWithId:MVCAdd goesTo:MVCSettings];
-    [settingsButton stateWithId:MVCSummary goesTo:MVCSettings];
+    [settingsButton stateWithId:HomeState movesToPosition:[ARKDefault centerScreenHorizontalWithVertical:settingsButton.center.y]];
     
     [settingsButton syncHomeState];
     
@@ -228,12 +210,7 @@
     
     //states
     [summaryButton addStateIdentList:[ARKF mainViewControllerStateList]];
-    [summaryButton addState:[ARKState stateWithId:HomeState moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:summaryButton.center.y] fromInitialPosition:summaryButton.center]];
-    [summaryButton addState:[ARKState stateWithId:MVCMain moveToPosition:[ARKDefault centerScreenHorizontalWithVertical:summaryButton.center.y] fromInitialPosition:summaryButton.center]];
-    [summaryButton stateWithId:HomeState goesTo:MVCSummary];
-    [summaryButton stateWithId:MVCMain goesTo:MVCSummary];
-    [summaryButton stateWithId:MVCAdd goesTo:MVCSummary];
-    [summaryButton stateWithId:MVCSettings goesTo:MVCSummary];
+    [summaryButton stateWithId:HomeState movesToPosition:[ARKDefault centerScreenHorizontalWithVertical:summaryButton.center.y]];
     
     [summaryButton syncHomeState];
     
@@ -248,8 +225,7 @@
     fullLibrary.backgroundColor = [ARKF interfaceColor];
     
     //states
-    [fullLibrary addStateIdentList:[ARKF mainViewControllerStateList] withDefaultState:[ARKState stateWithId:@"" moveInvisibleDown:[ARKDefault screenHeight]]];
-    [fullLibrary addState:[ARKState nullStateWithId:MVCSettings]];
+    [fullLibrary addStateIdentList:[ARKF mainViewControllerStateList] withDefaultState:[ARKState moveInvisibleDown:[ARKDefault screenHeight] andRight:0]];
     
     [fullLibrary syncHomeState];
     
@@ -264,6 +240,7 @@
     settingsLibrary.backgroundColor = [ARKF interfaceColor];
     
     //states
+    [settingsLibrary addStateIdentList:[ARKF mainViewControllerStateList] withDefaultState:[ARKState moveInvisibleDown:0 andRight:[ARKDefault screenWidth]]];
     
     [settingsLibrary syncHomeState];
     

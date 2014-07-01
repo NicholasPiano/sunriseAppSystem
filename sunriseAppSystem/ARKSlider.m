@@ -153,8 +153,8 @@
     //if at maximum extra time, then:
     if (self.extraMinute == 0) { //after incrementing
         //increment
-        int currentIndex = [regionDictionary indexOfKey:self.currentRegionIdent];
-        int newIndex = currentIndex==0?0:currentIndex-1;
+        NSUInteger currentIndex = [regionDictionary indexOfKey:self.currentRegionIdent];
+        NSUInteger newIndex = currentIndex==0?0:currentIndex-1;
         self.currentRegion = [regionDictionary objectAtIndex:newIndex];
         
         //
@@ -279,8 +279,9 @@
         [self insertSubview:region atIndex:0]; //all back of the bus
         
         //3. slider thumb state for region
-        ARKState *regionState = [ARKState stateWithId:region.touchUpStateId moveToPosition:region.snapPoint fromInitialPosition:self.thumb.center];
-        [self.thumb addState:regionState];
+        
+        [self.thumb addState:[ARKState nullStateWithId:region.touchUpStateId] withStateId:region.touchUpStateId];
+        [self.thumb stateWithId:region.touchUpStateId movesToPosition:region.snapPoint];
     }
 }
 

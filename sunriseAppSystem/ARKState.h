@@ -46,19 +46,14 @@
 
 //no state id
 + (ARKState *)nullState;
-+ (ARKState *)homeState;
++ (ARKState *)moveDown:(CGFloat)down andRight:(CGFloat)right andToAlpha:(CGFloat)argAlpha rotatedClockwiseByAngle:(CGFloat)angle;
++ (ARKState *)moveInvisibleDown:(CGFloat)down andRight:(CGFloat)right;
++ (ARKState *)moveDown:(CGFloat)down;
++ (ARKState *)moveRight:(CGFloat)right;
++ (ARKState *)goToAlpha:(CGFloat)argAlpha;
++ (ARKState *)rotateClockwiseByAngle:(CGFloat)angle;
 
 //state id
 + (ARKState *)nullStateWithId:(NSString *)stateId;
-+ (ARKState *)stateWithId:(NSString *)stateId goesToAlpha:(CGFloat)alpha;
-+ (ARKState *)stateWithId:(NSString *)stateId moveDown:(CGFloat)down andRight:(CGFloat)right;
-+ (ARKState *)stateWithId:(NSString *)stateId moveDown:(CGFloat)down;
-+ (ARKState *)stateWithId:(NSString *)stateId moveRight:(CGFloat)right;
-+ (ARKState *)stateWithId:(NSString *)stateId moveInvisibleDown:(CGFloat)down andRight:(CGFloat)right;
-+ (ARKState *)stateWithId:(NSString *)stateId moveInvisibleDown:(CGFloat)down;
-+ (ARKState *)stateWithId:(NSString *)stateId moveInvisibleRight:(CGFloat)right;
-+ (ARKState *)stateWithId:(NSString *)stateId moveToPosition:(CGPoint)position fromInitialPosition:(CGPoint)initalPosition;
-+ (ARKState *)stateWithId:(NSString *)stateId moveToInvisiblePosition:(CGPoint)position fromInitialPosition:(CGPoint)initalPosition;
-+ (ARKState *)stateWithId:(NSString *)stateId rotatedStateWithAngle:(CGFloat)angle;
 
 @end

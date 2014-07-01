@@ -42,15 +42,18 @@
 - (void)syncHomeState;
 //-adding
 - (void)addState:(ARKState *)state;
+- (void)addState:(ARKState *)state withStateId:(NSString *)stateId;
 - (void)addStateIdentList:(NSArray *)stateIdentList;
 - (void)addStateIdentList:(NSArray *)stateIdentList withDefaultState:(ARKState *)defaultState;
 - (ARKState *)stateWithId:(NSString *)stateId;
 //--customisation
 - (void)stateWithId:(NSString *)stateId goesTo:(NSString *)nextStateId;
-- (void)stateWithId:(NSString *)stateId 
-- (void)stateWithId:(NSString *)stateId
-- (void)stateWithId:(NSString *)stateId
-- (void)stateWithId:(NSString *)stateId
+- (void)stateWithId:(NSString *)stateId movesToPosition:(CGPoint)position; //uses position of object
+- (void)stateWithId:(NSString *)stateId movesDownBy:(CGFloat)down andRightBy:(CGFloat)right;//finish tomorrow. need methods for alpha, callbacks, etc.
+- (void)stateWithId:(NSString *)stateId movesDownBy:(CGFloat)down;
+- (void)stateWithId:(NSString *)stateId movesRightBy:(CGFloat)right;
+- (void)stateWithId:(NSString *)stateId goesToAlpha:(CGFloat)alpha;
+- (void)stateWithId:(NSString *)stateId hasCallback:(ARKState *)callback;
 
 //notification center
 - (void)receiveNotification:(NSNotification *)notification;
