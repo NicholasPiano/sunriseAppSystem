@@ -138,7 +138,7 @@
 - (void)syncHomeState
 {
     //make this modify the duration and delay before syncing.
-    ARKState *homeState = [self stateWithId:HomeState];
+    ARKState *homeState = [ARKState cloneState:[self stateWithId:HomeState]];
     homeState.duration = 0.0;
     homeState.delay = 0.0;
     [self syncState:homeState];

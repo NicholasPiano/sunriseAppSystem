@@ -76,6 +76,11 @@
     return newState;
 }
 
++ (ARKState *)cloneState:(ARKState *)state
+{
+    return [self stateFromState:state withStateId:nil andNextStateId:nil];
+}
+
 //no state id
 + (ARKState *)nullState
 {

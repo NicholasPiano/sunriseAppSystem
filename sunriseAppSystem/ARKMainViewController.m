@@ -179,6 +179,7 @@
     [addButton addStateIdentList:[ARKF mainViewControllerStateList]];
     [addButton stateWithId:HomeState movesToPosition:[ARKDefault centerScreenHorizontalWithVertical:addButton.center.y]];
     [addButton stateWithId:HomeState goesTo:MVCAdd];
+    [addButton stateWithId:MVCAdd goesTo:HomeState];
     
     //plus symbol (when graphic class is done)
     

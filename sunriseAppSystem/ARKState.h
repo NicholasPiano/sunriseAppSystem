@@ -43,6 +43,7 @@
 //refactor
 + (ARKState *)state:(ARKState *)state withNextStateId:(NSString *)nextStateId;
 + (ARKState *)stateFromState:(ARKState *)state withStateId:(NSString *)stateId andNextStateId:(NSString *)nextStateId;
++ (ARKState *)cloneState:(ARKState *)state;
 
 //no state id
 + (ARKState *)nullState;
