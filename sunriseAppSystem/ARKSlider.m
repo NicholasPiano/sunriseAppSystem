@@ -99,7 +99,6 @@
                 self.currentRegion = region;
                 self.currentRegionIdent = region.ident;
                 noRegion = NO;
-                ARKLog(self.currentRegion.ident);
             }
         }
         

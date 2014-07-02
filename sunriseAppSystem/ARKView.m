@@ -143,6 +143,14 @@
     ARKState *homeState = [ARKState cloneState:[self stateWithId:HomeState]];
     homeState.duration = 0.0;
     homeState.delay = 0.0;
+    
+    ARKState *callBack = homeState.callbackState;
+    while (callBack != nil) {
+        callBack.duration = 0.0;
+        callBack.delay = 0.0;
+        callBack = callBack.callbackState;
+    }
+    
     [self syncState:homeState];
 }
 //-adding

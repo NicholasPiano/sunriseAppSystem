@@ -21,6 +21,9 @@
 @implementation ARKState
 
 #pragma mark - properties
+//recursion
+@synthesize callbackState;
+
 //identification
 @synthesize stateId, nextStateId;
 
@@ -42,6 +45,7 @@
         self.alpha = 1.0;
         self.duration = animationDuration;
         self.delay = animationDelay;
+        self.callbackState = nil;
     }
     return self;
 }
@@ -62,18 +66,23 @@
 
 + (ARKState *)stateFromState:(ARKState *)state withStateId:(NSString *)stateId andNextStateId:(NSString *)nextStateId
 {
-    ARKState *newState = [[ARKState alloc] initWithStateId:stateId andNextStateId:nextStateId];
-    if (stateId == nil && nextStateId == nil) {
-        newState.stateId = state.stateId;
-        newState.nextStateId = state.nextStateId;
+    if (state != nil) {
+        ARKState *newState = [[self alloc] initWithStateId:stateId andNextStateId:nextStateId];
+        if (stateId == nil && nextStateId == nil) {
+            newState.stateId = state.stateId;
+            newState.nextStateId = state.nextStateId;
+        }
+        newState.transform = state.transform;
+        newState.color = state.color;
+        newState.alpha = state.alpha;
+        newState.duration = state.duration;
+        newState.delay = state.delay;
+        newState.callbackState = [self stateFromState:state.callbackState withStateId:nil andNextStateId:nil];
+        
+        return newState;
+    } else {
+        return nil;
     }
-    newState.transform = state.transform;
-    newState.color = state.color;
-    newState.alpha = state.alpha;
-    newState.duration = state.duration;
-    newState.delay = state.delay;
-    
-    return newState;
 }
 
 + (ARKState *)cloneState:(ARKState *)state

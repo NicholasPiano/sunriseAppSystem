@@ -104,8 +104,6 @@
     [mainSlider.thumb syncHomeState];
     [mainSlider syncHomeState];
     
-    ARKLog(@"%@", mainSlider.thumb.stateDictionary);
-    
     return mainSlider;
 }
 
@@ -191,6 +189,19 @@
     //states
     [addButton addStateIdentList:[ARKF mainViewControllerStateList]];
     [addButton stateWithId:HomeState movesToPosition:[ARKDefault centerScreenHorizontalWithVertical:addButton.center.y]];
+    ARKState *homeStateBack2 = [ARKState moveRight:-200];
+    
+    ARKState *homeStateBack1 = [ARKState moveRight:400];
+    homeStateBack1.duration = 0.0;
+    
+    ARKState *homeState = [addButton stateWithId:HomeState];
+    homeStateBack1.callbackState = homeState;
+    
+    homeStateBack2.callbackState = homeStateBack1;
+    
+    [addButton addState:homeStateBack2 withStateId:HomeState];
+    
+    //control
     [addButton stateWithId:HomeState goesTo:MVCAdd];
     [addButton stateWithId:MVCAdd goesTo:HomeState];
     
