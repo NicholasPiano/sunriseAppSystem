@@ -84,8 +84,6 @@
     [mainSlider addRegionWithIdent:OffRegionIdent andHeight:[ARKF mainSliderOffRegionHeight] andHours:0 andMinutes:0];
     [mainSlider regionWithIdent:OffRegionIdent hasSnapPoint:[ARKF mainSliderOffRegionSnapPoint]];
     
-    //2. a button
-    [mainSlider addThumb:[ARKMainViewController mainSliderThumb]];
     //3. enough gesture recognizers with their own methods so that nothing gets confused, but everything is satisfied.
     
     //what does the main slider need to be defined?
@@ -98,9 +96,15 @@
     //4. minute label
     [mainSlider addMinuteLabel:[ARKMainViewController mainSliderMinuteLabel]];
     
+    //5. add thumb last
+    [mainSlider addThumb:[ARKMainViewController mainSliderThumb]];
+    
     [mainSlider syncRegions]; //regions must be declared before thumb
     
-//    ARKLog(@"%@", mainSlider.stateDictionary);
+    [mainSlider.thumb syncHomeState];
+    [mainSlider syncHomeState];
+    
+    ARKLog(@"%@", mainSlider.thumb.stateDictionary);
     
     return mainSlider;
 }
@@ -108,16 +112,22 @@
 + (ARKButton *)mainSliderThumb
 {
     ARKButton *mainSliderThumb = [ARKButton buttonWithCenter:[ARKF mainSliderThumbCenter] andSize:[ARKF mainSliderThumbSize]];
+    mainSliderThumb.ident = @"main-slider-thumb";
     mainSliderThumb.backgroundColor = [ARKF transparent];
     ARKView *mainSliderThumbView = [[ARKView alloc] initWithCenter:CGPointMake([ARKF mainSliderThumbWidth]/2.0, [ARKF mainSliderThumbHeight]/2.0) andSize:CGSizeMake(buttonRadius*2+buttonSpacing, buttonRadius*2+buttonSpacing)];
     mainSliderThumbView.backgroundColor = [ARKF mainSliderThumbBackgroundColor];
     [mainSliderThumb addSubview:mainSliderThumbView];
+    
+    //states
+    [mainSliderThumb addStateIdentList:[ARKF mainViewControllerStateList]];
+    
     return mainSliderThumb;
 }
 
 + (ARKLabel *)mainSliderHourLabel
 {
     ARKLabel *mainSliderHourLabel = [[ARKLabel alloc] initWithCenter:[ARKF mainSliderHourLabelCenter] andSize:[ARKF mainSliderHourLabelSize] andType:HourType];
+    mainSliderHourLabel.ident = @"main-slider-hour-label";
     mainSliderHourLabel.backgroundColor = [ARKF transparent];
     [mainSliderHourLabel setTextColor:[ARKF interfaceColor]];
     [mainSliderHourLabel setFontSize:30];
@@ -137,6 +147,7 @@
 + (ARKLabel *)mainSliderMinuteLabel
 {
     ARKLabel *mainSliderMinuteLabel = [[ARKLabel alloc] initWithCenter:[ARKF mainSliderMinuteLabelCenter] andSize:[ARKF mainSliderMinuteLabelSize] andType:MinuteType];
+    mainSliderMinuteLabel.ident = @"main-slider-minute-label";
     mainSliderMinuteLabel.backgroundColor = [ARKF transparent];
     [mainSliderMinuteLabel setTextColor:[ARKF interfaceColor]];
     [mainSliderMinuteLabel setFontSize:30];
@@ -157,6 +168,7 @@
 + (ARKButton *)homeButton
 {
     ARKButton *homeButton = [ARKButton buttonWithCenter:[ARKF homeButtonCenter] andRadius:buttonRadius];
+    homeButton.ident = @"home-button";
     homeButton.backgroundColor = [ARKF homeButtonBackgroundColor];
     
     //states
@@ -173,6 +185,7 @@
 + (ARKButton *)addButton
 {
     ARKButton *addButton = [ARKButton buttonWithCenter:[ARKF addButtonCenter] andRadius:buttonRadius];
+    addButton.ident = @"add-button";
     addButton.backgroundColor = [ARKF addButtonBackgroundColor];
     
     //states
@@ -192,6 +205,7 @@
 + (ARKButton *)settingsButton
 {
     ARKButton *settingsButton = [ARKButton buttonWithCenter:[ARKF settingsButtonCenter] andRadius:buttonRadius];
+    settingsButton.ident = @"settings-button";
     settingsButton.backgroundColor = [ARKF settingsButtonBackgroundColor];
     
     //states
@@ -207,6 +221,7 @@
 + (ARKButton *)summaryButton
 {
     ARKButton *summaryButton = [ARKButton buttonWithCenter:[ARKF summaryButtonCenter] andRadius:buttonRadius];
+    summaryButton.ident = @"summary-button";
     summaryButton.backgroundColor = [ARKF summaryButtonBackgroundColor];
     
     //states

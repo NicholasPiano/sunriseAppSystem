@@ -99,6 +99,7 @@
                 self.currentRegion = region;
                 self.currentRegionIdent = region.ident;
                 noRegion = NO;
+                ARKLog(self.currentRegion.ident);
             }
         }
         
@@ -279,7 +280,6 @@
         [self insertSubview:region atIndex:0]; //all back of the bus
         
         //3. slider thumb state for region
-        
         [self.thumb addState:[ARKState nullStateWithId:region.touchUpStateId] withStateId:region.touchUpStateId];
         [self.thumb stateWithId:region.touchUpStateId movesToPosition:region.snapPoint];
     }

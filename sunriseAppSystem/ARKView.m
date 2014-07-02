@@ -70,9 +70,9 @@
     
     //check sender
     ARKState *state = [self.stateDictionary objectForKey:sender];
-//    ARKLog(@"%@ in %@ trying sender: %@", self.ident, self.activeState.stateId, sender);
+    ARKLog(@"%@ in %@ trying sender: %@", self.ident, self.activeState.stateId, sender);
     if (state == nil) {
-//        ARKLog(@"%@ in %@ failed, trying state id: %@", self.ident, self.activeState.stateId, stateId);
+        ARKLog(@"%@ in %@ failed, trying state id: %@", self.ident, self.activeState.stateId, stateId);
         state = [self.stateDictionary objectForKey:stateId];
         if (state != nil) {
             [self syncState:state];
