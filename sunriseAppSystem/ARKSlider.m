@@ -121,7 +121,7 @@
         for (ARKSliderRegion *region in self.regionDictionary.objectArray) {
             if (CGRectContainsPoint(region.frame, thumbCenter) && region.ident != nil) {
                 if (self.currentRegion.touchUpStateId != region.touchUpStateId) {
-                    [self postStateWithId:nil andSender:region.touchInStateId];
+//                    [self postStateWithId:nil andSender:region.touchInStateId];
                     self.currentRegion = region;
                     self.currentRegionIdent = region.ident;
                     if (self.currentRegion.hour != -1) {
@@ -292,8 +292,9 @@
     
     //main slider
     if ([self.ident isEqualToString:MainSliderIdent]) {
-        if ([state.stateId  isEqualToString:MVCMain]) {
+        if ([state.stateId isEqualToString:MVCMain] || [state.stateId isEqualToString:HomeState]) {
             self.panThumbRecognizer.enabled = NO;
+            self.lastButtonTransform = 0.0;
         } else {
             self.panThumbRecognizer.enabled = YES;
         }

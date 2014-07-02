@@ -69,12 +69,14 @@
     //view object has a number of states. Some have global ids and the sender "self". Others have a specific sender. When receiving a state message with a global id and a sender. This method checks in the stateDictionary for a state with the same sender. The global id is checked. If it finds no sender or the global id is wrong, it will look for the global id in the dictionary. If it finds neither, it will go to the default state.
     
     //check sender
-    ARKState *state = [self.stateDictionary objectForKey:sender];
-    ARKLog(@"%@ in %@ trying sender: %@", self.ident, self.activeState.stateId, sender);
+    NSString *stateSender = [ARKDefault string:stateId hyphenString:sender];
+    ARKState *state = [self.stateDictionary objectForKey:stateSender]; //try most specific
     if (state == nil) {
-        ARKLog(@"%@ in %@ failed, trying state id: %@", self.ident, self.activeState.stateId, stateId);
-        state = [self.stateDictionary objectForKey:stateId];
-        if (state != nil) {
+        state = [self.stateDictionary objectForKey:sender]; //then sender
+        if (state == nil) {
+            state = [self.stateDictionary objectForKey:stateId]; //then sender
+            [self syncState:state];
+        } else {
             [self syncState:state];
         }
     } else {
@@ -243,8 +245,7 @@
     if (stateId == nil) {
         stateId = activeState.stateId;
     }
-    NSString *stateSender = [ARKDefault string:stateId hyphenString:sender];
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:stateId, StateId, stateSender, Sender, nil];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:stateId, StateId, sender, Sender, nil];
     [self postNotification:[NSNotification notificationWithName:State object:nil userInfo:dictionary]]; //not using object. Requires cast. May use in the future.
 }
 
