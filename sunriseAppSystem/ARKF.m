@@ -246,6 +246,18 @@ static NSArray *mainStateList = nil;
     return [self interfaceColor];
 }
 
+//yes button
++ (CGPoint)yesButtonCenter
+{
+    return CGPointMake([ARKDefault screenWidth]-buttonRadius-buttonSpacing, [ARKDefault screenHeight]-3*buttonRadius-2*buttonSpacing);
+}
+
+//no button
++ (CGPoint)noButtonCenter
+{
+    return CGPointMake([ARKDefault screenWidth]-buttonRadius-buttonSpacing, [ARKDefault screenHeight]-buttonRadius-buttonSpacing);
+}
+
 //full library
 + (CGPoint)fullLibraryCenter
 {

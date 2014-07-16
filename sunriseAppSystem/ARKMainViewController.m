@@ -21,10 +21,13 @@
     [self.view addSubview:[ARKMainViewController mainSlider]];
     
     //standalone controls
-//    [self.view addSubview:[ARKMainViewController homeButton]];
+    [self.view addSubview:[ARKMainViewController homeButton]];
     [self.view addSubview:[ARKMainViewController addButton]];
     [self.view addSubview:[ARKMainViewController settingsButton]];
     [self.view addSubview:[ARKMainViewController summaryButton]];
+    
+    [self.view addSubview:[ARKMainViewController yesButton]];
+    [self.view addSubview:[ARKMainViewController noButton]];
     
 //    [self.view addSubview:[ARKMainViewController fullLibrary]];
 }
@@ -188,18 +191,12 @@
     
     //states
     [addButton addStateIdentList:[ARKF mainViewControllerStateList]];
+    
+    //home state
     [addButton stateWithId:HomeState movesToPosition:[ARKDefault centerScreenHorizontalWithVertical:addButton.center.y]];
-    ARKState *homeStateBack2 = [ARKState moveRight:-200];
     
-    ARKState *homeStateBack1 = [ARKState moveRight:400];
-    homeStateBack1.duration = 0.0;
-    
-    ARKState *homeState = [addButton stateWithId:HomeState];
-    homeStateBack1.callbackState = homeState;
-    
-    homeStateBack2.callbackState = homeStateBack1;
-    
-    [addButton addState:homeStateBack2 withStateId:HomeState];
+    //add state
+    [addButton stateWithId:MVCAdd movesRightBy:-2*(buttonRadius+buttonSpacing)];
     
     //control
     [addButton stateWithId:HomeState goesTo:MVCAdd];
@@ -223,6 +220,9 @@
     [settingsButton addStateIdentList:[ARKF mainViewControllerStateList]];
     [settingsButton stateWithId:HomeState movesToPosition:[ARKDefault centerScreenHorizontalWithVertical:settingsButton.center.y]];
     
+    //add state
+    [settingsButton stateWithId:MVCAdd movesRightBy:-2*(buttonRadius+buttonSpacing)];
+    
     [settingsButton syncHomeState];
     
     return settingsButton;
@@ -239,9 +239,49 @@
     [summaryButton addStateIdentList:[ARKF mainViewControllerStateList]];
     [summaryButton stateWithId:HomeState movesToPosition:[ARKDefault centerScreenHorizontalWithVertical:summaryButton.center.y]];
     
+    //add state
+    [summaryButton stateWithId:MVCAdd movesRightBy:-2*(buttonRadius+buttonSpacing)];
+    
     [summaryButton syncHomeState];
     
     return summaryButton;
+}
+
+//yes button
++ (ARKButton *)yesButton
+{
+    ARKButton *yesButton = [ARKButton buttonWithCenter:[ARKF yesButtonCenter] andRadius:buttonRadius];
+    yesButton.ident = @"yes-button";
+    yesButton.backgroundColor = [ARKF yesColor];
+    
+    //states
+    [yesButton addStateIdentList:[ARKF mainViewControllerStateList]];
+    [yesButton stateWithId:HomeState movesRightBy:2*(buttonSpacing+buttonRadius)];
+    
+    //control
+    [yesButton stateWithId:MVCAdd goesTo:HomeState];
+    
+    [yesButton syncHomeState];
+    return yesButton;
+}
+
+//no button
++ (ARKButton *)noButton
+{
+    ARKButton *noButton = [ARKButton buttonWithCenter:[ARKF noButtonCenter] andRadius:buttonRadius];
+    noButton.ident = @"no-button";
+    noButton.backgroundColor = [ARKF noColor];
+    
+    //states
+    [noButton addStateIdentList:[ARKF mainViewControllerStateList]];
+    [noButton stateWithId:HomeState movesRightBy:2*(buttonSpacing+buttonRadius)];
+    
+    //control
+    [noButton stateWithId:MVCAdd goesTo:HomeState];
+    
+    [noButton syncHomeState];
+    
+    return noButton;
 }
 
 //full library

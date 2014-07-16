@@ -118,6 +118,12 @@
 
 + (UIColor *)summaryButtonBackgroundColor;
 
+//yes button
++ (CGPoint)yesButtonCenter;
+
+//no button
++ (CGPoint)noButtonCenter;
+
 //full library
 + (CGPoint)fullLibraryCenter;
 + (CGSize)fullLibrarySize;

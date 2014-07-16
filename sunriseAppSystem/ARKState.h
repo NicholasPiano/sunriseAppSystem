@@ -17,6 +17,7 @@
 //identification
 @property (strong, nonatomic) NSString *stateId;
 @property (strong, nonatomic) NSString *nextStateId;
+//@property (strong, nonatomic) NSString *callBackStateId;
 
 //state variables
 @property (nonatomic) CGAffineTransform transform;

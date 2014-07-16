@@ -46,6 +46,7 @@
         self.duration = animationDuration;
         self.delay = animationDelay;
         self.callbackState = nil;
+//        self.callBackStateId = nil;
     }
     return self;
 }
@@ -78,6 +79,11 @@
         newState.duration = state.duration;
         newState.delay = state.delay;
         newState.callbackState = [self stateFromState:state.callbackState withStateId:nil andNextStateId:nil];
+//        if (state.callBackStateId != nil) {
+//            newState.callBackStateId = [NSString stringWithString:state.callBackStateId];
+//        } else {
+//            newState.callBackStateId = nil;
+//        }
         
         return newState;
     } else {

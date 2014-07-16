@@ -90,6 +90,9 @@
     __block NSMutableArray* animationBlocks = [NSMutableArray new];
     typedef void(^animationBlock)(BOOL);
     
+    //prepare for callback state id
+//    NSString *callBackStateId = nil;
+    
     // getNextAnimation
     // removes the first block in the queue and returns it
     animationBlock (^getNextAnimation)() = ^{
@@ -119,12 +122,21 @@
                     }
                 } completion: getNextAnimation()];
             }];
-            state = state.callbackState; //supports chain of callback states
+//            if (state.callbackState == nil) {
+//                callBackStateId = state.callBackStateId;
+//            } else {
+                state = state.callbackState; //supports chain of callback states
+//            }
         }
     }
     
     //begin
     getNextAnimation()(YES);
+    
+    //callback state id
+//    if (callBackStateId != nil) {
+//        [self postStateWithId:callBackStateId andSender:self.ident];
+//    }
 }
 
 - (void)syncCurrentState
@@ -141,10 +153,8 @@
 {
     //make this modify the duration and delay before syncing.
     ARKState *homeState = [ARKState cloneState:[self stateWithId:HomeState]];
-    homeState.duration = 0.0;
-    homeState.delay = 0.0;
-    
-    ARKState *callBack = homeState.callbackState;
+
+    ARKState *callBack = homeState;
     while (callBack != nil) {
         callBack.duration = 0.0;
         callBack.delay = 0.0;
