@@ -22,7 +22,6 @@
 
 //state
 @property (strong, nonatomic) ARKState *activeState;
-@property (strong, nonatomic) ARKState *defaultState;
 @property (strong, nonatomic) NSMutableDictionary *stateDictionary;
 
 //user defaults
@@ -31,35 +30,36 @@
 #pragma mark - initialisers
 - initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius;
 - initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
-- initViewWithStatesWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andDefaultState:(ARKState *)argDefaultState;
-- initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState;
-- initViewWithStatesWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius;
-- initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize;
 
 #pragma mark instance methods
 - (void)dealloc; //for removing observer
 
 //state methods
+//-syncing
 - (void)syncStateWithId:(NSString *)stateId andSender:(NSString *)sender;
 - (void)syncState:(ARKState *)state;
 - (void)syncCurrentState;
 - (void)syncHomeState;
+//-adding
 - (void)addState:(ARKState *)state;
+- (void)addState:(ARKState *)state withStateId:(NSString *)stateId;
+- (void)addStateIdentList:(NSArray *)stateIdentList;
+- (void)addStateIdentList:(NSArray *)stateIdentList withDefaultState:(ARKState *)defaultState;
 - (ARKState *)stateWithId:(NSString *)stateId;
+//--customisation
 - (void)stateWithId:(NSString *)stateId goesTo:(NSString *)nextStateId;
-
-//more general animate methods for state change to use
-- (void)animateTransform:(CGAffineTransform)argTransform andAlpha:(CGFloat)argAlpha andColor:(UIColor *)argColor withDuration:(CGFloat)duration andDelay:(CGFloat)delay;
-- (void)transformHorizontal:(CGFloat)horizontal andVertical:(CGFloat)vertical andAlpha:(CGFloat)argAlpha withDuration:(CGFloat)duration andDelay:(CGFloat)delay;
+- (void)stateWithId:(NSString *)stateId movesToPosition:(CGPoint)position; //uses position of object
+- (void)stateWithId:(NSString *)stateId movesDownBy:(CGFloat)down andRightBy:(CGFloat)right;//finish tomorrow. need methods for alpha, callbacks, etc.
+- (void)stateWithId:(NSString *)stateId movesDownBy:(CGFloat)down;
+- (void)stateWithId:(NSString *)stateId movesRightBy:(CGFloat)right;
+- (void)stateWithId:(NSString *)stateId goesToAlpha:(CGFloat)alpha;
+- (void)stateWithId:(NSString *)stateId hasCallback:(ARKState *)callback;
 
 //notification center
 - (void)receiveNotification:(NSNotification *)notification;
 - (void)postNotification:(NSNotification *)notification;
 - (void)postStateWithId:(NSString *)stateId andSender:(NSString *)sender;
 - (void)postNextStateId;
-
-//value methods
-- (void)postValue:(int)value withType:(NSString *)type;
 
 //user defaults
 - (void)pullDictionaryFromUserDefaults; //pulls on category not ident

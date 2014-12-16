@@ -37,11 +37,6 @@
                BlueprintName = "sunriseAppSystemTests"
                ReferencedContainer = "container:sunriseAppSystem.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "sunriseAppSystemTests/testExample">
-               </Test>
-            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

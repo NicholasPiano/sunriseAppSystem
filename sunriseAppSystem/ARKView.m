@@ -18,7 +18,7 @@
 @synthesize ident, category;
 
 //state
-@synthesize activeState, defaultState, stateDictionary;
+@synthesize activeState, stateDictionary;
 
 #pragma mark - initialisers
 - (id)initWithFrame:(CGRect)frame
@@ -28,6 +28,7 @@
         // Initialization code
         self.backgroundColor = [ARKF interfaceColor];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:State object:nil];
+        self.stateDictionary = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -54,106 +55,6 @@
     return self;
 }
 
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius andDefaultState:(ARKState *)argDefaultState
-{
-    self = [self initWithCenter:argCenter andRadius:argRadius];
-    if (self) {
-        self.defaultState = argDefaultState;
-        self.stateDictionary = [NSMutableDictionary dictionary];
-        
-        //states
-        for (NSString *stateId in [ARKF stateList]) {
-            if ([stateId isEqualToString:HomeState]) {
-                ARKState *homeState = self.defaultState;
-//                homeState.duration = 0.0;
-//                homeState.delay = 0.0;
-                [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
-            } else {
-                [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
-            }
-        }
-        
-        //sync home state
-        [self syncHomeState];
-    }
-    return self;
-}
-
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andDefaultState:(ARKState *)argDefaultState
-{
-    self = [self initWithCenter:argCenter andSize:argSize];
-    if (self) {
-        self.defaultState = argDefaultState;
-        self.stateDictionary = [NSMutableDictionary dictionary];
-        
-        //states
-        for (NSString *stateId in [ARKF stateList]) {
-            if ([stateId isEqualToString:HomeState]) {
-                ARKState *homeState = self.defaultState;
-//                homeState.duration = 0.0;
-//                homeState.delay = 0.0;
-                [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
-            } else {
-                [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
-            }
-        }
-        
-        //sync home state
-        [self syncHomeState];
-    }
-    return self;
-}
-
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius
-{
-    self = [self initWithCenter:argCenter andRadius:argRadius];
-    if (self) {
-        self.defaultState = [ARKState nullState];
-        self.stateDictionary = [NSMutableDictionary dictionary];
-        
-        //states
-        for (NSString *stateId in [ARKF stateList]) {
-            if ([stateId isEqualToString:HomeState]) {
-                ARKState *homeState = self.defaultState;
-//                homeState.duration = 0.0;
-//                homeState.delay = 0.0;
-                [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
-            } else {
-                [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
-            }
-        }
-        
-        //sync home state
-        [self syncHomeState];
-    }
-    return self;
-}
-
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
-{
-    self = [self initWithCenter:argCenter andSize:argSize];
-    if (self) {
-        self.defaultState = [ARKState nullState];
-        self.stateDictionary = [NSMutableDictionary dictionary];
-        
-        //states
-        for (NSString *stateId in [ARKF stateList]) {
-            if ([stateId isEqualToString:HomeState]) {
-                ARKState *homeState = self.defaultState;
-//                homeState.duration = 0.0;
-//                homeState.delay = 0.0;
-                [self addState:[ARKState stateFromState:homeState withStateId:stateId andNextStateId:nil]];
-            } else {
-                [self addState:[ARKState stateFromState:self.defaultState withStateId:stateId andNextStateId:nil]];
-            }
-        }
-        
-        //sync home state
-        [self syncHomeState];
-    }
-    return self;
-}
-
 #pragma mark - instance methods
 
 - (void)dealloc
@@ -162,17 +63,20 @@
 }
 
 //state methods
+//-syncing
 - (void)syncStateWithId:(NSString *)stateId andSender:(NSString *)sender
 {
     //view object has a number of states. Some have global ids and the sender "self". Others have a specific sender. When receiving a state message with a global id and a sender. This method checks in the stateDictionary for a state with the same sender. The global id is checked. If it finds no sender or the global id is wrong, it will look for the global id in the dictionary. If it finds neither, it will go to the default state.
     
     //check sender
-    ARKState *state = [self.stateDictionary objectForKey:sender];
-//    ARKLog(@"%@ in %@ trying sender: %@", self.ident, self.activeState.stateId, sender);
+    NSString *stateSender = [ARKDefault string:stateId hyphenString:sender];
+    ARKState *state = [self.stateDictionary objectForKey:stateSender]; //try most specific
     if (state == nil) {
-//        ARKLog(@"%@ in %@ failed, trying state id: %@", self.ident, self.activeState.stateId, stateId);
-        state = [self.stateDictionary objectForKey:stateId];
-        if (state != nil) {
+        state = [self.stateDictionary objectForKey:sender]; //then sender
+        if (state == nil) {
+            state = [self.stateDictionary objectForKey:stateId]; //then sender
+            [self syncState:state];
+        } else {
             [self syncState:state];
         }
     } else {
@@ -185,6 +89,9 @@
     //http://stackoverflow.com/questions/17949511/the-proper-way-of-doing-chain-animations/17956396#17956396
     __block NSMutableArray* animationBlocks = [NSMutableArray new];
     typedef void(^animationBlock)(BOOL);
+    
+    //prepare for callback state id
+//    NSString *callBackStateId = nil;
     
     // getNextAnimation
     // removes the first block in the queue and returns it
@@ -215,12 +122,21 @@
                     }
                 } completion: getNextAnimation()];
             }];
-            state = state.callbackState; //supports chain of callback states
+//            if (state.callbackState == nil) {
+//                callBackStateId = state.callBackStateId;
+//            } else {
+                state = state.callbackState; //supports chain of callback states
+//            }
         }
     }
     
     //begin
     getNextAnimation()(YES);
+    
+    //callback state id
+//    if (callBackStateId != nil) {
+//        [self postStateWithId:callBackStateId andSender:self.ident];
+//    }
 }
 
 - (void)syncCurrentState
@@ -235,15 +151,42 @@
 
 - (void)syncHomeState
 {
-    [self syncStateWithId:HomeState andSender:nil];
-}
+    //make this modify the duration and delay before syncing.
+    ARKState *homeState = [ARKState cloneState:[self stateWithId:HomeState]];
 
+    ARKState *callBack = homeState;
+    while (callBack != nil) {
+        callBack.duration = 0.0;
+        callBack.delay = 0.0;
+        callBack = callBack.callbackState;
+    }
+    
+    [self syncState:homeState];
+}
+//-adding
 - (void)addState:(ARKState *)state
 {
-    //this method searches the current stateDictionary for a state with the matching global id and sender in a manner similar to -syncStateWithGlobalId. If the state exists, it will replace it; if not, it will add it to the dictionary.
-    
-    //1. if state dictionary is nil, make it.
     [self.stateDictionary setObject:state forKey:state.stateId];
+}
+
+- (void)addState:(ARKState *)state withStateId:(NSString *)stateId
+{
+    state.stateId = stateId;
+    [self.stateDictionary setObject:state forKey:stateId];
+}
+
+- (void)addStateIdentList:(NSArray *)stateIdentList
+{
+    for (NSString *stateId in stateIdentList) {
+        [self addState:[ARKState stateFromState:[ARKState nullState] withStateId:stateId andNextStateId:nil]];
+    }
+}
+
+- (void)addStateIdentList:(NSArray *)stateIdentList withDefaultState:(ARKState *)defaultState
+{
+    for (NSString *stateId in stateIdentList) {
+        [self addState:[ARKState stateFromState:defaultState withStateId:stateId andNextStateId:nil]];
+    }
 }
 
 - (ARKState *)stateWithId:(NSString *)stateId
@@ -251,33 +194,51 @@
     return [self.stateDictionary objectForKey:stateId];
 }
 
+//-customisation
 - (void)stateWithId:(NSString *)stateId goesTo:(NSString *)nextStateId
 {
     [self addState:[ARKState state:[self stateWithId:stateId] withNextStateId:nextStateId]];
 }
-
-//more general animate methods for state change to use
-- (void)animateTransform:(CGAffineTransform)argTransform andAlpha:(CGFloat)argAlpha andColor:(UIColor *)argColor withDuration:(CGFloat)duration andDelay:(CGFloat)delay
+- (void)stateWithId:(NSString *)stateId movesToPosition:(CGPoint)position
 {
-    //set up animation
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:duration];
-    [UIView setAnimationDelay:delay];
-    
-    self.transform = argTransform;
-    self.alpha = argAlpha;
-    if (argColor != nil) {
-        self.backgroundColor = argColor;
-    }
-    
-    [UIView commitAnimations];
+    ARKState *state = [self stateWithId:stateId];
+    state.transform = CGAffineTransformMakeTranslation(position.x-self.center.x, position.y-self.center.y);
+    [self addState:state];
 }
 
-- (void)transformHorizontal:(CGFloat)horizontal andVertical:(CGFloat)vertical andAlpha:(CGFloat)argAlpha withDuration:(CGFloat)duration andDelay:(CGFloat)delay
+- (void)stateWithId:(NSString *)stateId movesDownBy:(CGFloat)down andRightBy:(CGFloat)right
 {
-    CGAffineTransform argTransform = CGAffineTransformMakeTranslation(horizontal, vertical);
-    [self animateTransform:argTransform andAlpha:argAlpha andColor:nil withDuration:duration andDelay:delay];
+    ARKState *state = [self stateWithId:stateId];
+    state.transform = CGAffineTransformMakeTranslation(right, down);
+    [self addState:state];
+}
+
+- (void)stateWithId:(NSString *)stateId movesDownBy:(CGFloat)down
+{
+    ARKState *state = [self stateWithId:stateId];
+    state.transform = CGAffineTransformMakeTranslation(state.transform.tx, down);
+    [self addState:state];
+}
+
+- (void)stateWithId:(NSString *)stateId movesRightBy:(CGFloat)right
+{
+    ARKState *state = [self stateWithId:stateId];
+    state.transform = CGAffineTransformMakeTranslation(right, state.transform.ty);
+    [self addState:state];
+}
+
+- (void)stateWithId:(NSString *)stateId goesToAlpha:(CGFloat)alpha
+{
+    ARKState *state = [self stateWithId:stateId];
+    state.alpha = alpha;
+    [self addState:state];
+}
+
+- (void)stateWithId:(NSString *)stateId hasCallback:(ARKState *)callback
+{
+    ARKState *state = [self stateWithId:stateId];
+    state.callbackState = callback;
+    [self addState:state];
 }
 
 //notification center
@@ -299,31 +260,19 @@
 
 - (void)postStateWithId:(NSString *)stateId andSender:(NSString *)sender
 {
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:stateId, StateId, sender, Sender, nil];
     if (stateId == nil) {
-        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:sender, Sender, nil];
+        stateId = activeState.stateId;
     }
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:stateId, StateId, sender, Sender, nil];
     [self postNotification:[NSNotification notificationWithName:State object:nil userInfo:dictionary]]; //not using object. Requires cast. May use in the future.
 }
 
-//IBAN: GB63TSBS87700482122068
-//BIC: TSBSGB21118
-
 - (void)postNextStateId
 {
-    [self postStateWithId:self.activeState.nextStateId andSender:[ARKDefault stateId:self.activeState.nextStateId withSender:self.ident]];
-}
-
-//value methods
-- (void)postValue:(int)value withType:(NSString *)type
-{
-    ARKLog(@"post value: %d", value);
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"value", [NSNumber numberWithInt:value], @"type", type, nil];
-    [self postNotification:[NSNotification notificationWithName:@"value" object:nil userInfo:dictionary]];
+    [self postStateWithId:self.activeState.nextStateId andSender:self.ident];
 }
 
 //user defaults
-
 - (void)pullDictionaryFromUserDefaults
 {
     [self pullDictionaryFromUserDefaultsWithKey:self.category];

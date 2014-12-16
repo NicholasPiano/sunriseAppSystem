@@ -11,20 +11,27 @@
 @implementation ARKSlider
 
 #pragma mark - properties
+//setup
+@synthesize lastRegionAdded, lastRegionCounter;
+
 //intrinsic
-@synthesize isVertical, day, hour, minute, extraMinute;
+@synthesize day, hour, minute, extraMinute;
 
 //elements
-@synthesize upperTrack, lowerTrack, thumb;
+@synthesize thumb, hourLabel, minuteLabel, plusButton, minusButton;
 
 //tracking
-@synthesize lastButtonTransform, tapThumbRecognizer, panThumbRecognizer, regionArray;
+@synthesize lastButtonTransform, currentRegion, currentRegionIdent, tapThumbRecognizer, panThumbRecognizer, regionDictionary;
 
 #pragma mark - initialisers
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
+- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
 {
-    self = [super initViewWithStatesWithCenter:argCenter andSize:argSize];
+    self = [super initWithCenter:argCenter andSize:argSize];
     if (self) {
+        //setup
+        self.lastRegionAdded = nil;
+        self.lastRegionCounter = 0;
+        
         //intrinsic
         self.extraMinute = 0;
         
@@ -37,11 +44,8 @@
         self.panThumbRecognizer.minimumNumberOfTouches = 1;
         [self.tapThumbRecognizer requireGestureRecognizerToFail:self.panThumbRecognizer];
         
-        //vertical?
-        self.isVertical = YES;
-        
         //regions
-        self.regionArray = [NSMutableArray array];
+        self.regionDictionary = [ARKOrderedDictionary dictionary];
     }
     return self;
 }
@@ -88,24 +92,19 @@
         //regions - maybe redundant given section in dragging state
         BOOL noRegion = YES;
         CGPoint thumbCenter = CGPointMake(thumb.bounds.size.width/2.0, thumb.transform.ty + thumb.center.y);
-        for (ARKSliderRegion *region in regionArray) {
-            if (CGRectContainsPoint(region.frame, thumbCenter)) {
-//                ARKLog(@"region: %@ thumby: %f, regiony: %f, height: %f", region.touchUpStateId, thumbCenter.y, region.center.y, region.size.height);
-//                [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:region.touchUpStateId]]; //bit of a hack with the name combining. Might need more formal way of doing this.
+        for (ARKSliderRegion *region in self.regionDictionary.objectArray) {
+            if (CGRectContainsPoint(region.frame, thumbCenter) && region.ident != nil) {
                 [self postStateWithId:nil andSender:region.touchUpStateId];
                 self.lastButtonTransform = region.snapPoint.y - thumb.center.y; //account for initial position
-//                ARKLog(@"last button transform: %f %f", self.lastButtonTransform, thumb.bounds.size.height);
                 self.currentRegion = region;
+                self.currentRegionIdent = region.ident;
                 noRegion = NO;
             }
         }
         
-        if (noRegion && [self.regionArray count]!=0) {
-//            ARKLog(@"no region stopped but last region: %@", self.currentRegion);
-//            [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:self.currentRegion.touchUpStateId]]; //sync last region if gone past edges
+        if (noRegion && [self.regionDictionary count]!=0) {
             [self postStateWithId:nil andSender:self.currentRegion.touchUpStateId];
             self.lastButtonTransform = self.currentRegion.snapPoint.y - thumb.center.y; //account for initial position
-//            ARKLog(@"last button transform: %f", self.lastButtonTransform);
         }
         
     } else if (argPanGestureRecognizer.state == UIGestureRecognizerStateChanged) { //still dragging
@@ -113,18 +112,17 @@
         CGPoint translation = [argPanGestureRecognizer translationInView:self];
         //2. set button transform to follow touch
         self.thumb.transform = CGAffineTransformMakeTranslation(0, self.lastButtonTransform + translation.y);
-//        ARKLog(@"thumb transform: %f", self.thumb.transform.ty);
         
         //regions
         BOOL noRegion = YES;
         CGPoint thumbCenter = CGPointMake(thumb.bounds.size.width/2.0, thumb.transform.ty + thumb.center.y);
 
-        for (ARKSliderRegion *region in regionArray) {
-            if (CGRectContainsPoint(region.frame, thumbCenter)) {
+        for (ARKSliderRegion *region in self.regionDictionary.objectArray) {
+            if (CGRectContainsPoint(region.frame, thumbCenter) && region.ident != nil) {
                 if (self.currentRegion.touchUpStateId != region.touchUpStateId) {
-//                    ARKLog(@"current region: %@, thumb: %f, region %f)", region.touchUpStateId, thumbCenter.y, region.center.y);
-//                    [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:self.currentRegion.exitStateId]];
+//                    [self postStateWithId:nil andSender:region.touchInStateId];
                     self.currentRegion = region;
+                    self.currentRegionIdent = region.ident;
                     if (self.currentRegion.hour != -1) {
                         [self.hourLabel setText:[ARKDefault timeStringWithInt:self.currentRegion.hour]];
                         [self.minuteLabel setText:[ARKDefault timeStringWithInt:self.currentRegion.minute]];
@@ -134,7 +132,6 @@
                         [self.hourLabel setText:@""];
                         [self.minuteLabel setText:@""];
                     }
-//                    [self postStateWithId:self.ident andSender:[ARKDefault stateId:self.ident withSender:region.enteredStateId]];
                 }
                 noRegion = NO;
             }
@@ -155,9 +152,12 @@
     
     //if at maximum extra time, then:
     if (self.extraMinute == 0) { //after incrementing
-        int currentIndex = [regionArray indexOfObject:self.currentRegion];
-        int newIndex = currentIndex==0?0:currentIndex-1;
-        self.currentRegion = [regionArray objectAtIndex:newIndex];
+        //increment
+        NSUInteger currentIndex = [regionDictionary indexOfKey:self.currentRegionIdent];
+        NSUInteger newIndex = currentIndex==0?0:currentIndex-1;
+        self.currentRegion = [regionDictionary objectAtIndex:newIndex];
+        
+        //
         self.lastButtonTransform = self.currentRegion.snapPoint.y - thumb.center.y;
         self.hour = self.currentRegion.hour;
         self.minute = self.currentRegion.minute;
@@ -175,18 +175,6 @@
 }
 
 //construct
-- (void)addUpperTrack:(ARKRect *)argUpperTrack
-{
-    self.upperTrack = argUpperTrack;
-    [self addSubview:self.upperTrack];
-}
-
-- (void)addLowerTrack:(ARKRect *)argLowerTrack
-{
-    self.lowerTrack = argLowerTrack;
-    [self addSubview:self.lowerTrack];
-}
-
 - (void)addThumb:(ARKButton *)argThumb
 {
     self.thumb = argThumb;
@@ -223,154 +211,93 @@
 //regions
 - (void)addRegion:(ARKSliderRegion *)region
 {
-    [self addRegion:region withSnapPoint:region.center];
+    if (region.ident != nil) {
+        [self.regionDictionary setObject:region forKey:region.ident];
+    }
+    self.lastRegionAdded = region; //allows for the insertion of null regions that act as spacers
 }
 
-- (void)addRegion:(ARKSliderRegion *)region withSnapPoint:(CGPoint)snapPoint
+- (void)regionWithIdent:(NSString *)regionIdent hasSnapPoint:(CGPoint)snapPoint
 {
-    //1. add region at the bottom of the subviews list to ensure it doesn't swallow touches.
+    NSString *realRegionIdent = [ARKDefault string:self.ident hyphenString:regionIdent];
+    ARKSliderRegion *region = [self.regionDictionary objectForKey:realRegionIdent];
     region.snapPoint = snapPoint;
-    [self insertSubview:region atIndex:0]; //all back of the bus
-    
-    //2. Add to array of regions
-    [self.regionArray addObject:region];
-    
-    //3. slider thumb state for region
-    ARKState *regionState = [ARKState stateWithId:[ARKDefault stateId:nil withSender:region.touchUpStateId] moveToPosition:snapPoint fromInitialPosition:thumb.center];
-    [self.thumb addState:regionState];
+    [self.regionDictionary setObject:region forKey:realRegionIdent];
 }
 
-#pragma mark - factory
-+ (ARKSlider *)horizontalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
+- (void)addRegionWithIdent:(NSString *)regionIdent andHeight:(CGFloat)regionHeight andHours:(int)hours andMinutes:(int)minutes
 {
-    ARKSlider *slider = [[ARKSlider alloc] initViewWithStatesWithCenter:argCenter andSize:argSize];
-    slider.isVertical = NO;
-    return slider;
+    CGFloat y = regionHeight/2.0;
+    if (self.lastRegionAdded != nil) {
+        y += lastRegionAdded.size.height/2.0 + lastRegionAdded.center.y;
+    }
+    
+    CGPoint sliderRegionCenter = CGPointMake(self.size.width/2.0, y);
+    CGSize sliderRegionSize = CGSizeMake(self.size.width, regionHeight);
+    
+    ARKSliderRegion *sliderRegion = [[ARKSliderRegion alloc] initWithCenter:sliderRegionCenter andSize:sliderRegionSize];
+    sliderRegion.hour = hours;
+    sliderRegion.minute = minutes;
+    if (regionIdent != nil) {
+        sliderRegion.ident = [ARKDefault string:self.ident hyphenString:regionIdent];
+    }
+    
+    //touch up and in
+    sliderRegion.touchInStateId = [ARKDefault string:sliderRegion.ident hyphenString:TouchInIdent];
+    sliderRegion.touchUpStateId = [ARKDefault string:sliderRegion.ident hyphenString:TouchUpIdent];
+    
+    [self addRegion:sliderRegion];
 }
 
-+ (ARKSlider *)verticalSliderWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
+- (void)addTimeRegionsWithHeight:(CGFloat)timeRegionHeight
 {
-    return [[ARKSlider alloc] initViewWithStatesWithCenter:argCenter andSize:argSize];
-}
-
-+ (ARKSlider *)alarmSliderWithIndex:(int)index andDay:(NSUInteger)day
-{
-    ARKSlider *slider = [ARKSlider verticalSliderWithCenter:[ARKF alarmSliderCenterWithIndex:index] andSize:[ARKF alarmSliderSize]];
-    slider.ident = [NSString stringWithFormat:@"%@-%d", alarmInterfaceIdent, index];
-    
-    slider.backgroundColor = [ARKF transparent];
-    
-    //buttons
-    [slider addThumb:[self sliderButtonWithIdent:slider.ident]];
-    [slider addPlusButton:[self plusButtonWithIdent:slider.ident]];
-    [slider addMinusButton:[self minusButtonWithIdent:slider.ident]];
-    
-    //labels
-    [slider addHourLabel:[self hourLabelWithIdent:slider.ident]];
-    [slider addMinuteLabel:[self minuteLabelWithIdent:slider.ident]];
-    
-    //regions
-    int numberOfTimeRegions = 94;
-    CGFloat timeRegionHeight = ([ARKF alarmSliderHeight] - 4*(buttonSpacing+buttonRadius))/(float)numberOfTimeRegions;
-    //    ARKLog(@"%f", timeRegionHeight);
-    
-    //-top region
-    ARKSliderRegion *topRegion = [ARKSliderRegion sliderRegionWithCenter:CGPointMake([ARKF alarmSliderWidth]/2.0, (buttonSpacing+buttonRadius)/2.0)
-                                                                 andSize:CGSizeMake([ARKF alarmSliderWidth], buttonRadius+buttonSpacing)
-                                                       andTouchUpStateId:[NSString stringWithFormat:@"%@-top", slider.ident]];
-    topRegion.hour = 23;
-    topRegion.minute = 45;
-    topRegion.backgroundColor = [ARKF interfaceColor2];
-    [slider addRegion:topRegion withSnapPoint:CGPointMake([ARKF alarmSliderWidth]/2.0, buttonRadius+buttonSpacing-timeRegionHeight/2.0)];
-    
-    //-time regions
     int hours = 23;
     int minutes = 30;
     for (int i=0; i<numberOfTimeRegions; i++) {
-        CGFloat offset = buttonSpacing + buttonRadius;
-        CGPoint timeRegionCenter = CGPointMake([ARKF alarmSliderWidth]/2.0, (i+0.5)*timeRegionHeight + offset);
-        CGSize timeRegionSize = CGSizeMake([ARKF alarmSliderWidth], timeRegionHeight);
-        ARKSliderRegion *timeRegion = [ARKSliderRegion sliderRegionWithCenter:timeRegionCenter andSize:timeRegionSize andTouchUpStateId:[NSString stringWithFormat:@"%@-%d", slider.ident, i]];
-        timeRegion.backgroundColor = [ARKF interfaceColor];
+        NSString *regionIdent = [NSString stringWithFormat:@"%@-%d-%d", TimeRegionIdent, hours, minutes];
+        [self addRegionWithIdent:regionIdent andHeight:timeRegionHeight andHours:hours andMinutes:minutes];
         
-        //hours and minutes
-        //23 30
-        //23 15
-        //23 00
-        timeRegion.hour = hours;
-        timeRegion.minute = minutes;
-        
+        //reset minutes and hours
         minutes = minutes - 15;
         if (i%4==2) { //2 6 10 ...
             hours--;
             minutes = 45;
         }
-        
-        [slider addRegion:timeRegion];
     }
+}
+
+- (void)syncRegions
+{
+    for (ARKSliderRegion *region in self.regionDictionary.objectArray) {
+        //1. add region at the bottom of the subviews list to ensure it doesn't swallow touches.
+//        if (self.lastRegionCounter == 1) {
+//            self.lastRegionCounter = 0;
+//        } else {
+//            region.backgroundColor = [ARKF yesColor];
+//            self.lastRegionCounter = 1;
+//        }
+        [self insertSubview:region atIndex:0]; //all back of the bus
+        
+        //3. slider thumb state for region
+        [self.thumb addState:[ARKState nullStateWithId:region.touchUpStateId] withStateId:region.touchUpStateId];
+        [self.thumb stateWithId:region.touchUpStateId movesToPosition:region.snapPoint];
+    }
+}
+
+//states
+- (void)syncState:(ARKState *)state
+{
+    [super syncState:state];
     
-    //-zero region
-    ARKSliderRegion *zeroRegion = [ARKSliderRegion sliderRegionWithCenter:CGPointMake([ARKF alarmSliderWidth]/2.0, [ARKF alarmSliderHeight]-(5.0/2.0)*(buttonRadius+buttonSpacing)) andSize:CGSizeMake([ARKF alarmSliderWidth], buttonSpacing+buttonRadius) andTouchUpStateId:[NSString stringWithFormat:@"%@-zero", slider.ident]];
-    zeroRegion.hour = 0;
-    zeroRegion.minute = 0;
-    [slider addRegion:zeroRegion withSnapPoint:CGPointMake([ARKF alarmSliderWidth]/2.0, [ARKF alarmSliderHeight]-3.0*(buttonRadius+buttonSpacing) + timeRegionHeight/2.0)];
-    slider.currentRegion = zeroRegion;
-    
-    //-off region
-    ARKSliderRegion *offRegion = [ARKSliderRegion sliderRegionWithCenter:CGPointMake([ARKF alarmSliderWidth]/2.0, [ARKF alarmSliderHeight]-(buttonRadius+buttonSpacing)) andSize:CGSizeMake([ARKF alarmSliderWidth], 2*(buttonSpacing+buttonRadius)) andTouchUpStateId:[NSString stringWithFormat:@"%@-off", slider.ident]];
-    offRegion.hour = -1;
-    offRegion.backgroundColor = [ARKF interfaceColor3];
-    [slider addRegion:offRegion];
-    
-    return slider;
+    //main slider
+    if ([self.ident isEqualToString:MainSliderIdent]) {
+        if ([state.stateId isEqualToString:MVCMain] || [state.stateId isEqualToString:HomeState]) {
+            self.panThumbRecognizer.enabled = NO;
+            self.lastButtonTransform = 0.0;
+        } else {
+            self.panThumbRecognizer.enabled = YES;
+        }
+    }
 }
-
-//alarm
-+ (ARKButton *)sliderButtonWithIdent:(NSString *)ident
-{
-    ARKButton *sliderButton = [ARKButton buttonWithCenter:[ARKF alarmSliderButtonCenter] andSize:[ARKF alarmSliderButtonSize]];
-    sliderButton.ident = [NSString stringWithFormat:@"%@-thumb", ident];
-    sliderButton.backgroundColor = [ARKF transparent];
-    ARKView *subview = [[ARKView alloc] initWithCenter:CGPointMake([ARKF alarmSliderButtonSize].width/2.0, [ARKF alarmSliderButtonSize].width) andRadius:[ARKF alarmSliderButtonSize].width/2.0];
-    subview.backgroundColor = [ARKF yesColor];
-    [sliderButton addSubview:subview];
-    
-    return sliderButton;
-}
-
-+ (ARKButton *)plusButtonWithIdent:(NSString *)ident
-{
-    ARKButton *plusButton = [ARKButton buttonWithCenter:[ARKF alarmSliderPlusButtonCenter] andSize:[ARKF alarmSliderPlusButtonSize]];
-    plusButton.backgroundColor = [ARKF yesColor];
-    return plusButton;
-}
-
-+ (ARKButton *)minusButtonWithIdent:(NSString *)ident
-{
-    ARKButton *minusButton = [ARKButton buttonWithCenter:[ARKF alarmSliderMinusButtonCenter] andSize:[ARKF alarmSliderMinusButtonSize]];
-    minusButton.backgroundColor = [ARKF yesColor];
-    return minusButton;
-}
-
-+ (ARKLabel *)hourLabelWithIdent:(NSString *)ident
-{
-    ARKLabel *hourLabel = [ARKLabel hourLabelWithCenter:[ARKF alarmSliderHourLabelCenter] andSize:CGSizeMake(2*buttonRadius, 2*buttonRadius)];
-    hourLabel.ident = [NSString stringWithFormat:@"%@-label-hour", ident];
-    hourLabel.backgroundColor = [ARKF transparent];
-    return hourLabel;
-}
-
-+ (ARKLabel *)minuteLabelWithIdent:(NSString *)ident
-{
-    ARKLabel *minuteLabel = [ARKLabel minuteLabelWithCenter:[ARKF alarmSliderMinuteLabelCenter] andSize:CGSizeMake(2*buttonRadius, 2*buttonRadius)];
-    minuteLabel.ident = [NSString stringWithFormat:@"%@-label-minute", ident];
-    minuteLabel.backgroundColor = [ARKF transparent];
-    return minuteLabel;
-}
-//
-//+ (ARKAlarm *)alarmWithIdent:(NSString *)ident
-//{
-//
-//}
 
 @end

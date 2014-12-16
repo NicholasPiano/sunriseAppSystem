@@ -14,9 +14,9 @@
 @synthesize tapRecognizer;
 
 #pragma mark - initialiser
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius
+- (id)initWithCenter:(CGPoint)argCenter andRadius:(CGFloat)argRadius
 {
-    self = [super initViewWithStatesWithCenter:argCenter andRadius:argRadius];
+    self = [super initWithCenter:argCenter andRadius:argRadius];
     if (self) {
         self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
         [self addGestureRecognizer:self.tapRecognizer];
@@ -24,9 +24,9 @@
     return self;
 }
 
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
+- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize
 {
-    self = [super initViewWithStatesWithCenter:argCenter andSize:argSize];
+    self = [super initWithCenter:argCenter andSize:argSize];
     if (self) {
         self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
         [self addGestureRecognizer:self.tapRecognizer];
@@ -49,12 +49,12 @@
 #pragma mark - factory
 + (ARKButton *)buttonWithCenter:(CGPoint)center andRadius:(CGFloat)radius;
 {
-    return [[self alloc] initViewWithStatesWithCenter:center andRadius:radius];
+    return [[self alloc] initWithCenter:center andRadius:radius];
 }
 
 + (ARKButton *)buttonWithCenter:(CGPoint)center andSize:(CGSize)size
 {
-    return [[self alloc] initViewWithStatesWithCenter:center andSize:size];
+    return [[self alloc] initWithCenter:center andSize:size];
 }
 
 @end

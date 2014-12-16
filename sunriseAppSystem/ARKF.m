@@ -12,8 +12,7 @@
 static UIColor *backgroundColor = nil, *interfaceColor = nil, *interfaceColor2 = nil, *interfaceColor3 = nil, *yesColor = nil, *noColor = nil;
 
 //states
-static NSArray *stateList = nil;
-static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
+static NSArray *mainStateList = nil;
 
 @implementation ARKF
 
@@ -29,11 +28,8 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
     noColor = [[UIColor alloc] initWithRed:(200.0f/255.0f) green:(35.0f/255.0f) blue:(35.0/255.0) alpha:1];
     
     //states
-    summaryState = @"summary";
-    addState = @"add";
-    settingsState = @"settings";
     
-    stateList = [NSArray arrayWithObjects:HomeState, summaryState, addState, settingsState, nil];
+    mainStateList = [NSArray arrayWithObjects:HomeState, MVCMain, MVCFull, MVCSummary, MVCAdd, MVCSettings, nil];
 }
 
 #pragma mark fetch methods
@@ -80,87 +76,219 @@ static NSString *summaryState = nil, *addState = nil, *settingsState = nil;
 }
 
 //states
-+ (NSArray *)stateList
++ (NSArray *)mainViewControllerStateList
 {
-    return stateList;
+    return mainStateList;
 }
 
-//slider
-
-//slider region
-
-//button
-
-//composite view
-
-//label
-
-//library
-
-//alarm interface
-+ (CGPoint)alarmSliderCenterWithIndex:(int)index
+//main slider
++ (CGPoint)mainSliderCenter
 {
-    return CGPointMake([self alarmSliderWidth]*index + 2*buttonRadius + 4*buttonSpacing, [ARKDefault screenHeight]/2.0+[self alarmSliderLabelSize].height);
+    return [ARKDefault centerScreen];
 }
 
-+ (CGFloat)alarmSliderHeight
++ (CGFloat)mainSliderHeight
 {
-    return [ARKDefault screenHeight]-2*[self alarmSliderLabelSize].height;
+    return [ARKDefault screenHeight];
 }
 
-+ (CGFloat)alarmSliderWidth
++ (CGFloat)mainSliderAreaHeight
 {
-    return (2*buttonSpacing + 2*buttonRadius);
+    return [self mainSliderHeight]-[self mainSliderLabelRegionHeight];
 }
 
-+ (CGSize)alarmSliderSize
++ (CGFloat)mainSliderWidth
 {
-    return CGSizeMake([self alarmSliderWidth], [self alarmSliderHeight]);
+    return 4*buttonRadius + buttonSpacing;
 }
 
-+ (CGSize)alarmSliderButtonSize
++ (CGSize)mainSliderSize
 {
-    return CGSizeMake(2*buttonRadius, 4*buttonRadius);
+    return CGSizeMake([self mainSliderWidth], [self mainSliderHeight]);
 }
 
-+ (CGPoint)alarmSliderButtonCenter
++ (UIColor *)mainSliderBackgroundColor
 {
-    return CGPointMake([self alarmSliderWidth]/2.0, [ARKF alarmSliderHeight] - 6*buttonRadius);
+    return [self transparent]; //shall become carefully crafted color or just invisible
 }
 
-+ (CGSize)alarmSliderLabelSize
++ (CGPoint)mainSliderThumbCenter
 {
-    return CGSizeMake(2*buttonRadius, 2*buttonRadius);
+    return CGPointMake([self mainSliderWidth]/2.0, [self mainSliderHeight]/2.0);
 }
 
-+ (CGPoint)alarmSliderHourLabelCenter
++ (CGFloat)mainSliderThumbHeight
 {
-    return CGPointMake([self alarmSliderWidth]/2.0, -3*buttonRadius);
+    return 2*[self mainSliderWidth];
 }
 
-+ (CGPoint)alarmSliderMinuteLabelCenter
++ (CGFloat)mainSliderThumbWidth
 {
-    return CGPointMake([self alarmSliderWidth]/2.0, -buttonRadius);
+    return [self mainSliderWidth];
 }
 
-+ (CGPoint)alarmSliderPlusButtonCenter
++ (CGSize)mainSliderThumbSize
 {
-    return CGPointMake([self alarmSliderWidth]/2.0, [self alarmSliderHeight]-3*buttonRadius);
+    return CGSizeMake([self mainSliderThumbWidth], [self mainSliderThumbHeight]);
 }
 
-+ (CGSize)alarmSliderPlusButtonSize
++ (UIColor *)mainSliderThumbBackgroundColor
 {
-    return CGSizeMake(2*buttonRadius, 2*buttonRadius);
+    return [self interfaceColor]; //another masterfully styled color
 }
 
-+ (CGPoint)alarmSliderMinusButtonCenter
++ (CGFloat)mainSliderLabelRegionHeight
 {
-    return CGPointMake([self alarmSliderWidth]/2.0, [self alarmSliderHeight]-buttonRadius);
+    return 3*buttonSpacing+4*buttonRadius;
 }
 
-+ (CGSize)alarmSliderMinusButtonSize
++ (CGFloat)mainSliderTopRegionHeight
 {
-    return CGSizeMake(2*buttonRadius, 2*buttonRadius);
+    return buttonRadius+buttonSpacing;
+}
+
++ (CGFloat)mainSliderTimeRegionHeight
+{
+    return [ARKF mainSliderAreaHeight] - 4*(buttonSpacing+buttonRadius);
+}
+
++ (CGFloat)mainSliderTimeRegionIndividualHeight
+{
+    return [self mainSliderTimeRegionHeight]/(float)numberOfTimeRegions;
+}
+
++ (CGFloat)mainSliderZeroRegionHeight
+{
+    return buttonRadius+buttonSpacing;
+}
+
++ (CGFloat)mainSliderOffRegionHeight
+{
+    return 2*(buttonSpacing+buttonRadius);
+}
+
++ (CGPoint)mainSliderTopRegionSnapPoint
+{
+    return CGPointMake([self mainSliderWidth]/2.0, [self mainSliderLabelRegionHeight] + buttonRadius+buttonSpacing-[self mainSliderTimeRegionIndividualHeight]/2.0);
+}
+
++ (CGPoint)mainSliderZeroRegionSnapPoint
+{
+    return CGPointMake([ARKF mainSliderWidth]/2.0, [ARKF mainSliderHeight]-3.0*(buttonRadius+buttonSpacing) + [self mainSliderTimeRegionIndividualHeight]/2.0);
+}
+
++ (CGPoint)mainSliderOffRegionSnapPoint
+{
+    return CGPointMake([ARKF mainSliderWidth]/2.0, [ARKF mainSliderHeight]-buttonRadius-1.5*buttonSpacing);
+}
+
++ (CGPoint)mainSliderHourLabelCenter
+{
+    return CGPointMake([ARKF mainSliderWidth]/2.0, buttonSpacing+buttonRadius);
+}
+
++ (CGSize)mainSliderHourLabelSize
+{
+    return CGSizeMake(4*buttonRadius, 4*buttonRadius);
+}
+
++ (CGPoint)mainSliderMinuteLabelCenter
+{
+    return CGPointMake([ARKF mainSliderWidth]/2.0, 2*buttonSpacing+3*buttonRadius);
+}
+
++ (CGSize)mainSliderMinuteLabelSize
+{
+    return CGSizeMake(4*buttonRadius, 4*buttonRadius);
+}
+
+//home button
++ (CGPoint)homeButtonCenter
+{
+    return CGPointMake(buttonRadius+buttonSpacing, [ARKDefault screenHeight]-7*buttonRadius-4*buttonSpacing);
+}
+
++ (UIColor *)homeButtonBackgroundColor
+{
+    return [self interfaceColor];
+}
+
+//add button
++ (CGPoint)addButtonCenter
+{
+    return CGPointMake(buttonRadius+buttonSpacing, [ARKDefault screenHeight]-5*buttonRadius-3*buttonSpacing);
+}
+
++ (UIColor *)addButtonBackgroundColor
+{
+    return [self interfaceColor];
+}
+
+//settings button
++ (CGPoint)settingsButtonCenter
+{
+    return CGPointMake(buttonRadius+buttonSpacing, [ARKDefault screenHeight]-3*buttonRadius-2*buttonSpacing);
+}
+
++ (UIColor *)settingsButtonBackgroundColor
+{
+    return [self interfaceColor];
+}
+
+//summary button
++ (CGPoint)summaryButtonCenter
+{
+    return CGPointMake(buttonRadius+buttonSpacing, [ARKDefault screenHeight]-buttonRadius-buttonSpacing);
+}
+
++ (UIColor *)summaryButtonBackgroundColor
+{
+    return [self interfaceColor];
+}
+
+//yes button
++ (CGPoint)yesButtonCenter
+{
+    return CGPointMake([ARKDefault screenWidth]-buttonRadius-buttonSpacing, [ARKDefault screenHeight]-3*buttonRadius-2*buttonSpacing);
+}
+
+//no button
++ (CGPoint)noButtonCenter
+{
+    return CGPointMake([ARKDefault screenWidth]-buttonRadius-buttonSpacing, [ARKDefault screenHeight]-buttonRadius-buttonSpacing);
+}
+
+//full library
++ (CGPoint)fullLibraryCenter
+{
+    return [ARKDefault centerScreenVerticalWithHorizontal:[ARKDefault screenWidth]/2.0+0.5*buttonSpacing+buttonRadius];
+}
+
++ (CGSize)fullLibrarySize
+{
+    return CGSizeMake([ARKDefault screenWidth]-3*buttonSpacing-2*buttonRadius, [ARKDefault screenHeight]-2*buttonSpacing);
+}
+
+//settings library
++ (CGPoint)settingsLibraryCenter
+{
+    return [ARKDefault centerScreenHorizontalWithVertical:[ARKDefault screenHeight]/2.0+0.5*buttonSpacing+buttonRadius];
+}
+
++ (CGSize)settingsLibrarySize
+{
+    return CGSizeMake([ARKDefault screenWidth]-2*buttonSpacing, [ARKDefault screenHeight]-3*buttonSpacing-2*buttonRadius);
+}
+
+//summary library
++ (CGPoint)summaryLibraryCenter
+{
+    return [ARKDefault centerScreenHorizontalWithVertical:[ARKDefault screenHeight]-2*buttonRadius-buttonSpacing];
+}
+
++ (CGSize)summaryLibrarySize
+{
+    return CGSizeMake([ARKDefault screenWidth]-2*buttonSpacing, 2*buttonRadius+2*buttonSpacing);
 }
 
 @end

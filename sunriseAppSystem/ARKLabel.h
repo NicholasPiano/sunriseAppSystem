@@ -15,11 +15,13 @@
 @property (strong, nonatomic) NSString *type; //hour or minute
 
 #pragma mark - initialiser
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andType:(NSString *)argType;
+- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andType:(NSString *)argType;
 
 #pragma mark - instance methods
 - (void)receiveNotification:(NSNotification *)notification;
 - (void)setText:(NSString *)text;
+- (void)setTextColor:(UIColor *)color;
+- (void)setFontSize:(NSUInteger)fontSize;
 
 #pragma mark - factory
 + (ARKLabel *)hourLabelWithCenter:(CGPoint)center andSize:(CGSize)size;

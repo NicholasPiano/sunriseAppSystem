@@ -36,6 +36,7 @@
 		89B222B218E702B90042FF24 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B2229618E702B80042FF24 /* CoreData.framework */; };
 		89B222BA18E702B90042FF24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 89B222B818E702B90042FF24 /* InfoPlist.strings */; };
 		89B222BC18E702B90042FF24 /* sunriseAppSystemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B222BB18E702B90042FF24 /* sunriseAppSystemTests.m */; };
+		89C0854A193668600065F763 /* ARKOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C08549193668600065F763 /* ARKOrderedDictionary.m */; };
 		89DCDBDB19244AB0001614D7 /* ARKLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DCDBDA19244AB0001614D7 /* ARKLabel.m */; };
 		89DCDBDE192590BE001614D7 /* ARKF.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DCDBDD192590BE001614D7 /* ARKF.m */; };
 /* End PBXBuildFile section */
@@ -97,6 +98,8 @@
 		89B222B718E702B90042FF24 /* sunriseAppSystemTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "sunriseAppSystemTests-Info.plist"; sourceTree = "<group>"; };
 		89B222B918E702B90042FF24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		89B222BB18E702B90042FF24 /* sunriseAppSystemTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = sunriseAppSystemTests.m; sourceTree = "<group>"; };
+		89C08548193668600065F763 /* ARKOrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKOrderedDictionary.h; sourceTree = "<group>"; };
+		89C08549193668600065F763 /* ARKOrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKOrderedDictionary.m; sourceTree = "<group>"; };
 		89DCDBD919244AB0001614D7 /* ARKLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKLabel.h; sourceTree = "<group>"; };
 		89DCDBDA19244AB0001614D7 /* ARKLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKLabel.m; sourceTree = "<group>"; };
 		89DCDBDC192590BE001614D7 /* ARKF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKF.h; sourceTree = "<group>"; };
@@ -261,6 +264,8 @@
 		89B2229918E702B90042FF24 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				89C08548193668600065F763 /* ARKOrderedDictionary.h */,
+				89C08549193668600065F763 /* ARKOrderedDictionary.m */,
 				8912A1F819146C4300BEB211 /* ARKLog.h */,
 				8912A1F919146C4300BEB211 /* ARKLog.m */,
 				89B2229A18E702B90042FF24 /* sunriseAppSystem-Info.plist */,
@@ -391,6 +396,7 @@
 				8912A1FA19146C4300BEB211 /* ARKLog.m in Sources */,
 				89AB47B6190805DF00A0D5B7 /* ARKButton.m in Sources */,
 				89DCDBDE192590BE001614D7 /* ARKF.m in Sources */,
+				89C0854A193668600065F763 /* ARKOrderedDictionary.m in Sources */,
 				89AB47CF190824DC00A0D5B7 /* ARKGlyph.m in Sources */,
 				89105F381920FBB9001A115F /* ARKCompositeView.m in Sources */,
 				89AA602618EF9589002195FD /* ARKState.m in Sources */,
@@ -448,7 +454,7 @@
 		89B222BD18E702B90042FF24 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -487,7 +493,7 @@
 		89B222BE18E702B90042FF24 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -525,7 +531,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sunriseAppSystem/sunriseAppSystem-Prefix.pch";
 				INFOPLIST_FILE = "sunriseAppSystem/sunriseAppSystem-Info.plist";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -538,7 +546,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sunriseAppSystem/sunriseAppSystem-Prefix.pch";
 				INFOPLIST_FILE = "sunriseAppSystem/sunriseAppSystem-Info.plist";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

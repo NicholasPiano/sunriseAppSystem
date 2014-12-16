@@ -17,6 +17,7 @@
 //identification
 @property (strong, nonatomic) NSString *stateId;
 @property (strong, nonatomic) NSString *nextStateId;
+//@property (strong, nonatomic) NSString *callBackStateId;
 
 //state variables
 @property (nonatomic) CGAffineTransform transform;
@@ -40,15 +41,21 @@
 - (void)nextGlobalId:(NSString *)argNextGlobalId;
 
 #pragma mark - factory
-+ (ARKState *)nullState;
-+ (ARKState *)homeState;
+//refactor
 + (ARKState *)state:(ARKState *)state withNextStateId:(NSString *)nextStateId;
 + (ARKState *)stateFromState:(ARKState *)state withStateId:(NSString *)stateId andNextStateId:(NSString *)nextStateId;
-+ (ARKState *)stateWithId:(NSString *)stateId moveDown:(CGFloat)down andRight:(CGFloat)right;
-+ (ARKState *)stateWithId:(NSString *)stateId moveDown:(CGFloat)down;
-+ (ARKState *)stateWithId:(NSString *)stateId moveRight:(CGFloat)right;
-+ (ARKState *)stateWithId:(NSString *)stateId moveToPosition:(CGPoint)position fromInitialPosition:(CGPoint)initalPosition;
-+ (ARKState *)stateWithId:(NSString *)stateId moveToInvisiblePosition:(CGPoint)position fromInitialPosition:(CGPoint)initalPosition;
-+ (ARKState *)stateWithId:(NSString *)stateId rotatedStateWithAngle:(CGFloat)angle;
++ (ARKState *)cloneState:(ARKState *)state;
+
+//no state id
++ (ARKState *)nullState;
++ (ARKState *)moveDown:(CGFloat)down andRight:(CGFloat)right andToAlpha:(CGFloat)argAlpha rotatedClockwiseByAngle:(CGFloat)angle;
++ (ARKState *)moveInvisibleDown:(CGFloat)down andRight:(CGFloat)right;
++ (ARKState *)moveDown:(CGFloat)down;
++ (ARKState *)moveRight:(CGFloat)right;
++ (ARKState *)goToAlpha:(CGFloat)argAlpha;
++ (ARKState *)rotateClockwiseByAngle:(CGFloat)angle;
+
+//state id
++ (ARKState *)nullStateWithId:(NSString *)stateId;
 
 @end

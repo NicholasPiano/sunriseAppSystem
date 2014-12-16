@@ -14,9 +14,9 @@
 @synthesize label, type;
 
 #pragma mark - initialiser
-- (id)initViewWithStatesWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andType:(NSString *)argType
+- (id)initWithCenter:(CGPoint)argCenter andSize:(CGSize)argSize andType:(NSString *)argType
 {
-    self = [super initViewWithStatesWithCenter:argCenter andSize:argSize];
+    self = [super initWithCenter:argCenter andSize:argSize];
     if (self) {
         self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         [self.label setFont:[UIFont systemFontOfSize:16]];
@@ -35,15 +35,25 @@
     [self.label setText:text];
 }
 
+- (void)setTextColor:(UIColor *)color
+{
+    [self.label setTextColor:color];
+}
+
+- (void)setFontSize:(NSUInteger)fontSize
+{
+    [self.label setFont:[UIFont systemFontOfSize:fontSize]];
+}
+
 #pragma mark - factory
 + (ARKLabel *)hourLabelWithCenter:(CGPoint)center andSize:(CGSize)size
 {
-    return [[ARKLabel alloc] initViewWithStatesWithCenter:center andSize:size andType:@"hour"];
+    return [[ARKLabel alloc] initWithCenter:center andSize:size andType:@"hour"];
 }
 
 + (ARKLabel *)minuteLabelWithCenter:(CGPoint)center andSize:(CGSize)size
 {
-    return [[ARKLabel alloc] initViewWithStatesWithCenter:center andSize:size andType:@"minute"];
+    return [[ARKLabel alloc] initWithCenter:center andSize:size andType:@"minute"];
 }
 
 @end
